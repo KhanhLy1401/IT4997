@@ -1,0 +1,16 @@
+import mongoose from "mongoose";
+
+const rentalSchema = new mongoose.Schema({
+    rentalId: String,
+    ownerId: String,
+    userId: String,
+    bikeId: String,
+    startDate: Date,
+    endDate: Date,
+    totalPrice: Number,
+    paymentStatus: String,
+    status: String,
+    createdAt: {type: Date, default: Date.now}
+})
+
+export default mongoose.model('Rental', rentalSchema);

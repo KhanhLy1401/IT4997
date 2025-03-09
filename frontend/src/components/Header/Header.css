@@ -1,0 +1,65 @@
+.header {
+    width: 100%;
+    background-color: #fff;
+    color: #333;
+    display: flex;
+    height: 80px;
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+.left-header {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    justify-content: space-between;
+    padding: 0px 30px 0px 40px;
+
+}
+
+.left-header .logo-header {
+    display: flex;
+    flex-direction: row;
+    color: #2596be;
+    font-size: 24px;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.left-header .contact-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+}
+
+.contact-header span {
+    cursor: pointer;
+}
+.logo-header img{
+    width: 70px;
+}
+
+.right-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1rem;
+    justify-content: space-between;
+}
+
+.right-header .sign-up {
+    cursor: pointer;
+    border-left: 1px solid #ddd;
+    padding: 15px 30px;
+}
+
+.right-header .sign-in {
+    padding: 10px 30px 15px;
+    border: 1px solid #333;
+    border-radius: 15px;
+    cursor: pointer;
+
+}
