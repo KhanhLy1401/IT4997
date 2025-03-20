@@ -1,19 +1,21 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Home from './pages/Home/Home.js';
-import Header from './components/Header/Header.js';
+import AdminLayout from './pages/Admin/AdminLayout.js';
+import UserLayout from './pages/User/UserLayout.js';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Header/>
-      </header>
-      
-      <div className='main'>
-        <Home/>
+    <Router> {/* Bọc trong <Router> */}
+      <div className="App">
+        <div className="main-content">
+          <Routes>
+            <Route path="/*" element={<UserLayout />} />
+            <Route path="/admin/*" element={<AdminLayout />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

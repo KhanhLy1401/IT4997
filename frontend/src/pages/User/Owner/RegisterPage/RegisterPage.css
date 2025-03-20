@@ -1,0 +1,54 @@
+.register-page {
+    max-width: 1280px;
+    margin: 20px auto 0px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+.rp-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 15px
+
+}
+
+.rp-form {
+    width: 50%;
+    padding: 16px 24px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+
+}
+
+.rp-form input {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.rp-about {
+    width: 50%;
+    
+}
+
+.rp-about-company {
+    color: #fff;
+    background-color: #2596be;
+    box-sizing: border-box;
+    padding: 24px ;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    
+}
+
+.rp-form-title,
+.rp-advantage-title {
+    margin: 0px 0px 10px 10px;
+    font-size: 1.5rem;
+    color: #2596be;
+    font-weight: 700;
+
+}
+
+.rp-advantage ul  {
+    padding-left: 30px;
+}

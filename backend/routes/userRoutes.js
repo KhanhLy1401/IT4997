@@ -1,9 +1,13 @@
-import express from 'express';
-import { signUpUser, signInUser } from '../controllers/userControllers.js';
+import { Router } from "express";
+import { changeUserRole, getAllOwners, getAllUser, getUserById } from "../controllers/userControllers.js";
 
-const router = express.Router();
 
-router.post('/sign-up', signUpUser);
-router.post('/sign-in', signInUser);
+const router = Router();
+router.patch('/change-role/:id', changeUserRole);
+router.get('/',getAllUser);
+router.get('/get-owners/', getAllOwners);
+
+router.get('/:id', getUserById);
+
 
 export default router;

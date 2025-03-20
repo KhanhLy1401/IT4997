@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const bikeSchema = new mongoose.Schema({
-    bikeId: String,
     ownerId: String,
     brand: String,
     bikeType: String,

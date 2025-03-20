@@ -1,0 +1,179 @@
+
+.home {
+    background-image: url('../../../../public/background.jpg');
+    width: 80%;
+    height: 600px;
+    background-size: cover;
+    background-position: 20% 60%;
+    border-radius: 40px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px auto;
+    margin-bottom: 20px;
+}
+
+.hero-title {
+    margin-top: 50px;
+    padding: 10px;
+}
+.hero-title,  
+.hero-subtitle {
+    color: #fff;
+    font-size: 2.4rem;
+    font-weight: bolder;
+}
+
+.hero-subtitle {
+    padding-bottom: 20px;
+}
+
+.booking-bar {
+    width: 80%;
+    height: 65px;
+    background-color: #fff;
+    color: #000;
+    display: flex;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.booking-location {
+    width: 20%;
+    display: flex;
+    padding: 0px 20px ;
+    flex-direction: column;
+}
+
+.booking-bar-subtitle {
+    padding: 5px 0px;
+    font-size: 0.8rem;
+    color: #767575;
+    gap: 10px;
+}
+
+.booking-date {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    justify-content: space-around;
+}
+.booking-date-from,
+.booking-date-to {
+    display: flex;
+    flex-direction: column;
+}
+.booking-type {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-btn {
+    margin: auto ;
+    margin-right: 10px;
+    padding: 10px 14px;
+    border: 1px solid #2596be;
+    border-radius: 999px;
+    background-color: #2596be;
+    cursor: pointer;
+}
+
+.rental-guide {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.guide {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+}
+.rental-guide-title {
+    margin: auto;
+    font-size: 40px;
+    color: #2596be;
+    font-weight: 700;
+}
+.rental-guide-subtitle {
+    margin: auto;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.guide-step-img {
+    width: 250px;
+}
+
+.guide-step-title {
+    font-size: 24px;
+    margin: 10px 0px;
+}
+.guide-step-title span {
+    color: #2596be;
+    font-weight: 700;
+    
+}
+
+.motor-for-you {
+    background: #f6f6f6;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0px 80px;
+}
+.motor-for-you-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.motor {
+    
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 80%;
+}
+
+.motor-img {
+    display: flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    width: calc(25% - 15px);
+    flex-direction: column;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: #fff;
+    cursor: pointer;
+    color: #767676;
+    
+}
+.motor-img img{
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.motor-name {
+    color: #000;
+    font-size: 1rem;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.motor-address {
+    border-bottom: 1px solid #767575;
+    padding-bottom: 20px;
+}

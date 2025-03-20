@@ -1,0 +1,46 @@
+.dashboard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 0px 30px;
+    gap: 30px;
+    background-color: #f1f5f9;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.db-overview {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0px;
+}
+
+.db-card {
+    width: 280px;
+    height: 220px;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    
+}
+.db-card-title {
+    padding: 5px 20px;
+}
+
+.db-card-value {
+    display: flex;
+    font-size: 4rem;
+    justify-content: center;
+    padding: 20px 0px;
+}
+
+.db-charts {
+    width: 100%;
+    border-radius: 30px;
+    min-height: 400px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
