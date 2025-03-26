@@ -1,9 +1,13 @@
 import React from 'react'
+import AuthModal from '../../../../components/Auth/Auth.js';
+
 import './Register.css'
 
-const Register = () => {
+const Register = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
   return (
     <div className='register-owner'>
+        <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
+
         <div className='register-form'>
             <div className='main-content'>
                 <h1>

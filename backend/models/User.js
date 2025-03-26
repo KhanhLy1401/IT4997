@@ -3,11 +3,24 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     fullName: String,
     email: String,
-    phone: Number,
+    phone: String,
     password: String,
-    role: {type: String, default: "user"},
-    createdAt: {type: Date, default: Date.now},
-    updatedAt: {type: Date, default: Date.now}
-})
+    role: {type: String, enum: ["user", "owner", "admin"], default: "user"},
+    address: String,
+    citizen_id: String,
+    license_number: String,
+    avatar_url: { type: String },
+    citizen_images: {
+        front: { type: String },
+        back: { type: String }
+    },
+    license_image_url: { type: String },
+    banking: {
+        account_name: String,
+        account_number: String,
+        account_holder: String,
+    },
+    status: { type: String, enum: ["pending", "approved", "rejected"],  }
+}, { timestamps: true });
 
 export default mongoose.model('User', userSchema);

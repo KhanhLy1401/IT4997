@@ -63,3 +63,24 @@
     cursor: pointer;
 
 }
+
+.user-menu {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-width: 150px;
+  }
+  
+  .user-menu:hover .dropdown-menu {
+    display: block;
+  }
+  

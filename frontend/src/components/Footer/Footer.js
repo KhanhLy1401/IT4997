@@ -26,7 +26,7 @@ function Footer () {
                 </div>
 
                     <div className="footer-policy">
-                        <h2>Chính sách</h2>
+                        <h2><i class="fa-solid fa-building-shield"></i> Chính sách</h2>
                             <div>Chính sách và quy định</div>
                             <div>Quy chế hoạt động</div>
                             <div>Bảo mật thông tin</div>
@@ -42,17 +42,17 @@ function Footer () {
                     </div>
 
                     <div className="policy-partner">
-                        <h2>Đối tác</h2>
+                        <h2> <i class="fa-solid fa-handshake"></i>Đối tác</h2>
                         <div>Đăng ký trở thành đối tác</div>
                     </div>
                 </div>
                 <div className="line"></div>
                 <div className="footer-banking">
-                    <div className="footer-address">Địa chỉ: Nhà 18, ngõ 105 Yên Hòa, quận Cầu Giấy, Thành phố Hà Nội</div>
+                    <div className="footer-address"><i class="fa-solid fa-location-dot"></i> Địa chỉ: Nhà 18, ngõ 105 Yên Hòa, quận Cầu Giấy, Thành phố Hà Nội</div>
                     <div className="banking">
-                        <div className="banking-item">Tên chủ TK: momooooo</div>
-                        <div className="banking-item">Số TK: 12345687789</div>
-                        <div className="banking-item">Ngân hàng: Vietcombank</div>
+                        <div className="banking-item"><i class="fa-solid fa-user-tie"></i> Tên chủ TK: momooooo</div>
+                        <div className="banking-item"><i class="fa-solid fa-credit-card"></i> Số TK: 12345687789</div>
+                        <div className="banking-item"><i class="fa-solid fa-building-columns"></i> Ngân hàng: Vietcombank</div>
                     </div>
                 </div>
             </div>

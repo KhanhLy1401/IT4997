@@ -1,7 +1,6 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
 
 
 const SALT_ROUNDS = 10;
@@ -13,9 +12,14 @@ export const signUpUser = async (req, res) => {
     const { fullName, email, password, phone } = req.body;
 
     // Kiểm tra email đã tồn tại
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    const existingEmail = await User.findOne({ email });
+    const existingPhone = await User.findOne({phone});
+    if (existingEmail) {
       return res.status(400).json({ message: 'Email đã được sử dụng.' });
+    }
+
+    if (existingPhone) {
+      return res.status(400).json({ message: 'Số điện thoại đã được sử dụng.' });
     }
 
     // Mã hóa mật khẩu
@@ -48,13 +52,15 @@ export const signInUser = async (req, res) => {
     }
 
     // So sánh mật khẩu
-    const isPasswordValid = bcrypt.compare(password, user.password);
+    const isPasswordValid =  bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Sai mật khẩu.' });
     }
 
+    
+
     // Tạo JWT token
-    const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '6h' });
+    const token = jwt.sign({ _id: user._id, email: user.email, phone: user.phone, fullName: user.fullName }, JWT_SECRET, { expiresIn: '6h' });
 
     res.status(200).json({ message: 'Đăng nhập thành công!', token });
   } catch (error) {

@@ -1,5 +1,7 @@
 import User from "../models/User.js";
 
+import { uploadToCloudinary } from "../config/cloudinary.js";
+
 export const changeUserRole = async (req, res) => {
     try {
         const userId = req.params.id;
@@ -44,5 +46,53 @@ export const getAllOwners = async (req, res) => {
         return res.status(200).json(owners);
     } catch(error) {
         return res.status(500).json({message: error.message})
+    }
+}
+
+export const requestOwner = async (req, res) => {
+    try {
+        const {_id, address, citizen_id, license_number, banking} = req.body;
+        const files = req.files; // Lấy file từ multer
+
+        const avatar_url = await uploadToCloudinary(files.avatar[0].path);
+        const license_image_url = await uploadToCloudinary(files.license_image[0].path);
+        const citizen_images = {
+        front: await uploadToCloudinary(files.citizen_front[0].path),
+        back: await uploadToCloudinary(files.citizen_back[0].path),
+        };
+
+        const existingUser = await User.findById(_id);
+        if (!existingUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Nếu user đã được approved thì không cho cập nhật nữa
+        if (existingUser.status === "approved") {
+            return res.status(200).json({ message: "Bạn đã là chủ xe" });
+        }
+
+        if(existingUser.status === "pending") {
+            return res.status(200).json({message: "Bạn đã gửi yêu  cầu rồi"})
+        }
+        const updatedUser = await User.findByIdAndUpdate(
+            _id,
+            {
+                address,
+                citizen_id,
+                license_number,
+                citizen_images,
+                license_image_url,
+                avatar_url,
+                citizen_images,
+                license_image_url,
+                banking,
+                status: "pending" // Đánh dấu chờ duyệt
+            },
+            { new: true }
+        );
+
+        res.status(200).json({ message: "Yêu cầu đã gửi, chờ phê duyệt", user: updatedUser });
+    } catch (error) {
+        return res.status(500).json({message: error.message});
     }
 }

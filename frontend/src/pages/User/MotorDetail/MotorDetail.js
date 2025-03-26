@@ -2,10 +2,16 @@ import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faStar } from "@fortawesome/free-solid-svg-icons";
 import './MotorDetail.css'
+import AuthModal from '../../../components/Auth/Auth.js';
 
-const MotorDetail = () => {
+
+const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
+    console.log(isOpen, setIsOpen, isLogin, setIsLogin);
+
   return (
     <div className='motor-detail'>
+
+        <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
         <div className='motor-detail-imgs'>
             <div className='md-main-img'>
                 <img src='/assets/anhxemayphu.jpg' alt='' />

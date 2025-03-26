@@ -27,16 +27,32 @@
     
 }
 .db-card-title {
-    padding: 5px 20px;
+    padding: 15px 0 0 15px;
 }
+
 
 .db-card-value {
     display: flex;
-    font-size: 4rem;
+    font-size: 4.5rem;
     justify-content: center;
     padding: 20px 0px;
 }
 
+.db-card-value.user {
+    color: #3b82f6 !important;
+}
+
+.db-card-value.owner {
+    color: #ef4444 !important;
+}
+
+.db-card-value.bike {
+    color: #f59e0b !important;
+}
+
+.db-card-value.rental {
+    color: #22c55e !important;
+}
 .db-charts {
     width: 100%;
     border-radius: 30px;

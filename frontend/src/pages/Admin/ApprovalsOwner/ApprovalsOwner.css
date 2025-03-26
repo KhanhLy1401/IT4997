@@ -1,0 +1,85 @@
+.approval-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.approval-table {
+    width: calc(100% - 40px);
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.approval-item {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    margin: 10px 20px;
+    border-radius: 5px;
+}
+
+.approval-item thead tr {
+    background-color: #f8fafc !important; /* Dùng !important nếu bị ghi đè */
+    font-weight: 500 !important;
+    
+}
+
+.approval-item th, .approval-item td {
+    padding: 20px 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.approval-item td img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.approval-item td:nth-child(5) i {
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 5px 15px;
+    color: #333;
+}
+.approval-item td:nth-child(5) i:hover {
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 5px 15px;
+    color: #fff;
+    background-color: #333;
+}
+
+.approval-item td:nth-child(6) i {
+    border: 1px solid green;
+    border-radius: 20px;
+    padding: 5px 7px;
+    color: green;
+}
+
+.approval-item td:nth-child(7) i {
+    border: 1px solid red;
+    border-radius: 20px;
+    padding: 5px 7px;
+    color: red;
+}
+
+.approval-item td:nth-child(7) i:hover {
+    border: 1px solid red;
+    border-radius: 20px;
+    padding: 5px 7px;
+    background-color: red;
+    color: #fff;
+}
+.approval-item td:nth-child(6) i:hover {
+    border: 1px solid green;
+    border-radius: 20px;
+    padding: 5px 7px;
+    color: #fff;
+    background-color: green;
+}
+
+
+
+
+
