@@ -60,7 +60,7 @@ export const signInUser = async (req, res) => {
     
 
     // Tạo JWT token
-    const token = jwt.sign({ _id: user._id, email: user.email, phone: user.phone, fullName: user.fullName }, JWT_SECRET, { expiresIn: '6h' });
+    const token = jwt.sign({ _id: user._id, email: user.email, phone: user.phone, fullName: user.fullName, role: user.role }, JWT_SECRET, { expiresIn: '6h' });
 
     res.status(200).json({ message: 'Đăng nhập thành công!', token });
   } catch (error) {

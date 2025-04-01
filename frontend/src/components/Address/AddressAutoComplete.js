@@ -1,6 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
+import './AddressAutoComplete.css'
 
 const AddressAutocomplete = ({ onSelectAddress }) => {
   const [query, setQuery] = useState('');
@@ -43,8 +44,10 @@ const AddressAutocomplete = ({ onSelectAddress }) => {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%' }}>
+    <div className='autocomplete-address'>
+      <i class="fa-solid fa-location-dot"></i> 
       <input
+        
         type="text"
         placeholder="Nhập địa chỉ..."
         value={query}
@@ -59,7 +62,7 @@ const AddressAutocomplete = ({ onSelectAddress }) => {
             left: 0,
             right: 0,
             background: '#fff',
-            border: '1px solid #ccc',
+            border: '1px solid #fff',
             listStyle: 'none',
             padding: 0,
             margin: 0,
@@ -79,6 +82,7 @@ const AddressAutocomplete = ({ onSelectAddress }) => {
           ))}
         </ul>
       )}
+      <i class="fa-solid fa-angle-down" ></i>
     </div>
   );
 };

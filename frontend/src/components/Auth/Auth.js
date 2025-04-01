@@ -111,6 +111,7 @@ const AuthModal = ({ isOpen, setIsOpen, isLogin, setIsLogin, setUser }) => {
           localStorage.setItem("_id", decoded._id);
           localStorage.setItem("phone", decoded.phone);
           localStorage.setItem("fullName", decoded.fullName);
+          localStorage.setItem("role", decoded.role)
 
           setUser(decoded.email);
         }

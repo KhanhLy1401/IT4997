@@ -1,11 +1,14 @@
 .footer {
-    width: 100%;
+    width: 100vw;
     min-height: 150px; 
     padding: 20px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #6f6f6f;
+    color: #fff;
+    background-color: #12b76a;
+    font-size: 1.1rem;
+    margin-top: 30px;
 }
 
 
@@ -19,7 +22,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: #2596be;
+    color: #fff;
     font-size: 2rem;
     font-weight: 700;
     padding-bottom: 20px;
@@ -39,7 +42,7 @@
     /* justify-content: center; */
 }
 
-.footer .line {
+.line-footer {
     width: 100%;
     height: 1px;
     background-color: #e0e0e0;
@@ -48,14 +51,14 @@
 }
 
 .main-content h2 {
-    font-size: 1rem;
-    color: #242420;
+    font-size: 1.1rem;
+    color: #fff;
     font-weight: 600;
 }
 
 .contact-phone,
 .email {
-    color: #242420;
+    color: #fff;
     font-weight: 600;
 }
 

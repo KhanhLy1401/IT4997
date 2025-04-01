@@ -1,0 +1,22 @@
+.autocomplete-address {
+    display: flex;
+    width: 100%;
+    /* border: 1px solid #333; */
+    flex-direction: row;
+    background-color: #f8f8f8;
+    align-items: center;
+    padding: 5px 10px;
+    gap: 10px;
+    font-size: 1.2rem;
+
+}
+
+.autocomplete-address i {
+    color: #000;
+}
+
+.autocomplete-address input {
+    border: none;
+    outline: none;
+    background-color: #f8f8f8;
+}

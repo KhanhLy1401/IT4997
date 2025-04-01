@@ -5,6 +5,9 @@ const userSchema = new mongoose.Schema({
     email: String,
     phone: String,
     password: String,
+    isBlocked: { type: Boolean, default: false }, // Trường để khóa/mở tài khoản
+    blockedAt: { type: Date, default: null }, // Ngày bị khóa (tùy chọn)
+    blockReason: { type: String, default: "" },
     role: {type: String, enum: ["user", "owner", "admin"], default: "user"},
     address: String,
     citizen_id: String,

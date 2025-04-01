@@ -41,7 +41,7 @@ export const getUserById = async (req, res) => {
 
 export const getAllOwners = async (req, res) => {
     try {
-        const owners = await User.find({role: "Owner"});
+        const owners = await User.find({role: "owner"});
         if(!owners) return res.status(404).json({message: "Not found owner"})
         return res.status(200).json(owners);
     } catch(error) {
@@ -96,3 +96,30 @@ export const requestOwner = async (req, res) => {
         return res.status(500).json({message: error.message});
     }
 }
+
+export const blockUser =  async (req, res) => {
+    const { id } = req.params;
+    const { reason } = req.body; // Lý do khóa tài khoản
+  
+    await User.findByIdAndUpdate(id, {
+      isBlocked: true,
+      blockedAt: new Date(),
+      blockReason: reason || "Vi phạm điều khoản",
+    });
+  
+    res.json({ message: "Tài khoản đã bị khóa!" });
+  };
+  
+
+export const unblockUser =  async (req, res) => {
+    const { id } = req.params;
+  
+    await User.findByIdAndUpdate(id, {
+      isBlocked: false,
+      blockedAt: null,
+      blockReason: "",
+    });
+  
+    res.json({ message: "Tài khoản đã được mở lại!" });
+  };
+  

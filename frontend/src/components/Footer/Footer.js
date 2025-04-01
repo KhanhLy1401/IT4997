@@ -7,7 +7,6 @@ function Footer () {
         <div className="footer">
             
             <div className="footer-container">
-            <div className="line"></div>
 
                 <div className="main-content">
                     <div className="footer-about">
@@ -46,7 +45,7 @@ function Footer () {
                         <div>Đăng ký trở thành đối tác</div>
                     </div>
                 </div>
-                <div className="line"></div>
+                <div className="line-footer"></div>
                 <div className="footer-banking">
                     <div className="footer-address"><i class="fa-solid fa-location-dot"></i> Địa chỉ: Nhà 18, ngõ 105 Yên Hòa, quận Cầu Giấy, Thành phố Hà Nội</div>
                     <div className="banking">

@@ -1,7 +1,7 @@
 import React from 'react'
 import './Home.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarDays, faMagnifyingGlass, faLocationDot, faMotorcycle, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import AuthModal from '../../../components/Auth/Auth.js';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -58,27 +58,35 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
             <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
             <div className='hero-title'>MOTORENT - Thuê xe ngay</div>
             <div className='hero-subtitle'>Cùng bạn chinh phục mọi nẻo đường</div>
+            <div className="home-line"></div>
+            <div className='sub-title'>Trải nghiệm sự khác biệt từ hơn <span>100000</span> xe trên khắp cả nước </div>
             <div className='booking-bar'>
+                <div className='booking-bar-title'>Bạn cần thuê xe máy ?</div>
                 <div className='booking-location'>
-                    <span><i class="fa-solid fa-location-dot"></i>  Địa điểm</span>
                     <span className='booking-bar-subtitle'><AddressAutocomplete onSelectAddress={(addr) => setLocation(addr)} /></span>
                 </div>
                 <div className='booking-date'>
                     <div className='booking-date-from'>
-                    <label><FontAwesomeIcon icon={faCalendarDays}/> Từ: </label>
-                    <DatePicker
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      showTimeSelect    // Cho phép chọn giờ
-                      dateFormat="dd/MM/yyyy HH:mm"
-                      placeholderText="Ngày bắt đầu thuê"
-                    />
-                        {/* <span className='booking-bar-subtitle'>Ngày bắt đầu thuê</span> */}
+
+                      <div className='booking-date-title'>Ngày nhận xe</div>
+                      <div className='booking-day'>
+                        <DatePicker
+                          className='datepicker'
+                          selected={startDate}
+                          onChange={(date) => setStartDate(date)}
+                          showTimeSelect    // Cho phép chọn giờ
+                          dateFormat="dd/MM/yyyy HH:mm"
+                          placeholderText="Ngày bắt đầu thuê"
+                        />
+                          <i class="fa-solid fa-calendars"></i>
+                      </div>
                     
                     </div>
                     <div className='booking-date-to'>
-                      <label><FontAwesomeIcon icon={faCalendarDays}/> Đến: </label>
-                      <DatePicker
+                      <div className='booking-date-title'>Ngày trả xe</div>
+
+                      <div className='booking-day'>
+                        <DatePicker className='datepicker'
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         showTimeSelect    // Cho phép chọn giờ
@@ -86,17 +94,14 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
                         placeholderText="Ngày trả xe"
                         minDate={startDate} // Chỉ cho phép chọn ngày sau startDate
                       />
-                        {/* <span className='booking-bar-subtitle'>Ngày trả xe</span> */}
+                        <i class="fa-solid fa-calendars"></i></div>
                     </div>
                     
 
                 </div>
-                {/* <div className='booking-type'>
-                    <span>Hình thức</span>
-                    <span className='booking-bar-subtitle'><FontAwesomeIcon icon={faMotorcycle} /> Tại cửa hàng/ nơi bạn ở</span>
-                </div> */}
+
                 <div className='booking-btn' onClick={handleSearch}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />    
+                    Tìm xe giá tốt
                 </div>
             </div>
         </div>
@@ -113,15 +118,17 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
             <div>
               <div className="motor-name">{bike.title}</div>
               <div className="motor-feature">
-                <div className="motor-capacity">Dung tích: {bike.description || "109cc"}</div>
-                <div className="motor-type">Loại xe: {bike.bikeType || "Xe số"}</div>
-                <div className="motor-brand">Hãng: {bike.brand}</div>
+                <div className="motor-capacity"><i class="fa-regular fa-globe"></i> Dung tích: {bike.description || "109cc"}</div>
+                <div className='motor-fuel'><i className="fa-solid fa-gas-pump"></i> Xăng </div>
+                <div className="motor-type"><i class="fa-regular fa-motorcycle"></i> Loại xe: {bike.bikeType || "Xe số"}</div>
+                <div className="motor-brand"><i className="fa-regular fa-tags" ></i> Hãng: {bike.brand}</div>
               </div>
-              <div className="motor-address">
-                <FontAwesomeIcon icon={faLocationDot} /> {bike.location}
+              <div className='line-motor'></div>
+              <div classNameName="motor-address">
+                  <i class="fa-solid fa-location-dot"></i> {bike.location}
               </div>
-              <div className="motor-rating">
-                4.5 <FontAwesomeIcon icon={faStar} /> - <FontAwesomeIcon icon={faMotorcycle} /> {bike.rental_count} chuyến
+              <div classNameName="motor-rating">
+                4.5 <i className="fa-solid fa-star"></i> - <i className="fa-regular fa-suitcase-rolling"  ></i> {bike.rental_count} chuyến
               </div>
             </div>
           </div>

@@ -20,7 +20,7 @@
 .left-header .logo-header {
     display: flex;
     flex-direction: row;
-    color: #2596be;
+    color: #12b76a;
     font-size: 24px;
     align-items: center;
     cursor: pointer;
@@ -42,6 +42,15 @@
     width: 70px;
 }
 
+.contact-header .header-item {
+    text-decoration: none;
+    color: #333;
+}
+
+.contact-header .header-item:hover {
+    text-decoration: dashed;
+}
+
 .right-header {
     display: flex;
     flex-direction: row;
@@ -58,7 +67,9 @@
 
 .right-header .sign-in {
     padding: 10px 30px 15px;
-    border: 1px solid #333;
+    border: 1px solid #fff;
+    background-color: #12b76a;
+    color: #fff;
     border-radius: 15px;
     cursor: pointer;
 
