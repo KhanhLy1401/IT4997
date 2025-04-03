@@ -138,54 +138,39 @@ const ApprovalsOwner = () => {
                                         <tr>
                                             <td colSpan="7">
                                                 <div className="detail-approval-info">Thông tin chi tiết</div>
-                                                <div className="detail-approval-user">
-                                                    <div className="detail-top">
-                                                        <div className="detail-left">
-                                                            <div className="detail-left-avatar">
-                                                                <img src={user.avatar_url} alt="User" width="300px" />
-                                                            </div>
-                                                        </div>
-                                                        <div className="detail-right">
-                                                            <div className="detail-right-item">
-                                                                <div className="item-approval">Họ và tên: {user.fullName}</div>
-                                                                <div className="item-approval">Số điện thoại: {user.phone}</div>
-                                                            </div>
-                                                            <div className="detail-right-item">
-                                                                <div className="item-approval">Email: {user.email}</div>
-                                                                <div className="item-approval">Địa chỉ: {user.address}</div>
-                                                            </div>
-                                                            <div className="detail-right-item">
-                                                                <div className="item-approval">Số bằng lái xe: {user.license_number}</div>
-                                                                <div className="item-approval">Căn cước công da: {user.citizen_id}</div>
-                                                            </div>
-                                                            <div className="detail-right-item">
-                                                                <div className="item-approval">Ngân hàng: {user.banking.account_name}</div>
-                                                                <div className="item-approval">Số tài khoản: {user.banking.account_number}</div>
-                                                            </div>
-                                                            <div className='detail-right-item'>
-                                                                <div className="item-approval">Tên chủ tài khoản: {user.banking.account_holder}</div>
+                                                
+                                                <div className='detail-approval-user'>
+                                                    <div className='detail-left'>
+                                                        <img src={user.avatar_url} alt="User"  />
+                                                        <img src={user.license_image_url} alt="Front" />
+                                                        <img src={user.citizen_images.front} alt="Front" />
+                                                        <img src={user.citizen_images.back} alt="Front"  />
 
+                                                    </div>
+                                                    <div className='detail-right'>
+                                                            <div className='detail-right-top'>
+                                                                <div className="detail-right-item">
+                                                                    <div className="item-approval">Họ và tên: {user.fullName}</div>
+                                                                    <div className="item-approval">Số điện thoại: {user.phone}</div>
+                                                                    <div className="item-approval">Email: {user.email}</div>
+                                                                    <div className="item-approval">Địa chỉ: {user.address}</div>
+                                                                    <div className="item-approval">Số bằng lái xe: {user.license_number}</div>
+                                                                </div>
+                                                            
+                                                                <div className="detail-right-item">
+                                                                    
+                                                                    <div className="item-approval">Căn cước công dân: {user.citizen_id}</div>
+                                                                    <div className="item-approval">Ngân hàng: {user.banking.account_name}</div>
+                                                                    <div className="item-approval">Số tài khoản: {user.banking.account_number}</div>
+                                                                    <div className="item-approval">Tên chủ tài khoản: {user.banking.account_holder}</div>
+
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="detail-line"></div>
-                                                    <div className="detail-bottom">
-                                                        <div className="detail-bottom-item">
-                                                            Ảnh căn mặt trước CCCD
-                                                            <img src={user.citizen_images.front} alt="Front" width="300" />
-                                                        </div>
-                                                        <div className="detail-bottom-item">
-                                                            Ảnh căn mặt sau CCCD
-                                                            <img src={user.citizen_images.front} alt="Front" width="300" />
-                                                        </div>
-                                                        <div className="detail-bottom-item">
-                                                            Ảnh bằng lái xe
-                                                            <img src={user.license_image_url} alt="Front" width="300" />
-                                                        </div>
-                                                    </div>
-                                                    <div className='btn-approval'>
-                                                        <button className='btn-reject'>Từ chối</button>
-                                                        <button className='btn-accept'>Chấp nhận</button>
+
+                                                            <div className='btn-approval'>
+                                                                <button className='btn-reject'>Từ chối</button>
+                                                                <button className='btn-accept'>Chấp nhận</button>
+                                                            </div>
                                                     </div>
                                                 </div>
                                             </td>

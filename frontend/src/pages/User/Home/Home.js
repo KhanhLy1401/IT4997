@@ -44,6 +44,8 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
             try {
               const response = await axios.get('http://localhost:5000/bike/get-all-bikes');
               // Giả sử API trả về dữ liệu dạng mảng của các bike, hoặc điều chỉnh theo cấu trúc API của bạn
+              const distance = await axios.get("https://router.project-osrm.org/route/v1/driving/106.7009,10.7769;106.7020,10.7765?overview=false");
+              console.log("Khoảng cách", distance.data.routes[0]?.distance / 1000);
               setBikes(response.data);
             } catch (error) {
               console.error("Lỗi khi lấy dữ liệu xe:", error);
