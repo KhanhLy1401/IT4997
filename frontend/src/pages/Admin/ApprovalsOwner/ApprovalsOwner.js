@@ -1,11 +1,16 @@
+
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ApprovalsOwner.css';
 
 const ApprovalsOwner = () => {
     const API_URL = process.env.REACT_APP_API_URL;
-    const [approvalOwner, setApprovalOwner] = useState([]); // Thêm useState để lưu danh sách chờ duyệt
+    const [approvalOwner, setApprovalOwner] = useState([]);
     const [expandedUserId, setExpandedUserId] = useState(null);
+    const [searchTerm, setSearchTerm] = useState(""); // Save search term
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPerPage = 5;
 
     const toggleDetails = (userId) => {
         setExpandedUserId(expandedUserId === userId ? null : userId);
@@ -15,10 +20,9 @@ const ApprovalsOwner = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${API_URL}/admin/get-pending-owner`);
-                console.log('Dữ liệu nhận được:', response.data.users);
                 setApprovalOwner(response.data.users);
             } catch (error) {
-                console.error('Lỗi khi lấy danh sách:', error);
+                console.error('Error fetching data:', error);
             }
         };
 
@@ -26,193 +30,185 @@ const ApprovalsOwner = () => {
     }, [API_URL]);
 
     const handleApprove = async (userId) => {
-        const isConfirmed = window.confirm("Bạn có chắc chắn muốn chấp nhận không?");
+        const isConfirmed = window.confirm("Are you sure you want to approve?");
     
-        if (!isConfirmed) return; 
+        if (!isConfirmed) return;
         try {
             const response = await fetch(`${API_URL}/admin/approve-owner`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    _id: userId,
-                    action: "approve",
-                }),
+                body: JSON.stringify({ _id: userId, action: "approve" }),
             });
-    
+
             if (response.ok) {
-                alert("Chấp nhận thành công!");
-                // Xử lý UI sau khi approve (có thể setState để cập nhật danh sách)
+                alert("Approved successfully!");
             } else {
-                alert("Có lỗi xảy ra!");
+                alert("An error occurred!");
             }
         } catch (error) {
-            console.error("Lỗi:", error);
-            alert("Lỗi kết nối đến server!");
+            console.error("Error:", error);
+            alert("Connection error!");
         }
     };
 
     const handleReject = async (userId) => {
-        const isConfirmed = window.confirm("Bạn có chắc chắn muốn từ chối không?");
+        const isConfirmed = window.confirm("Are you sure you want to reject?");
     
-        if (!isConfirmed) return; 
+        if (!isConfirmed) return;
         try {
             const response = await fetch(`${API_URL}/admin/approve-owner`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    _id: userId,
-                    action: "reject",
-                }),
+                body: JSON.stringify({ _id: userId, action: "reject" }),
             });
-    
+
             if (response.ok) {
                 alert("Từ chối thành công!");
-                // Xử lý UI sau khi approve (có thể setState để cập nhật danh sách)
             } else {
-                alert("Có lỗi xảy ra!");
+                alert("An error occurred!");
             }
         } catch (error) {
-            console.error("Lỗi:", error);
-            alert("Lỗi kết nối đến server!");
+            console.error("Error:", error);
+            alert("Connection error!");
         }
     };
 
+    // Filter users based on the search term
+    const filteredUsers = approvalOwner.filter(user =>
+        user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.address.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  
+    const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  
+    const goToPage = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     return (
         <div className='approval-owner'>
             <div className='approval-search'>
-                <h2>Danh sách duyệt đăng ký chủ xe</h2>
-                <div className='approval-search-bar'><input placeholder='Nhập từ khóa cần tìm' /> <i class="fa-solid fa-magnifying-glass"></i></div>
+                <h2>Danh sách duyệt chủ xe</h2>
+                <div className='approval-search-bar'>
+                    <input
+                        type="text"
+                        placeholder="Tìm kiếm theo tên hoặc địa chỉ"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                </div>
             </div>
             <div className='approval-table'>
-            <table class="approval-item">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Ảnh đại diện</th>
-                        <th>Họ và tên</th>
-                        <th>Địa chỉ</th>
-                        <th>Xem chi tiết</th>
-                        <th>Phê duyệt</th>
-                        <th>Từ chối</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {approvalOwner? (
-                        approvalOwner.map((user, index) => (<>
+                <table className="approval-item">
+                    <thead>
                         <tr>
-                                <td>{index+1}</td>
-                                <td><img src={user.avatar_url} alt="avatar"/></td>
-                                <td>{user.fullName}</td>
-                                <td>{user.address}</td>
-                                <td><i class="fa-solid fa-angle-down" onClick={() => toggleDetails(user._id)}  >
-                                    </i></td>
-                                <td><i class="fa-solid fa-check" onClick={()=>{handleApprove(user._id)}}></i></td>
-                                <td><i class="fa-solid fa-xmark" onClick={()=>{handleReject(user._id)}}></i></td>
-                            </tr>
-                            
-                            {expandedUserId === user._id && (
-                                <tr key={user._id}>
-                                  <td colSpan="7">
-                                    <div className='detail-approval-info'>Thông tin chi tiết</div>
-                                    <div className='detail-approval-user'>
-                                        <div className='detail-top'>
-                                            <div className='detail-left'>
-                                                <div className='detail-left-avatar'>
-                                                    <img src={user.avatar_url} alt="User" width=" 300px" />
-                                                </div>
-                                            </div>
-                                            <div className='detail-right'>
-                                                <div className='detail-right-item'>
-                                                    <div className='item-approval'>Họ và tên : {user.fullName}</div>
-                                                    <div className='item-approval'>Số điện thoại : {user.phone}</div>
-                                                    <div className='item-approval'>Email : {user.email}</div>
-                                                </div>
-                                                <div className='detail-right-item'>
-                                                    <div className='item-approval'>Địa chỉ: {user.address}</div>
-                                                </div>
-                                                <div className='detail-right-item'>
-                                                    <div className='item-approval'>Số bằng lái xe: {user.license_number}</div>
-                                                    <div className='item-approval'>Số CCCD: {user.citizen_id}</div>
-                                                </div>
-                                                <div className='detail-right-item'>
-                                                    <div className='item-approval'>Ngân hàng: {user.banking.account_name}</div>
-                                                    <div className='item-approval'>Số tài khoản: {user.banking.account_number}</div>
-                                                    <div className='item-approval'>Chủ tài khoản: {user.banking.account_name}</div>
-                                                </div>
-                                            </div>
+                            <th>STT</th>
+                            <th>Avatar</th>
+                            <th>Full Name</th>
+                            <th>Address</th>
+                            <th>Details</th>
+                            <th>Approve</th>
+                            <th>Reject</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentUsers.length > 0 ? (
+                            currentUsers.map((user, index) => (
+                                <>
+                                    <tr key={user._id}>
+                                        <td>{index + 1}</td>
+                                        <td><img src={user.avatar_url} alt="avatar" /></td>
+                                        <td>{user.fullName}</td>
+                                        <td>{user.address}</td>
+                                        <td><i className="fa-solid fa-angle-down" onClick={() => toggleDetails(user._id)}></i></td>
+                                        <td><i className="fa-solid fa-check" onClick={() => handleApprove(user._id)}></i></td>
+                                        <td><i className="fa-solid fa-xmark" onClick={() => handleReject(user._id)}></i></td>
+                                    </tr>
 
-                                        </div>
-                                        <div className='detail-line'></div>
-                                        <div className='detail-bottom'>
-                                            <div className='detail-bottom-item'>
-                                                <img src={user.citizen_images.front} alt="Front" width="300"  />
-                                            </div>
-                                            <div className='detail-bottom-item'>
-                                                <img src={user.citizen_images.front} alt="Front" width="300"  />
-                                            </div>
-                                            <div className='detail-bottom-item'>
-                                                <img src={user.citizen_images.front} alt="Front" width="300"  />
-                                            </div>
-                                        </div>
-                                        
-                                      {/* <div className='detail-approval-item'>
-                                        <img src={user.avatar_url} alt="User" width="200px" />
-                                        <p>{user.fullName}</p>
-                                        <p>{user.phone}</p>
-                                        <p>{user.email}</p>
-                                      </div>
-                                      <div className='detail-approval-item'>
-                                        <div className='license-img'><img src={user.license_image_url} alt="License"/> </div>
+                                    {expandedUserId === user._id && (
+                                        <tr>
+                                            <td colSpan="7">
+                                                <div className="detail-approval-info">Thông tin chi tiết</div>
+                                                <div className="detail-approval-user">
+                                                    <div className="detail-top">
+                                                        <div className="detail-left">
+                                                            <div className="detail-left-avatar">
+                                                                <img src={user.avatar_url} alt="User" width="300px" />
+                                                            </div>
+                                                        </div>
+                                                        <div className="detail-right">
+                                                            <div className="detail-right-item">
+                                                                <div className="item-approval">Họ và tên: {user.fullName}</div>
+                                                                <div className="item-approval">Số điện thoại: {user.phone}</div>
+                                                            </div>
+                                                            <div className="detail-right-item">
+                                                                <div className="item-approval">Email: {user.email}</div>
+                                                                <div className="item-approval">Địa chỉ: {user.address}</div>
+                                                            </div>
+                                                            <div className="detail-right-item">
+                                                                <div className="item-approval">Số bằng lái xe: {user.license_number}</div>
+                                                                <div className="item-approval">Căn cước công da: {user.citizen_id}</div>
+                                                            </div>
+                                                            <div className="detail-right-item">
+                                                                <div className="item-approval">Ngân hàng: {user.banking.account_name}</div>
+                                                                <div className="item-approval">Số tài khoản: {user.banking.account_number}</div>
+                                                            </div>
+                                                            <div className='detail-right-item'>
+                                                                <div className="item-approval">Tên chủ tài khoản: {user.banking.account_holder}</div>
 
-                                        <p>{user.fullName}</p>
-                                        <p>{user.phone}</p>
-                                        <p>{user.email}</p>
-                                      </div>
-
-                                      <div className='detail-approval-item'>
-                                        <div className='citizen_img_back'>
-                                            <img src={user.citizen_images.back} alt="Back" width="80" />
-                                        </div>
-                                        <div className='address'>Địa chỉ: {user.address}</div>
-                                        <div className='license-number'>Số bằng lái: {user.license_number}</div>
-                                        <div className='account_name'>Chủ tài khoản: {user.banking.account_name}</div>
-                                        <div className='account_number'>STK: {user.banking.account_number}</div>
-                                        <div className='account_holder'>Ngân hàng: {user.banking.account_holder}</div>
-                                      </div>
-
-                                      <div className='detail-approval-item'>
-                                          <div className='citizen_number'>CCCD: {user.citizen_id}<div />
-                                          <div  className='citizen_img_front'>
-                                            <img src={user.citizen_images.front} alt="Front" width="80"  />
-                                          </div>
-                                          
-                                      </div> */}
-                                     
-                                    </div>
-                                    <div ></div>
-                                  </td>
-                                </tr>
-                              )}
-                        </>
-                            
-                           
-
-                        ))
-                    ) : (
-                        <p>Không có yêu cầu nào</p>
-                    )}
-                    
-                </tbody>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="detail-line"></div>
+                                                    <div className="detail-bottom">
+                                                        <div className="detail-bottom-item">
+                                                            Ảnh căn mặt trước CCCD
+                                                            <img src={user.citizen_images.front} alt="Front" width="300" />
+                                                        </div>
+                                                        <div className="detail-bottom-item">
+                                                            Ảnh căn mặt sau CCCD
+                                                            <img src={user.citizen_images.front} alt="Front" width="300" />
+                                                        </div>
+                                                        <div className="detail-bottom-item">
+                                                            Ảnh bằng lái xe
+                                                            <img src={user.license_image_url} alt="Front" width="300" />
+                                                        </div>
+                                                    </div>
+                                                    <div className='btn-approval'>
+                                                        <button className='btn-reject'>Từ chối</button>
+                                                        <button className='btn-accept'>Chấp nhận</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </>
+                            ))
+                        ) : (
+                            <tr><td colSpan="7">No users found</td></tr>
+                        )}
+                    </tbody>
                 </table>
 
+                <div className="pagination">
+                    <button disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)}>❮</button>
+                    {[...Array(totalPages)].map((_, index) => (
+                        <button key={index} className={currentPage === index + 1 ? "active" : ""} onClick={() => goToPage(index + 1)}>
+                            {index + 1}
+                        </button>
+                    ))}
+                    <button disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)}>❯</button>
+                </div>
             </div>
-
-
         </div>
     );
 };

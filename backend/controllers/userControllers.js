@@ -51,8 +51,28 @@ export const getAllOwners = async (req, res) => {
 
 export const requestOwner = async (req, res) => {
     try {
-        const {_id, address, citizen_id, license_number, banking} = req.body;
+        const {_id, address, citizen_id, license_number} = req.body;
         const files = req.files; // Lấy file từ multer
+
+        let {banking} = req.body;
+
+
+
+        
+    // Chỉ parse nếu banking là một chuỗi
+    if (typeof banking === 'string') {
+        try {
+            banking = banking.trim();  // Loại bỏ khoảng trắng đầu và cuối
+            banking = JSON.parse(banking); // Chỉ parse nếu là chuỗi
+        } catch (error) {
+            console.log("Lỗi parse banking:", error);
+            return res.status(400).json({ message: "Dữ liệu banking không hợp lệ" });
+        }
+    } else {
+        console.log("Dữ liệu banking đã là object:", banking);
+    }
+    
+    
 
         const avatar_url = await uploadToCloudinary(files.avatar[0].path);
         const license_image_url = await uploadToCloudinary(files.license_image[0].path);

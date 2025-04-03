@@ -130,6 +130,9 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    background-color: #f8f8f8;
+    padding-bottom: 40px;
+    padding-top: 20px;
 }
 
 .home-line {
@@ -153,17 +156,24 @@
 .guide {
     display: flex;
     justify-content: center;
-    gap: 80px;
+    gap: 50px;
+
+}
+.guide-step {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 2px solid #86e2b7;
 }
 .rental-guide-title {
     margin: auto;
-    font-size: 40px;
-    color: #2596be;
-    font-weight: 700;
+    font-size: 2rem;
+    color: #333;
+    font-weight: 600;
 }
 .rental-guide-subtitle {
     margin: auto;
-    font-size: 32px;
+    font-size: 1.5rem;
     margin-bottom: 20px;
     padding-left: 20px;
 }
@@ -177,7 +187,7 @@
     margin: 10px 0px;
 }
 .guide-step-title span {
-    color: #2596be;
+    color: #12b76a;
     font-weight: 700;
     
 }
@@ -332,4 +342,54 @@
     color: rgb(92, 179, 255); /* Màu đỏ */
   }
 
+
+
+.advantage {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: auto;
+    padding: 20px 0 40px;
+}
+
+.advantage .advantage-title {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 20px 10px;
+}
+
+.advantage .advantage-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.advantage-detail .advantage-item {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.advantage-item .ad-item{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    gap: 30px;
+    align-items: center;
+    
+}
+
+.ad-item h2 {
+    color: #333 !important;
+    font-size: 1.5rem;
+}
+
+.ad-item i {
+    color: #12b76a;
+}
+ 
+.ad-item-subtitle {
+    font-size: 1.2rem;
+}
 

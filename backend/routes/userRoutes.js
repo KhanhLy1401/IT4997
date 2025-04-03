@@ -8,8 +8,8 @@ router.get('/',getAllUser);
 router.get('/get-owners/', getAllOwners);
 
 router.get('/:id', getUserById);
-router.post("/block-user/:id", blockUser )
-router.post("/unblock-user/:id", unblockUser )
+router.patch("/block-user/:id", blockUser )
+router.patch("/unblock-user/:id", unblockUser )
 router.post('/request-owner',upload.fields([
     { name: "avatar", maxCount: 1 },
     { name: "license_image", maxCount: 1 },

@@ -106,73 +106,116 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
             </div>
         </div>
 
-    <div className="motor-for-you">
-      <div className="motor-for-you-title">Xe dành cho bạn</div>
-      <div className="motor">
-        {selectedBikes.map((bike) => (
-          <div key={bike._id} className="motor-img">
-            <img
-              src={bike.images && bike.images.length > 0 ? bike.images[0] : "/assets/anhxemay.jpg"}
-              alt={bike.title}
-            />
-            <div>
-              <div className="motor-name">{bike.title}</div>
-              <div className="motor-feature">
-                <div className="motor-capacity"><i class="fa-regular fa-globe"></i> Dung tích: {bike.description || "109cc"}</div>
-                <div className='motor-fuel'><i className="fa-solid fa-gas-pump"></i> Xăng </div>
-                <div className="motor-type"><i class="fa-regular fa-motorcycle"></i> Loại xe: {bike.bikeType || "Xe số"}</div>
-                <div className="motor-brand"><i className="fa-regular fa-tags" ></i> Hãng: {bike.brand}</div>
+        <div className="motor-for-you">
+          <div className="motor-for-you-title">Xe dành cho bạn</div>
+          <div className="motor">
+            {selectedBikes.map((bike) => (
+              <div key={bike._id} className="motor-img">
+                <img
+                  src={bike.images && bike.images.length > 0 ? bike.images[0] : "/assets/anhxemay.jpg"}
+                  alt={bike.title}
+                />
+                <div>
+                  <div className="motor-name">{bike.title}</div>
+                  <div className="motor-feature">
+                    <div className="motor-capacity"><i class="fa-regular fa-globe"></i> Dung tích: {bike.description || "109cc"}</div>
+                    <div className='motor-fuel'><i className="fa-solid fa-gas-pump"></i> Xăng </div>
+                    <div className="motor-type"><i class="fa-regular fa-motorcycle"></i> Loại xe: {bike.bikeType || "Xe số"}</div>
+                    <div className="motor-brand"><i className="fa-regular fa-tags" ></i> Hãng: {bike.brand}</div>
+                  </div>
+                  <div className='line-motor'></div>
+                  <div classNameName="motor-address">
+                      <i class="fa-solid fa-location-dot"></i> {bike.location}
+                  </div>
+                  <div classNameName="motor-rating">
+                    4.5 <i className="fa-solid fa-star"></i> - <i className="fa-regular fa-suitcase-rolling"  ></i> {bike.rental_count} chuyến
+                  </div>
+                </div>
               </div>
-              <div className='line-motor'></div>
-              <div classNameName="motor-address">
-                  <i class="fa-solid fa-location-dot"></i> {bike.location}
-              </div>
-              <div classNameName="motor-rating">
-                4.5 <i className="fa-solid fa-star"></i> - <i className="fa-regular fa-suitcase-rolling"  ></i> {bike.rental_count} chuyến
-              </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {/* Nút phân trang */}
-      <div className="pagination">
-        <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
-          ← Trước
-        </button>
-        <span>Trang {currentPage} / {totalPages}</span>
-        <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>
-          Tiếp →
-        </button>
-      </div>
-    </div>
-
-        <div className='featured-locations'>
-            <div className='featured-location-title'> Địa điểm nổi bật</div>
+          {/* Nút phân trang */}
+          <div className="pagination">
+            <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
+              ← Trước
+            </button>
+            <span>Trang {currentPage} / {totalPages}</span>
+            <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>
+              Tiếp →
+            </button>
+          </div>
         </div>
 
-        <div className='rental-guide'>
-            <div className='rental-guide-title'>Hướng dẫn thuê xe</div>
-            <div className='rental-guide-subtitle'>4 bước đơn giản bạn có thể trải nghiệm chuyến đi với Motorent</div>
-            <div className='guide'>
-                <div className='guide-step'>
-                    <img className='guide-step-img' src='/assets/step1.jpg' alt="step1"/>
-                    <div className='guide-step-title'><span>01.</span> Đặt xe trên web</div>
+        <div className='advantage'>
+            <div className='advantage-title'>Lợi ích của Motorent</div>
+            <div className='advantage-detail'>
+              <div className='advantage-item'>
+                  <div className='ad-item'>
+                    <i class="fa-solid fa-moped fa-3x"></i>
+                    <div className='ad-item-title'>
+                      <h2>Nhiều lựa chọn</h2>
+                      <div className='ad-item-subtitle'>Hàng trăm loại xe đa dạng ở nhiều địa điểm trên cả nước, phù hợp với mọi mục đích của bạn</div>
+                    </div>
+                  </div>
+                  <div className='ad-item'>
+                    <i class="fa-solid fa-shield-check fa-3x"></i>
+                    <div className='ad-item-title'>
+                      <h2>Tin cậy</h2>
+                      <div className='ad-item-subtitle'>Các xe đều được bảo dưỡng thường xuyên</div>
+                    </div>
+                  </div>
+              </div>
+              <div className='advantage-item'>
+                <div className='ad-item'>
+                    <i class="fa-solid fa-comments-question-check fa-3x"></i>
+                    <div className='ad-item-title'>
+                      <h2>Hỗ trợ 24/7</h2>
+                      <div className='ad-item-subtitle'>Có nhân viên hỗ trợ khách hàng trong suốt quá trình thuê xe</div>
+                    </div>
                 </div>
-                <div className='guide-step'>
-                    <img className='guide-step-img' src='/assets/step2.png'alt="step2"/>
-                    <div className='guide-step-title'><span>02.</span> Nhận xe</div>
+                <div className='ad-item'>
+                    <i class="fa-solid fa-paper-plane fa-3x"></i>
+                    <div className='ad-item-title'>
+                      <h2>Thuận tiện</h2>
+                      <div className='ad-item-subtitle'>Dễ dàng tìm kiếm, so sánh và đặt chiếc xe như ý với chỉ vài click chuột</div>
+                    </div>
                 </div>
-                <div className='guide-step'>
-                    <img className='guide-step-img' src='/assets/step3.png' alt="step3"/>
-                    <div className='guide-step-title'><span>03.</span> Bắt đầu hành trình</div>
+              </div>
+              <div className='advantage-item'>
+                <div className='ad-item'>
+                    <i class="fa-solid fa-tags fa-3x"></i>
+                    <div className='ad-item-title'>
+                      <h2>Giá cả cạnh tranh</h2>
+                      <div className='ad-item-subtitle'>Giá thuê được niêm yết công khai và thường rẻ hơn so với giá truyền thống</div>
+                    </div>
                 </div>
-                <div className='guide-step'>
-                    <img className='guide-step-img' src='/assets/step4.png' alt="step4"/>
-                    <div className='guide-step-title'><span>04.</span> Trả xe</div>
-                </div>  
+                <div className='ad-item'>
+                    <i class="fa-solid fa-shield-plus fa-3x"></i>
+                    <div className='ad-item-title'>
+                      <h2>Bảo hiểm</h2>
+                      <div className='ad-item-subtitle'>An tâm với các gói bảo hiểm thuê xe tự lái trong suốt quá trình thuê xe</div>
+                    </div>
+                </div>
+              </div>
             </div>
         </div>
+
+        {/* <div className='featured-locations'>
+            <div className='featured-location-title'> Địa điểm nổi bật </div>
+            <div className='featured-location'>
+              <div className='location'>
+                <div className='location-name'>Hà Nội</div>
+                <div className='location-img'>100+ xe</div>
+              </div>
+              <div className='location'>
+                <div className='location-name'>TP.Hồ Chí Minh</div>
+                <div className='location-count'>100+ xe</div>
+              </div>
+            </div>
+        </div> */}
+
+        
 
         <div className='explore-register'>
             <div className='explore-content'>
@@ -183,6 +226,29 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
             </div>
             <div className='explore-img'>
                 <img src='/assets/register_owner.jpg'/>
+            </div>
+        </div>
+
+        <div className='rental-guide'>
+            <div className='rental-guide-title'>Hướng dẫn thuê xe</div>
+            <div className='rental-guide-subtitle'>4 bước đơn giản bạn có thể trải nghiệm chuyến đi với Motorent</div>
+            <div className='guide'>
+                <div className='guide-step'>
+                    <img className='guide-step-img' src='/assets/step1.png' alt="step1"/>
+                    <div className='guide-step-title'><span>01.</span> Đặt xe trên web</div>
+                </div>
+                <div className='guide-step'>
+                    <img className='guide-step-img' src='/assets/step2.png'alt="step2"/>
+                    <div className='guide-step-title'><span>02.</span> Nhận xe</div>
+                </div>
+                <div className='guide-step'>
+                    <img className='guide-step-img' src='/assets/step3.png' alt="step3"/>
+                    <div className='guide-step-title'><span>03.</span> Bắt đầu chạy</div>
+                </div>
+                <div className='guide-step'>
+                    <img className='guide-step-img' src='/assets/step4.png' alt="step4"/>
+                    <div className='guide-step-title'><span>04.</span> Trả xe</div>
+                </div>  
             </div>
         </div>
 
