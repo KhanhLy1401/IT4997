@@ -7,6 +7,7 @@ import Approvals from './Approvals/Approvals';
 import UserManagement from './UserManagement/UserManagement';
 import BikeManagement from './Bike/BikeManagement';
 import ApprovalsOwner from './ApprovalsOwner/ApprovalsOwner';
+import ApprovalsLicense from './ApprovalsLicense/ApprovalsLicense';
 
 const AdminLayout = () => {
   return (
@@ -20,6 +21,7 @@ const AdminLayout = () => {
               <Route path='/user-management' element={<UserManagement/>}/>
               <Route path='/bike-management' element={<BikeManagement/>}/>
               <Route path='/approvals-owner' element={<ApprovalsOwner/>}/>
+              <Route path='/approvals-license' element={<ApprovalsLicense/>}/>
             </Routes>
             
         </div>

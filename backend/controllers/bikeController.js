@@ -2,12 +2,16 @@ import Bike from '../models/Bike.js'
 
 export const addBike = async (req, res) => {
     try {
-        const { ownerId, brand, bikeType, title, description, location, price, status, images} = req.body;
+        const { ownerId, brand, capacity, bikeType, license_plate, bike_registration, bike_insurance, title, description, location, price, status, images} = req.body;
 
         const newBike = new Bike({
             ownerId,
             brand,
+            capacity,
             bikeType,
+            license_plate, 
+            bike_registration, 
+            bike_insurance,
             title,
             description,
             location,

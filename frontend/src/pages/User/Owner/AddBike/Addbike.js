@@ -1,4 +1,5 @@
 import React , {useState} from 'react'
+import LocationPicker from '../../../../components/LocationPicker/LocationPicker';
 import "./Addbike.css"
 
 const Addbike = () => {
@@ -98,7 +99,7 @@ const Addbike = () => {
                     <div className='bike-location'>
                         <div className='bike-location-title'><i class="fa-regular fa-location-dot"></i> Địa điểm nhận xe *</div>
                         <div className='bike-location-detail'>
-                            <div className='bike-location-province'>
+                            {/* <div className='bike-location-province'>
                                 <label for="province">Tỉnh/Thành phố *</label>
                                 <input />
                             </div>
@@ -109,7 +110,8 @@ const Addbike = () => {
                             <div className='bike-location-commune'>
                                 <label for="commune">Xã phường *</label>
                                 <input id="commune" name='commune'/>
-                            </div>
+                            </div> */}
+                            <LocationPicker/>
                         </div>
                         <div className='detail-location'>
                             <label for="detail-location">Địa chỉ cụ thể *</label>

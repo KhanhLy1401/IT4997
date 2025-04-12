@@ -1,0 +1,19 @@
+.location-picker {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem; /* khoảng cách giữa các dropdown */
+  }
+  
+  .picker {
+    padding: 0.5rem 0.8rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: border 0.3s ease;
+  }
+  
+  .picker:focus {
+    border-color: #12b76a;
+  }
+  

@@ -17,6 +17,9 @@
     gap: 30px;
     padding: 20px;
 }
+.motor img {
+    height: 200px;
+}
 
 .search-content,
 .search-filter {
@@ -69,3 +72,8 @@
     align-items: center;
 }
 
+.motor-rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between ;
+}

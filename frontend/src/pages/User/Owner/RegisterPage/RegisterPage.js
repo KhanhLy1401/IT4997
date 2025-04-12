@@ -107,17 +107,7 @@
     formData.append("address", address);
     formData.append("citizen_id", citizen_id);
     formData.append("license_number", license_number);
-    // formData.append("banking", JSON.stringify(banking));
 
-    // const bankingData = {
-    //   account_name: banking.account_name,
-    //   account_number: banking.account_number,
-    //   account_holder: banking.account_holder
-    // };
-
-    // console.log("banking gửi đi:", JSON.stringify(bankingData));
-
-    // formData.append("banking", JSON.stringify(bankingData));
 
     // Thêm file ảnh vào formData
     if (avatar_url) formData.append("avatar", avatar_url);

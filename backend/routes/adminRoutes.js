@@ -1,8 +1,10 @@
 import {Router} from 'express';
-import { approveOwner, getPendingOwner } from '../controllers/adminController.js';
+import { approveLicense, approveOwner, getPendingLicense, getPendingOwner } from '../controllers/adminController.js';
 
 const router = Router();
 router.get('/get-pending-owner', getPendingOwner);
-router.post("/approve-owner", approveOwner);
+router.get('/get-pending-license', getPendingLicense);
+router.patch("/approve-owner", approveOwner);
+router.patch("/approve-license", approveLicense);
 
 export default router;

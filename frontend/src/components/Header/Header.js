@@ -1,26 +1,29 @@
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Header.css';
 
 const Header = ({ setIsOpen, setIsLogin, setIsAuthOpen, user, setUser }) => {
+  const navigate = useNavigate();
   const role = localStorage.getItem("role");
   return (
     <div className='header'>
       <div className='left-header'>
         <div className='logo-header'>
           <img src='../../../logo.png' alt='logo' />
-          <div className='title-header'>MOTORENT</div>
+          <div className='title-header' onClick={()=>{navigate('/')}}>MOTORENT</div>
         </div>
         <div className='contact-header'>
           <NavLink to='/about-us' className="header-item" activeclassname="active">
             <span>Về Motorent</span>
           </NavLink>
           {
-            role==="owner" ? <NavLink to="/owner/add-bike">Đăng xe </NavLink> : <NavLink to="/owner/register" className="header-item" activeclassname="active">
+            role==="owner" ? <NavLink to="/owner/add-bike" className="header-item" activeclassname="active">Đăng xe </NavLink> : <NavLink to="/owner/register" className="header-item" activeclassname="active">
             <span>Trở thành chủ xe</span>
           </NavLink>
           }
+
+           
           
           
         </div>  
@@ -29,14 +32,17 @@ const Header = ({ setIsOpen, setIsLogin, setIsAuthOpen, user, setUser }) => {
       <div className='right-header'>
         {user ? ( 
           <div className='user-menu'>
-            <span className='user-name'>👤 {user}</span>
-            <div className='dropdown-menu'>
-              <NavLink to="/profile">Hồ sơ</NavLink>
-              <NavLink to="/my-bookings">Đơn thuê xe</NavLink>
-              <div className='logout' onClick={() => {
+            <span className='user-name'> {user}   <span onClick={() => {
                 setUser(null);
-                localStorage.removeItem("user");
-              }}><i class="fa-duotone fa-solid fa-right-from-bracket"></i></div>
+                localStorage.removeItem("fullName");
+                localStorage.removeItem("role");
+                navigate("/");
+              }}><i class="fa-duotone fa-solid fa-right-from-bracket"> </i>
+              </span></span>
+            <div className='dropdown-menu'>
+              <NavLink to="/account">Hồ sơ</NavLink>
+              <NavLink to="/my-bookings">Đơn thuê xe</NavLink>
+              
             </div>
           </div>
         ) : (

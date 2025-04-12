@@ -28,4 +28,4 @@ const bikeSchema = new mongoose.Schema({
     updatedAt: {type: Date, default: Date.now}
 });
 
-export default mongoose.model('Bike', bikeSchema)
+export default mongoose.model('Bike', bikeSchema);

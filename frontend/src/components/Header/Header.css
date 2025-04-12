@@ -90,8 +90,29 @@
     padding: 10px;
     min-width: 150px;
   }
+
+  .dropdown-menu a,
+.dropdown-menu .logout {
+  display: block;
+  padding: 8px 10px;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu .logout:hover {
+  background-color: #f0f0f0;
+}
   
   .user-menu:hover .dropdown-menu {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
   }
   
+.user-name {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

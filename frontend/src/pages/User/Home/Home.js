@@ -9,6 +9,7 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import AddressAutocomplete from '../../../components/Address/AddressAutoComplete.js';
+import LocationPicker from '../../../components/LocationPicker/LocationPicker.js';
 
 
 const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
@@ -43,9 +44,10 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
           const fetchBikes = async () => {
             try {
               const response = await axios.get('http://localhost:5000/bike/get-all-bikes');
+              console.log("bikes", response.data);
               // Giả sử API trả về dữ liệu dạng mảng của các bike, hoặc điều chỉnh theo cấu trúc API của bạn
-              const distance = await axios.get("https://router.project-osrm.org/route/v1/driving/106.7009,10.7769;106.7020,10.7765?overview=false");
-              console.log("Khoảng cách", distance.data.routes[0]?.distance / 1000);
+              // const distance = await axios.get("https://router.project-osrm.org/route/v1/driving/106.7009,10.7769;106.7020,10.7765?overview=false");
+              // console.log("Khoảng cách", distance.data.routes[0]?.distance / 1000);
               setBikes(response.data);
             } catch (error) {
               console.error("Lỗi khi lấy dữ liệu xe:", error);
@@ -110,27 +112,31 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
 
         <div className="motor-for-you">
           <div className="motor-for-you-title">Xe dành cho bạn</div>
-          <div className="motor">
+          <div className="motor" >
             {selectedBikes.map((bike) => (
-              <div key={bike._id} className="motor-img">
-                <img
+              <div key={bike._id} onClick={() => navigate(`/motor-detail/${bike._id}`)} className="motor-img">
+                <div className='img-container'><img
                   src={bike.images && bike.images.length > 0 ? bike.images[0] : "/assets/anhxemay.jpg"}
                   alt={bike.title}
-                />
+                /></div>
                 <div>
                   <div className="motor-name">{bike.title}</div>
                   <div className="motor-feature">
-                    <div className="motor-capacity"><i class="fa-regular fa-globe"></i> Dung tích: {bike.description || "109cc"}</div>
-                    <div className='motor-fuel'><i className="fa-solid fa-gas-pump"></i> Xăng </div>
+                    <div className='motor-feature-item'>
+                      <div className="motor-capacity"><i class="fa-regular fa-globe"></i> Dung tích: {bike.capacity || ""}</div>
+                      <div className='motor-fuel'><i className="fa-solid fa-gas-pump"></i> Xăng </div>
+                    </div>
                     <div className="motor-type"><i class="fa-regular fa-motorcycle"></i> Loại xe: {bike.bikeType || "Xe số"}</div>
                     <div className="motor-brand"><i className="fa-regular fa-tags" ></i> Hãng: {bike.brand}</div>
+                   
                   </div>
                   <div className='line-motor'></div>
-                  <div classNameName="motor-address">
-                      <i class="fa-solid fa-location-dot"></i> {bike.location}
+                  <div className="motor-address">
+                      <i class="fa-solid fa-location-dot location-dot"></i> {bike.location}
                   </div>
-                  <div classNameName="motor-rating">
-                    4.5 <i className="fa-solid fa-star"></i> - <i className="fa-regular fa-suitcase-rolling"  ></i> {bike.rental_count} chuyến
+                  <div className="motor-rating">
+                    <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
+                    <div className='motor-price'> <span>{bike.price?.perDay/1000  || 0}K</span>/ngày </div>
                   </div>
                 </div>
               </div>
@@ -203,21 +209,7 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
             </div>
         </div>
 
-        {/* <div className='featured-locations'>
-            <div className='featured-location-title'> Địa điểm nổi bật </div>
-            <div className='featured-location'>
-              <div className='location'>
-                <div className='location-name'>Hà Nội</div>
-                <div className='location-img'>100+ xe</div>
-              </div>
-              <div className='location'>
-                <div className='location-name'>TP.Hồ Chí Minh</div>
-                <div className='location-count'>100+ xe</div>
-              </div>
-            </div>
-        </div> */}
-
-        
+        <LocationPicker />
 
         <div className='explore-register'>
             <div className='explore-content'>

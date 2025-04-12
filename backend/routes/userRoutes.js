@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { blockUser, changeUserRole, getAllOwners, getAllUser, getUserById, requestOwner, unblockUser } from "../controllers/userControllers.js";
+import { blockUser, changeUserRole, getAllOwners, getAllUser, getUserById, requestLicense, requestOwner, unblockUser } from "../controllers/userControllers.js";
 import {upload} from "../config/multer.js";
 
 const router = Router();
@@ -17,6 +17,8 @@ router.post('/request-owner',upload.fields([
     { name: "citizen_back", maxCount: 1 },
   ]), requestOwner)
 
-
+router.post("/request-license", upload.fields([
+  {name: "license_image_url", maxCount: 1}
+]), requestLicense);
 
 export default router;

@@ -205,13 +205,24 @@
     padding: 40px 0px 80px;
 }
 
-.motor-rating i {
-    color: gold; /* Màu vàng */
-  }
-  
-.motor-rating .fa-suitcase-rolling {
-    color: #12b76a; /* Màu xanh */
+.motor-rating {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
 }
+
+.motor-feature {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.8 rem;
+}
+.motor-feature-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+} 
 
 .motor-for-you-title {
     font-size: 3rem;
@@ -271,8 +282,17 @@
     background-color: #fff;
     cursor: pointer;
     color: #767676;
+    width: 250px; /* Kích thước cố định */
+
     
 }
+.motor-img .img-container {
+    width: 250px; /* Kích thước cố định */
+    height: 180px;
+    overflow: hidden; /* Ẩn phần thừa */
+    border-radius: 10px;
+}
+
 .motor-img img{
     width: 100%;
     border: 1px solid #e0e0e0;
@@ -285,6 +305,7 @@
     font-size: 1rem;
     font-weight: 700;
     overflow: hidden;
+    padding: 10px 0px;
     text-overflow: ellipsis;
     text-transform: uppercase;
     white-space: nowrap;
@@ -393,3 +414,20 @@
     font-size: 1.2rem;
 }
 
+.yellow-star {
+    color: gold;
+}
+
+.luggage {
+    color: #12b76a
+}
+
+.location-dot {
+    color: #000;
+}
+
+.motor-price span {
+    font-size: 1.5rem;
+    color: #12b76a;
+    font-weight: 600;
+}

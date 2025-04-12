@@ -43,6 +43,11 @@ const SideBar = () => {
         <i class="fa-regular fa-user-check"></i>
           <span>Duyệt đăng ký chủ xe</span>
         </NavLink>
+        <NavLink to="/admin/approvals-license" className='menu-item' activeclassname="active">
+        <i class="fa-solid fa-money-check"></i>
+          <span>Duyệt bằng lái xe</span>
+        </NavLink>
+        
         <NavLink to="/admin/transactions" className='menu-item' activeclassname="active">
           <FontAwesomeIcon icon={faMoneyBill} />
           <span>Quản lý giao dịch</span>

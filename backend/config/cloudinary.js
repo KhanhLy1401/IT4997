@@ -14,7 +14,10 @@ export const uploadToCloudinary = async (filePath) => {
       const result = await cloudinary.uploader.upload(filePath, {
         folder: "motorent", // Đặt thư mục lưu ảnh trên Cloudinary
       });
-      return result.secure_url;
+      return {
+        url: result.secure_url,
+        public_id: result.public_id
+      };
     } catch (error) {
       throw new Error("Lỗi khi tải ảnh lên Cloudinary");
     }

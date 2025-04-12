@@ -11,6 +11,9 @@ import "./UserLayout.css";
 import Search from "./Find/Search.js";
 import AuthModal from "../../components/Auth/Auth.js"; // Import AuthModal
 import Addbike from "./Owner/AddBike/Addbike.js";
+import AccountPage from "./Account/Account.js";
+import RentPage from "./RentPage/RentPage.js";
+import RentalForm from "./RentalForm/RentalForm.js";
 
 const UserLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,11 +42,14 @@ const UserLayout = () => {
       <div className="main">
         <Routes>
           <Route path="/" element={<Home isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
-          <Route path="/motor-detail" element={<MotorDetail isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
+          <Route path="/motor-detail/:id" element={<MotorDetail isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
           <Route path="/owner/register" element={<Register isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
           <Route path="/owner/register-form" element={<RegisterPage isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
           <Route path="/search" element={<Search />} />
           <Route path="/owner/add-bike" element={<Addbike />} />
+          <Route path="/rent/:id" element={<RentPage />} />
+          <Route path="/account" element={<AccountPage />} />
+          <Route path="/rental-form" element={<RentalForm />} />
         </Routes>
       </div>
 

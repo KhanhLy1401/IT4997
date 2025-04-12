@@ -1,0 +1,193 @@
+/* Tổng thể trang */
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f8f8;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .account-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+  }
+  
+  /* Sidebar */
+  .sidebar-account {
+    width: 250px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-account ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-account ul li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .sidebar-account ul .active {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .sidebar-account ul .logout {
+    color: red;
+  }
+  
+  /* Nội dung chính */
+  .account-content {
+    flex: 1;
+    margin-left: 20px;
+  }
+  
+  /* Thông tin tài khoản */
+  .account-info {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .avatar-account {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #d81b60;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-right: 15px;
+  }
+  
+  .points {
+    background: yellow;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
+  /* Giấy phép lái xe */
+  .license-info {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  }
+
+  .license-info .license {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  .license-info-img {
+    width: 50%;
+    text-align: center ;
+  }
+
+  .license-form {
+    width: 45%;
+  }
+  
+  .license-info h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .not-verified {
+    color: red;
+  }
+
+  .verified {
+    color: #218838;
+    padding: 5px;
+    border: 2px solid #12b76a;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+  
+  .warning {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .license-form input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .license-form button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    margin: auto;
+ 
+    cursor: pointer;
+  }
+  
+  .license-form button:hover {
+    background: #218838;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .account-container {
+      flex-direction: column;
+    }
+  
+    .sidebar-account {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    .account-content {
+      margin-left: 0;
+    }
+  }
+  
+.account-info-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-profile {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+}
+
+.detail-profile .profile {
+  flex-grow: 1;
+}
+
+
+.detail-profile .details {
+  flex-grow: 3;
+}
