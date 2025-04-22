@@ -56,6 +56,7 @@ export const requestOwner = async (req, res) => {
 
         let {banking} = req.body;
 
+        console.log("req.body:", req.body);
 
 
         
@@ -111,6 +112,7 @@ export const requestOwner = async (req, res) => {
 
         res.status(200).json({ message: "Yêu cầu đã gửi, chờ phê duyệt", user: updatedUser });
     } catch (error) {
+        console.error ("lỗi request owner", error);
         return res.status(500).json({message: error.message});
     }
 }

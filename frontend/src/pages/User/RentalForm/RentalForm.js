@@ -1,51 +1,171 @@
-import React from "react";
+
+import React, { useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
+import axios from "axios";
 import "./RentalForm.css";
 
 const RentalForm = () => {
+  const { id } = useParams(); 
+  const API_URL = process.env.REACT_APP_API_URL;
+  const { state } = useLocation();
+  const email = localStorage.getItem('user');
+  const fullName = localStorage.getItem('fullName');
+  const phone = localStorage.getItem('phone');
+  const [paymentMethod, setPaymentMethod] = useState('before'); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const userId = localStorage.getItem('_id');
+
+  // Xử lý khi người dùng chọn phương thức thanh toán
+  // const handlePaymentSubmit = async (event) => {
+  //   event.preventDefault();
+  //   if(!state) {
+  //     console.log("state", state);
+  //     return;
+  //   }
+
+  //   // Thông tin khách hàng và thông tin đơn hàng
+  //   const rentalData = {
+  //     ownerId: state?.ownerId,
+  //     userId: state?.userId,
+  //     bikeId: state?.bikeId,
+  //     startDate: state?.startDate,
+  //     endDate: state?.endDate,
+  //     totalPrice: state?.totalPrice,
+  //     // paymentMethod, // Trả trước hoặc trả sau
+  //   };
+
+  //   try {
+  //     // Gửi yêu cầu tạo đơn hàng đến backend
+  //     const response = await axios.post(`${API_URL}/payment/create`, rentalData);
+      
+  //     // Nhận về URL thanh toán của MoMo
+  //     const { payUrl } = response.data;
+
+  //     if (payUrl) {
+  //       // Chuyển hướng người dùng đến MoMo để thanh toán
+  //       window.location.href = payUrl;
+  //     }
+  //   } catch (error) {
+  //     console.error("Error creating payment:", error);
+  //   }
+  // };
+
+  const handlePaymentSubmit = async (event) => {
+    event.preventDefault();
+    if (!state || isSubmitting) return;
+    setIsSubmitting(true);
+  
+    // 1. Dữ liệu đơn thuê
+    const rentalData = {
+      ownerId: state.bikeOwnerId, 
+      userId,
+      bikeId: state.bikeId,
+      startDate: state.startDate,
+      endDate: state.endDate,
+      totalPrice: state.totalPrice,
+      paymentStatus: paymentMethod === 'before' ? 'pending' : 'unpaid',
+      status: 'pending'
+    };
+    console.log(rentalData)
+  
+    try {
+      // 2. Tạo đơn thuê (POST /rental/create)
+      const rentalRes = await axios.post(`${API_URL}/rental/add`, rentalData);
+      const rental = rentalRes.data.newRental;
+      const rentalId = rental._id;
+  
+      console.log("Rental created:", rental);
+  
+      // Nếu người dùng chọn "trả trước", tạo thanh toán MoMo
+      if (paymentMethod === 'before') {
+        const paymentPayload = {
+          rentalId: rentalId,
+          orderId: `ORDER_${Date.now()}`, // Mã đơn hàng duy nhất
+          amount: rental.totalPrice,
+          orderInfo: `Thanh toán đơn thuê xe ${rentalId}`,
+        };
+        console.log("payment payload", paymentPayload);
+  
+        const paymentRes = await axios.post(`${API_URL}/payment/create`, paymentPayload);
+        const { payUrl } = paymentRes.data;
+  
+        // 3. Chuyển hướng đến MoMo
+        if (payUrl) {
+          window.location.href = payUrl;
+        }
+      } else {
+        // Trả sau → chỉ cần thông báo thành công
+        alert("Đã tạo đơn thuê, thanh toán sẽ được thực hiện sau.");
+      }
+    } catch (error) {
+      console.error("Lỗi khi xử lý thanh toán:", error.message);
+      alert("Có lỗi xảy ra. Vui lòng thử lại.");
+    }
+    setIsSubmitting(false);
+  };
+
+  
   return (
     <div className="rental-container">
       <div className="vehicle-info">
-        <h2>HONDA BLADE 2018</h2>
-        <p>Xăng - 110cc - Xe số - Sản xuất 2018</p>
-        <div className="rental-time">
-          <p><strong>GIAO XE:</strong> Nhận xe tại đại lý</p>
-          <p><strong>THỜI GIAN:</strong> 07:00 05/04/2025 → 07:00 06/04/2025</p>
+        <div className="info-details">
+          <h2>{state?.bikeTitle}</h2>
+          <img src={state?.bikeImage} alt={state?.bikeTitle} />
+          <p>Xăng - {state?.bikeCapacity} - Xe số - Sản xuất 2018</p>
+          <div className="rental-time">
+            <p><strong>GIAO XE:</strong> Nhận xe tại đại lý</p>
+            <p><strong>THỜI GIAN:</strong> {state.startDate} → {state.endDate}</p>
+          </div>
         </div>
+
         <div className="price-details">
           <h3>CHI TIẾT GIÁ</h3>
-          <p>Đơn giá: 100.000 đ</p>
-          <p>Thời gian thuê: × 1,5 ngày</p>
-          <p>Giá cơ bản: 150.000 đ</p>
-          <p>+ Phụ phí cuối tuần: 20.000 đ</p>
-          <p><strong>Tổng: 170.000 đ</strong></p>
-          <p>Đặt cọc: 51.000 đ</p>
+          <p>Đơn giá: {state.bikePrice} đ</p>
+          <p>Thời gian thuê: × {state.rentalDuration.toFixed(2)} ngày</p>
+          <p><strong>Tổng: {state.totalPrice.toFixed(2)} đ</strong></p>
+          <p>Đặt cọc: {(state.totalPrice * 0.3).toFixed(2)} đ</p>
         </div>
       </div>
 
       <div className="customer-info">
         <h3>THÔNG TIN KHÁCH HÀNG</h3>
-        <form>
-          <input type="text" placeholder="Họ và tên" required />
-          <input type="text" placeholder="Số điện thoại" required />
-          <input type="email" placeholder="Email" required />
-          <textarea placeholder="Ghi chú của khách hàng" />
+        <form onSubmit={handlePaymentSubmit}>
+          <div>
+            <div className="customer-name">Khách hàng: {fullName}</div>
+            <div className="customer-email">Email: {email}</div>
+            <div className="customer-phone">Số điện thoại: {phone}</div>
+          </div>
 
           <div className="payment-method">
-            <label><input type="radio" name="payment" /> Trả trước (giảm 5%)</label>
-            <label><input type="radio" name="payment" defaultChecked /> Trả sau</label>
-            <div className="sub-options">
-              <label><input type="radio" name="subpayment" defaultChecked /> Thẻ ATM nội địa</label>
-              <label><input type="radio" name="subpayment" /> VISA/MasterCard</label>
-              <label><input type="radio" name="subpayment" /> VNPAY</label>
-              <label><input type="radio" name="subpayment" /> Chuyển khoản</label>
-              <label><input type="radio" name="subpayment" /> Thanh toán sau</label>
+            <div className="option">
+              <label>
+                <input 
+                  type="radio" 
+                  name="payment" 
+                  value="before" 
+                  onChange={() => setPaymentMethod('before')} 
+                />
+                <span>Trả trước (giảm 5%)</span>
+              </label>
+            </div>
+            <div className="option">
+              <label>
+                <input 
+                  type="radio" 
+                  name="payment" 
+                  value="after" 
+                  onChange={() => setPaymentMethod('after')} 
+                  defaultChecked 
+                />
+                <span>Trả sau</span>
+              </label>
             </div>
           </div>
 
-          <input type="text" placeholder="Mã giảm giá" className="discount-input" />
-
           <div className="form-buttons">
-            <button type="submit" className="confirm">Hoàn tất đặt xe</button>
+          <button type="submit" className="confirm" disabled={isSubmitting}>
+            {isSubmitting ? 'Đang xử lý...' : 'Thanh toán'}
+          </button>
             <button type="button" className="cancel">Quay lại</button>
           </div>
         </form>

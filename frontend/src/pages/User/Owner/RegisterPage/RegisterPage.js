@@ -15,7 +15,6 @@
     const [backImage, setBackImage] = useState(null);
     const [avatarImage, setAvatarImage] = useState(null);
     const [licenseImage, setLicenseImage] = useState(null);
-    const [avatar, setAvatar] = useState(null);
     const [isChecked, setIsChecked] = useState(false);
     const [address, setAddress] = useState('');
     const [citizen_id, setCitizen_id] = useState('');
@@ -100,7 +99,6 @@
       account_holder: banking.account_holder
     };
 
-    console.log("banking gửi đi:", JSON.stringify(bankingData));
 
     formData.append("banking", JSON.stringify(bankingData));
     formData.append("_id", _id);
@@ -114,7 +112,6 @@
     if (license_image_url) formData.append("license_image", license_image_url);
     if (citizen_images.front) formData.append("citizen_front", citizen_images.front);
     if (citizen_images.back) formData.append("citizen_back", citizen_images.back);
-    console.log("Form data", formData);
     try {
       const response = await axios.post(`${API_URL}/user/request-owner`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -154,7 +151,7 @@
                 <form onSubmit={handleSubmit}>
                     <div className='content-item'>
                       <div>
-                        <label for="name">Tên đơn vị/chủ xe *</label>
+                        <label for="name">Tên chủ xe *</label>
                         <input type="text"  value={fullName} readOnly />
                       </div>
                       <div>

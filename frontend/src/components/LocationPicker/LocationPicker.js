@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './LocationPicker.css'
 
-const LocationPicker = () => {
+const LocationPicker = ({ onLocationChange }) => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -76,33 +76,37 @@ useEffect(() => {
     if (selectedProvince && selectedDistrict && selectedWard) {
       let fullAddress = `${selectedWard.name}, ${selectedDistrict.name}, ${selectedProvince.name}, Vietnam`;
       fullAddress = removeVietnameseAdminTitles(fullAddress); // <- Xử lý tại đây
-
+      onLocationChange({
+        province: selectedProvince.name,
+        district: selectedDistrict.name,
+        ward: selectedWard.name,
+      }); 
 
       const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
         fullAddress
       )}&format=json&addressdetails=1&limit=1`;
   
-      console.log("🔍 Tìm tọa độ cho:", fullAddress);
+      // console.log("🔍 Tìm tọa độ cho:", fullAddress);
   
-      fetch(url, {
-        headers: {
-          "User-Agent": "Mozilla/5.0 (React app)",
-          "Accept-Language": "vi"
-        }
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("📡 Kết quả tọa độ:", data);
-          if (data.length > 0) {
-            setCoordinates({ lat: data[0].lat, lon: data[0].lon });
-          } else {
-            setCoordinates(null);
-          }
-        })
-        .catch(err => {
-          console.error("❌ Lỗi lấy tọa độ:", err);
-          setCoordinates(null);
-        });
+      // fetch(url, {
+      //   headers: {
+      //     "User-Agent": "Mozilla/5.0 (React app)",
+      //     "Accept-Language": "vi"
+      //   }
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     console.log("📡 Kết quả tọa độ:", data);
+      //     if (data.length > 0) {
+      //       setCoordinates({ lat: data[0].lat, lon: data[0].lon });
+      //     } else {
+      //       setCoordinates(null);
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.error("❌ Lỗi lấy tọa độ:", err);
+      //     setCoordinates(null);
+      //   });
     }
   }, [selectedProvince, selectedDistrict, selectedWard]);
   

@@ -116,7 +116,7 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
             {selectedBikes.map((bike) => (
               <div key={bike._id} onClick={() => navigate(`/motor-detail/${bike._id}`)} className="motor-img">
                 <div className='img-container'><img
-                  src={bike.images && bike.images.length > 0 ? bike.images[0] : "/assets/anhxemay.jpg"}
+                  src={bike.images?.front?.url || "/assets/anhxemay.jpg"}
                   alt={bike.title}
                 /></div>
                 <div>
@@ -132,7 +132,7 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
                   </div>
                   <div className='line-motor'></div>
                   <div className="motor-address">
-                      <i class="fa-solid fa-location-dot location-dot"></i> {bike.location}
+                      <i class="fa-solid fa-location-dot location-dot"></i> {bike.location?.province || "Hanoi"}
                   </div>
                   <div className="motor-rating">
                     <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
@@ -209,7 +209,6 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
             </div>
         </div>
 
-        <LocationPicker />
 
         <div className='explore-register'>
             <div className='explore-content'>

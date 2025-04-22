@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faStar } from "@fortawesome/free-solid-svg-icons";
 import './MotorDetail.css'
@@ -10,10 +11,11 @@ import axios from 'axios';
 
 const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
     const { id } = useParams(); // Lấy id từ URL
+    const navigate = useNavigate();
     const [bike, setBike] = useState();
     const API_URL = process.env.REACT_APP_API_URL;
-    const [pickupDateTime, setPickupDateTime] = useState('2025-02-25T09:00')
-    const [returnDateTime, setReturnDateTime] = useState('2025-02-25T09:00')
+    const [pickupDateTime, setPickupDateTime] = useState('');
+    const [returnDateTime, setReturnDateTime] = useState('')
     const [rentalDuration, setRentalDuration] = useState(0) // đơn vị ngày (thập phân)
     const [totalPrice, setTotalPrice] = useState(0)
 
@@ -23,7 +25,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
             try {
                 const response = await axios.get(`${API_URL}/bike/${id}`);
                 setBike(response.data);
-                console.log(bike)
+                // console.log(bike)
             } catch (error) {
                 console.error('Lỗi lấy chi tiets xe:', error.message);
             }
@@ -34,6 +36,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
 
     useEffect(() => {
         if (!bike || !bike.price) return;
+        
       
         const pickup = new Date(pickupDateTime);
         const dropoff = new Date(returnDateTime);
@@ -58,25 +61,33 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
     return <div>Không tìm thấy xe</div>;
   }
 
+  const handleRentalChange = () => {
+    if (!pickupDateTime || !returnDateTime) {
+        alert("Vui lòng chọn thời gian nhận và trả xe.");
+        return;
+    };
+    navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDateTime, endDate: returnDateTime, rentalDuration: rentalDuration, bikePrice: bike.price?.perDay||"100", totalPrice: totalPrice}})
+  }
+
   return (
     <div className='motor-detail'>
 
         <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
         <div className='motor-detail-imgs'>
             <div className='md-main-img'>
-                <img src={bike.images[0]} alt='' />
+                <img src={bike.images?.front?.url||'/assets/anhxemayphu.jpg'} alt='' />
             </div>
             <div className='md-sub-img'>
-                <img src={bike.images[0]} alt='' />
-                <img src='/assets/anhxemayphu.jpg' alt='' />
-                <img src='/assets/anhxemayphu.jpg' alt='' />
+                <img src={bike.images?.front?.url || '/assets/anhxemayphu.jpg'} alt='' />
+                <img src={bike.images?.back?.url || '/assets/anhxemayphu.jpg'} alt='' />
+                <img src={bike.images?.side?.url || '/assets/anhxemayphu.jpg'} alt='' />
             </div>
         </div>
         <div className='motor-detail-main'>
             <div className='motor-detail-des'>
                 <div className='motor-detail-name'>{bike.title}</div>
                 <div className='motor-detail-feature-1'>
-                    <div className='motor-detail-rating'>3 <FontAwesomeIcon icon={faStar} /> - {bike.rental_count} chuyến đi - {bike.location}</div>
+                    <div className='motor-detail-rating'>3 <FontAwesomeIcon icon={faStar} /> - {bike.rental_count} chuyến đi - {bike.location?.province || "No location"}</div>
                     <div className='motor-detail-highlight'> {bike.bikeType} - Giao xe tận nơi - Đặt xe nhanh</div>
                 </div>
                 <div className='motor-detail-feature-2'>
@@ -86,7 +97,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
 
                 <div className='motor-detail-feature-2'>
                     <div className='motor-detail-feature-title'>Địa chỉ nhận xe</div>
-                    <div className='motor-detail-feature-2-brand'> {bike.location}  </div>
+                    <div className='motor-detail-feature-2-brand'> {(bike.location?.province + ", "+  bike.location?.district + ", "+ bike.location?.ward) || "No location"}  </div>
                 </div>
                 
                 <div className='motor-detail-feature-3'>
@@ -126,16 +137,13 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                     <div className='motor-detail-booking-from-to'>
                         <div className='motor-detail-booking-from'>
                             <label>Nhận xe</label>
-                            {/* <div className='wrap-date-time'>
-                                <div className='wrap-date'>25/02/2025</div>
-                                <div className='wrap-time'>9:00</div>
-                            </div> */}
                             <div className='wrap-date-time'>
                                 <input
                                 type='datetime-local'
                                 value={pickupDateTime}
+                                min={new Date().toISOString().slice(0,16)}
                                 onChange={(e) => setPickupDateTime(e.target.value)}
-                                />
+                                required/>
                             </div>
                         </div>
                         <div className='motor-detail-booking-to'>
@@ -143,25 +151,26 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                             <div className='wrap-date-time'>
                                 <input
                                 type='datetime-local'
+                                min={pickupDateTime}
                                 value={returnDateTime}
                                 onChange={(e) => setReturnDateTime(e.target.value)}
-                                />
+                                required />
                             </div>
                         </div>
                     </div>
                     <div className='motor-detail-booking-address'>
-                        <lable>Giao xe tận nơi</lable>
+                        <label>Giao xe tận nơi</label>
                         <div className='wrap-address'>Địa chỉ</div>
                     </div>
                     <div className='motor-detail-booking-price-duration'>
-                        <div className='motor-detail-booking-price'>Đơn giá: {bike.price.perDay} vnđ/ ngày</div>
+                        <div className='motor-detail-booking-price'>Đơn giá: {bike.price?.perDay || "0"} vnđ/ ngày</div>
                         <div className='motor-detail-booking-duration'>Số ngày thuê: {rentalDuration.toFixed(2)} </div>
 
                     </div>
                     <div className='motor-detail-booking-total'>
                         Tổng cộng: {totalPrice.toLocaleString()} vnđ
                     </div>
-                    <div className='motor-detail-booking-btn'>
+                    <div className='motor-detail-booking-btn' onClick={() =>handleRentalChange() }>
                         Chọn thuê
                     </div>
 

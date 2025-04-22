@@ -1,189 +1,270 @@
-import React , {useState} from 'react'
+
+import React, { useState } from 'react';
 import LocationPicker from '../../../../components/LocationPicker/LocationPicker';
-import "./Addbike.css"
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import "./Addbike.css";
 
 const Addbike = () => {
+  const navigate = useNavigate();
+  const API_URL = process.env.REACT_APP_API_URL;
+  const [ownerName, setOwnerName] = useState('');
+  const [title, setTitle] = useState('');
+  const [bikeBrand, setBikeBrand] = useState('');
+  const [bikeCapacity, setBikeCapacity] = useState('');
+  const [bikeLicensePlate, setBikeLicensePlate] = useState('');
+  const [bikeType, setBikeType] = useState('');
+  const [bikeDescription, setBikeDescription] = useState('');
+  const [detailLocation, setDetailLocation] = useState('');
+  const [location, setLocation] = useState({
+    province: '',
+    district: '',
+    ward: '',
+    detail_location: ''
+  });
+  
+  const [price, setPrice] = useState({perDay: 0, perWeek: 0, perMonth: 0});
 
-    const [registrationImage, setRegistrationImage] = useState(null);
-    const [assuranceImage, setAssuranceImage] = useState(null);
-    const [sideImage, setSideImage] = useState(null);
-    const [frontImage, setFrontImage] = useState(null);
-    const [licensePlateImage, setLicensePlateImage] = useState(null);
+  const [registrationImage, setRegistrationImage] = useState(null);
+  const [insuranceImage, setInsuranceImage] = useState(null);
+  const [sideImage, setSideImage] = useState(null);
+  const [frontImage, setFrontImage] = useState(null);
+  const [licensePlateImage, setLicensePlateImage] = useState(null);
+  const [registrationPreview, setRegistrationPreview] = useState(null);
+  const [insurancePreview, setInsurancePreview] = useState(null);
+  const [image, setImage] = useState({front: "", back: "", side: ""});
 
-    const handleImageChange = (event, setImage) => {
-        const file = event.target.files[0];
-        if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setImage(imageUrl);
-        }
+  const handleFrontImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFrontImage(URL.createObjectURL(file));
+      setImage((prev)=> ({...prev, front: file}));
+    }
+  };
+
+  const handleSideImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSideImage(URL.createObjectURL(file));
+      setImage((prev)=> ({...prev, side: file}));
+    }
+  };
+
+  const handleBackImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setLicensePlateImage(URL.createObjectURL(file));
+      setImage((prev)=> ({...prev, back: file}));
+    }
+  };
+
+  const handleLicenseImageChange = (event) => {
+    const file = event.target.files[0];
+    if(file) {
+      setRegistrationPreview(URL.createObjectURL(file));
+      setRegistrationImage(file);
+
+    }
+  }
+
+  const handleInsuranceChange = (event) => {
+    const file = event.target.files[0];
+    if(file) {
+      setInsurancePreview(URL.createObjectURL(file));
+      setInsuranceImage(file);
+
+    }
+  }
+
+  const storedId = localStorage.getItem("_id");
+
+
+
+  const handleLocationChange = (location) => {
+    setLocation({
+      province: location.province,
+      district: location.district,
+      ward: location.ward,
+      detail_location: location.detail_location
+    });
+  };
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    const locationData = {
+
+      province: location.province,
+      district: location.district,
+      ward: location.ward,
+      detail_location: location.detail_location
     };
 
-    const steps = [
-        { label: "Nhập thông tin", completed: false },
-        { label: "Ảnh minh chứng", completed: false },
-        { label: "Chờ phê duyệt", completed: false },
-        { label: "Cho thuê xe", completed: true }
-      ];
-    return (
-        <div className='add-bike-page'>
-            <div className='add-bike-description'>Đừng để xe bạn rảnh rỗi. Đăng ký ngay để kiếm thêm thu nhập</div>
-            <div className = "add-bike">
-            <div class="add-step">
-                <i class="fa-light fa-person-biking-mountain fa-5x"></i>
+    const priceData = {
+        perDay: price.perDay,
+        perWeek: price.perWeek,
+        perMonth: price.perMonth
+    };
 
-                <div class="step">
-                    <div class="circle">1</div>
-                    <div class="line"></div>
-                    <div class="label">Nhập thông tin</div>
-                </div>
-                <div class="step">
-                    <div class="circle">2</div>
-                    <div class="line"></div>
-                    <div class="label">Ảnh minh chứng</div>
-                </div>
-                <div class="step">
-                    <div class="circle">3</div>
-                    <div class="line"></div>
-                    <div class="label">Chờ phê duyệt</div>
-                </div>
-                <div class="step">
-                    <div class="circle">✔</div>
-                    <div class="line"></div>
-                    <div class="label">Cho thuê xe</div>
-                </div>
-                <div class="line"></div>
+    formData.append("ownerId", storedId);
+    formData.append("title", title);
+    formData.append("ownerName", ownerName);
+    formData.append("brand", bikeBrand);
+    formData.append("capacity", bikeCapacity);
+    formData.append("license_plate", bikeLicensePlate);
+    formData.append("bikeType", bikeType);
+    formData.append("description", bikeDescription);
+    formData.append("location", JSON.stringify(locationData));
+    formData.append("price", JSON.stringify(priceData));
 
-            </div>
+    formData.append("bike_registration", registrationImage);
+    formData.append("bike_insurance", insuranceImage);
+    // formData.append("images_front", image.front);
+    // formData.append("images_back", image.back);
+    // formData.append("images_side", image.side);
+    formData.append("images_front", image.front);
+    formData.append("images_back", image.back);
+    formData.append("images_side", image.side);
 
-                <div className='add-form'>
-                    <div className='bike-item'> 
-                        <div className='bike-title'>
-                            <label for="bike-title "><i class="fa-regular fa-input-text"></i> Tên xe theo giấy đăng ký xe *</label>
-                            <input id="bike-title" name="bike-title"  type="text" placeholder='Nhập tên xe' required/>
-                        </div>
-                        <div className='bike-brand'>
-                            <label for="bike-brand "><i class="fa-regular fa-globe"></i> Hãng xe *</label>
-                            <input id="bike-brand" name="bike-brand"  type="text" placeholder='Nhập hãng xe' required/>
-                        </div>
-                    </div>
-                    <div className='bike-item'>
-
-                    </div>
-                    <div className='bike-item'>
-                        <div className='bike-capacity'>
-                            <label for="bike-capacity "><i class="fa-regular fa-globe"></i> Dung tích *</label>
-                            <input id="bike-capacity" name="bike-capacity"  type="text" placeholder='Nhập dung tích xe: Vd 109,1' required/>
-                        </div>
-                        <div className='bike-license-plate'>
-                            <label for="bike-license-plate "><i class="fa-regular fa-rectangle-barcode"></i>  Biển số xe *</label>
-                            <input id="bike-license-plate" name="bike-license-plate"  type="text" placeholder='VD: 17B2-42538' required/>
-                        </div>
-
-                    <div className='bike-type'>
-                            <div><i class="fa-duotone fa-regular fa-motorcycle"></i> Loại xe * </div>
-                            <div>
-                                <label>
-                                    <input type="radio" name="bike-type" value="Xe số"/>
-                                    Xe số
-                                </label>
-                                
-                                <label>
-                                    <input type="radio" name="bike-type" value="Xe tay ga"/>
-                                    Xe tay ga
-                                </label>
-                            </div>
-                            
-                        </div>
-                    </div>
-                
-                    <div className='bike-location'>
-                        <div className='bike-location-title'><i class="fa-regular fa-location-dot"></i> Địa điểm nhận xe *</div>
-                        <div className='bike-location-detail'>
-                            {/* <div className='bike-location-province'>
-                                <label for="province">Tỉnh/Thành phố *</label>
-                                <input />
-                            </div>
-                            <div className='bike-location-district'>
-                                <label for="province">Quận/Huyện *</label>
-                                <input id="province" name='province'/>
-                            </div>
-                            <div className='bike-location-commune'>
-                                <label for="commune">Xã phường *</label>
-                                <input id="commune" name='commune'/>
-                            </div> */}
-                            <LocationPicker/>
-                        </div>
-                        <div className='detail-location'>
-                            <label for="detail-location">Địa chỉ cụ thể *</label>
-                            <input id="detail-location" name='detail-location' placeholder='Nhập địa chỉ cụ thể số nhà, đường'/>
-                            
-                        </div>
-                    </div>
-
-                    <div className='bike-description'>
-                        <label for="bike-description "><i class="fa-regular fa-circle-info"></i> Mô tả *</label>
-                        <input id="bike-description" name="bike-description"  type="text" placeholder='Xe mới đẹp, bảo dưỡng định kì,...' required/>
-                    </div>
-
-                    <div className="bike-image-1">
-                        
-                        <div className='bike-registration' >
-                            <label><i class="fa-regular fa-file-exclamation"></i> Chứng nhận đăng ký xe mô tô, gắn máy *</label>
-                            <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, setRegistrationImage)} required />
-                            {registrationImage && <img src={registrationImage} alt="đăng ký xe" className="preview-img" />}
-                        </div>
-                        <div className='bike-assurance'>
-                            <label><i class="fa-regular fa-file-exclamation"></i> Ảnh bảo hiểm xe còn hạn *</label>
-                            <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, setAssuranceImage)} required />
-                            {assuranceImage && <img src={assuranceImage} alt="CCCD Mặt sau" className="preview-img" />}
-                        </div>
-                    </div>
-
-                    <div className='bike-image-2'>
-                        <div className='bike-image-item'>
-                            <label><i class="fa-regular fa-camera-retro"></i> Ảnh chụp ngang xe *</label>
-                            <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, setSideImage)} required />
-                            {sideImage && <img src={sideImage} alt="CCCD Mặt sau" className="preview-img" />}
-                        </div>
-                        <div className='bike-image-item'>
-                            <label><i class="fa-regular fa-camera-retro"></i> Ảnh chụp đầu xe *</label>
-                            <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, setFrontImage)} required />
-                            {frontImage && <img src={frontImage} alt="CCCD Mặt sau" className="preview-img" />}
-                        </div>
-                        <div className='bike-image-item'>
-                            <label><i class="fa-regular fa-camera-retro"></i> Ảnh chụp biển số xe *</label>
-                            <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, setLicensePlateImage)} required />
-                            {licensePlateImage && <img src={licensePlateImage} alt="CCCD Mặt sau" className="preview-img" />}
-                        </div>
-                    </div> 
-
-                    <div className='bike-price'>
-                        <div className='price-per'>
-                            <div className='price-per-day'>
-                                <label for="price-per-day"><i class="fa-regular fa-money-check-dollar"></i> Giá theo ngày *</label>
-                                <input type="number" id="price-per-day" name="price-per-day" step='5' />
-                            </div>
-                            <div className='price-per-week'>
-                                <label for="price-per-week"><i class="fa-regular fa-money-check-dollar"></i>Giá theo tuần *</label>
-                                <input type="number" id="price-per-week" name="price-per-week" step='5' />
-                            </div>
-                            <div className='price-per-month'>
-                                <label for="price-per-month"><i class="fa-regular fa-money-check-dollar"></i>Giá theo tháng *</label>
-                                <input type="number" id="price-per-month" name="price-per-month" step='5'/>
-                            </div>
-                
-                        </div>
-                    </div>
-                    <div className='rental-type'><i class="fa-regular fa-file"></i> Hình thức nhận xe: Nhận tại nhà chủ xe/Giao nhận tận nơi</div>
-                    <div className='rental-type-price'><i class="fa-regular fa-money-check-dollar"></i> Giá giao tận nơi: 10k/km</div>
-
-                    <button className='next-btn'>Đăng ký</button>
-                    
-                    
-                </div>
-            </div>
-        </div>
-    )
+    console.log("form add bike", formData);
+    try {
+      const response = await axios.post(`${API_URL}/bike/add`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log(response.data);
+      if (response.data.message === "Bạn đã gửi yêu  cầu rồi") {
+        alert("Bạn đã gửi yêu cầu rồi. Chờ phê duyệt");
+        navigate("/");
+        return;
+      }
+      
+      alert("Đăng ký xe thành công!");
+      
+    } catch (error) {
+      alert("Đã có lỗi xảy ra khi gửi dữ liệu.");
+      console.error(error.message);
     }
+  };
+
+  return (
+    <div className='add-bike-page'>
+      <div className='add-bike-description'>Đừng để xe bạn rảnh rỗi. Đăng ký ngay để kiếm thêm thu nhập</div>
+      <div className="add-bike">
+        <div className="add-step">
+          <i className="fa-light fa-person-biking-mountain fa-5x"></i>
+          {["Nhập thông tin", "Ảnh minh chứng", "Chờ phê duyệt", "Cho thuê xe"].map((label, i) => (
+            <div key={i} className="step">
+              <div className="circle">{i < 3 ? i + 1 : "✔"}</div>
+              <div className="line"></div>
+              <div className="label">{label}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className='add-form'>
+          <div className='bike-item'>
+            <div className='bike-title'>
+              <label htmlFor="bike-title"><i className="fa-regular fa-input-text"></i> Tên xe *</label>
+              <input id="bike-title" value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Nhập tên xe' required />
+            </div>
+            <div className='bike-owner-name'>
+              <label htmlFor="bike-owner-name"><i className="fa-regular fa-input-text"></i> Tên chủ xe *</label>
+              <input id="bike-owner-name" value={ownerName} onChange={(e) => setOwnerName(e.target.value)} placeholder='Nhập tên chủ xe' required />
+            </div>
+            <div className='bike-brand'>
+              <label htmlFor="bike-brand"><i className="fa-regular fa-globe"></i> Nhãn hiệu *</label>
+              <input id="bike-brand" value={bikeBrand} onChange={(e) => setBikeBrand(e.target.value)} placeholder='Nhập hãng xe' required />
+            </div>
+          </div>
+
+          <div className='bike-item'>
+            <div className='bike-capacity'>
+              <label htmlFor="bike-capacity"><i className="fa-regular fa-globe"></i> Dung tích *</label>
+              <input id="bike-capacity" value={bikeCapacity} onChange={(e) => setBikeCapacity(e.target.value)} placeholder='VD: 109,1' required />
+            </div>
+            <div className='bike-license-plate'>
+              <label htmlFor="bike-license-plate"><i className="fa-regular fa-rectangle-barcode"></i> Biển số đăng ký *</label>
+              <input id="bike-license-plate" value={bikeLicensePlate} onChange={(e) => setBikeLicensePlate(e.target.value)} placeholder='VD: 17B2-42538' required />
+            </div>
+
+            <div className='bike-type'>
+              <div><i className="fa-regular fa-motorcycle"></i> Loại xe * </div>
+              <label><input type="radio" name="bike-type" value="Xe số" checked={bikeType === "Xe số"} onChange={() => setBikeType("Xe số")} /> Xe số</label>
+              <label><input type="radio" name="bike-type" value="Xe tay ga" checked={bikeType === "Xe tay ga"} onChange={() => setBikeType("Xe tay ga")} /> Xe tay ga</label>
+            </div>
+          </div>
+
+          <div className='bike-location'>
+            <div className='bike-location-title'><i className="fa-regular fa-location-dot"></i> Địa điểm nhận xe *</div>
+            <div className='bike-location-detail'>
+              <LocationPicker onLocationChange={handleLocationChange}/>
+            </div>
+            <div className='detail-location'>
+              <label htmlFor="detail-location">Địa chỉ cụ thể *</label>
+              <input id="detail-location" value={location.detail_location} onChange={(e) => setLocation({...location, detail_location:e.target.value})} placeholder='Nhập địa chỉ cụ thể' required />
+            </div>
+          </div>
+
+          <div className='bike-description'>
+            <label htmlFor="bike-description"><i className="fa-regular fa-circle-info"></i> Mô tả *</label>
+            <input id="bike-description" value={bikeDescription} onChange={(e) => setBikeDescription(e.target.value)} placeholder='Xe mới đẹp, bảo dưỡng định kì,...' required />
+          </div>
+
+          <div className="bike-image-1">
+            <div className='bike-registration'>
+              <label><i className="fa-regular fa-file-exclamation"></i> Chứng nhận đăng ký *</label>
+              <input type="file" accept="image/*" onChange={handleLicenseImageChange} required />
+            </div>
+            <div className='bike-assurance'>
+              <label><i className="fa-regular fa-file-exclamation"></i> Bảo hiểm xe *</label>
+              <input type="file" accept="image/*" onChange={handleInsuranceChange} required />
+            </div>
+          </div>
+
+          <div className='bike-image-2'>
+            <div className='bike-image-item'>
+              <label><i className="fa-regular fa-camera-retro"></i> Ảnh ngang xe *</label>
+              <input type="file" accept="image/*" onChange={handleSideImageChange} required />
+            </div>
+            <div className='bike-image-item'>
+              <label><i className="fa-regular fa-camera-retro"></i> Ảnh đầu xe *</label>
+              <input type="file" accept="image/*" onChange={handleFrontImageChange} required />
+            </div>
+            <div className='bike-image-item'>
+              <label><i className="fa-regular fa-camera-retro"></i> Ảnh biển số *</label>
+              <input type="file" accept="image/*" onChange={handleBackImageChange} required />
+            </div>
+          </div>
+
+          <div className='bike-price'>
+            <div className='price-per'>
+              <div className='price-per-day'>
+                <label htmlFor="price-per-day"><i className="fa-regular fa-money-check-dollar"></i> Giá theo ngày *</label>
+                <input type="number" id="price-per-day" value={price.perDay} onChange={(e) => setPrice({...price, perDay:e.target.value})} step='5' />
+              </div>
+              <div className='price-per-week'>
+                <label htmlFor="price-per-week"><i className="fa-regular fa-money-check-dollar"></i> Giá theo tuần *</label>
+                <input type="number" id="price-per-week" value={price.perWeek} onChange={(e) => setPrice({...price, perWeek:e.target.value})} step='5' />
+              </div>
+              <div className='price-per-month'>
+                <label htmlFor="price-per-month"><i className="fa-regular fa-money-check-dollar"></i> Giá theo tháng *</label>
+                <input type="number" id="price-per-month" value={price.perMonth} onChange={(e) =>setPrice({...price, perMonth:e.target.value})} step='5' />
+              </div>
+            </div>
+          </div>
+
+          <div className='rental-type'><i className="fa-regular fa-file"></i> Hình thức nhận xe: Nhận tại nhà chủ xe/Giao nhận tận nơi</div>
+          <div className='rental-type-price'><i className="fa-regular fa-money-check-dollar"></i> Giá giao tận nơi: 10k/km</div>
+
+          <button className='next-btn' onClick={handleSubmit}>Đăng ký</button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Addbike;

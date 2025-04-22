@@ -86,7 +86,7 @@ const Search = () => {
                   <div className="motor-brand">Hãng: {bike.brand}</div>
                 </div>
                 <div className="motor-address">
-                  <FontAwesomeIcon icon={faLocationDot} /> {bike.location}
+                  <FontAwesomeIcon icon={faLocationDot} /> {bike.location?.province || "No location"}
                 </div>
                 <div className="motor-rating">
                     <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
