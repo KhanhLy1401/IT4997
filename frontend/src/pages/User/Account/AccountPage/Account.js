@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import "./Account.css";
@@ -73,21 +74,6 @@ const AccountPage = () => {
       };
       return (
         <div className="account-container">
-          <aside className="sidebar-account">
-            <h2>Xin chào bạn!</h2>
-            <ul>
-              <li className="active">
-                <i className="fa-light fa-user"></i> Tài khoản của tôi
-              </li>
-              <li><i className="fa-regular fa-heart"></i> Xe yêu thích</li>
-              <li><i className="fa-regular fa-motorcycle"></i> Xe của tôi</li>
-              <li><i className="fa-regular fa-box-check"></i> Chuyến của tôi</li>
-              <li><i className="fa-regular fa-map-pin"></i> Địa chỉ của tôi</li>
-              <li><i className="fa-regular fa-lock-hashtag"></i> Đổi mật khẩu</li>
-              <li className="logoutt"><i className="fa-solid fa-left-from-bracket"></i> Đăng xuất</li>
-            </ul>
-          </aside>
-    
           <main className="account-content">
             <section className="account-info">
               <div className="account-info-header">
@@ -135,7 +121,7 @@ const AccountPage = () => {
                   ) : user?.license_image_url ? (
                     // Nếu không có ảnh mới, nhưng user đã có ảnh cũ từ server
                     <img
-                      src={`${user.license_image_url}`}
+                      src={`${user.license_image_url.url}`}
                       alt="GPLX đã gửi"
                       style={{ width: "200px", height: "auto", marginTop: "10px", borderRadius: "8px" }}
                     />
@@ -164,9 +150,14 @@ const AccountPage = () => {
                 </div>
               </div>
             </section>
+
+
+            
           </main>
         </div>
       );
     };
     
     export default AccountPage;
+
+

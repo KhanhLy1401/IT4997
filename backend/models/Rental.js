@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+const imageSchema = new mongoose.Schema({
+    url:       { type: String, required: true },
+    public_id: { type: String, required: true }
+}, { _id: false });
 
 const rentalSchema = new mongoose.Schema({
   ownerId: { type: String, required: true },
@@ -7,6 +11,7 @@ const rentalSchema = new mongoose.Schema({
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
   totalPrice: { type: Number, required: true },
+  bikeImage: String,
 
   // Trạng thái thanh toán
   paymentStatus: {

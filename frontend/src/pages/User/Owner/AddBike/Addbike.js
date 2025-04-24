@@ -15,7 +15,8 @@ const Addbike = () => {
   const [bikeLicensePlate, setBikeLicensePlate] = useState('');
   const [bikeType, setBikeType] = useState('');
   const [bikeDescription, setBikeDescription] = useState('');
-  const [detailLocation, setDetailLocation] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const [location, setLocation] = useState({
     province: '',
     district: '',
@@ -94,6 +95,7 @@ const Addbike = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsSubmitting(true);
     const formData = new FormData();
 
     const locationData = {
@@ -148,6 +150,7 @@ const Addbike = () => {
       alert("Đã có lỗi xảy ra khi gửi dữ liệu.");
       console.error(error.message);
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -244,15 +247,15 @@ const Addbike = () => {
             <div className='price-per'>
               <div className='price-per-day'>
                 <label htmlFor="price-per-day"><i className="fa-regular fa-money-check-dollar"></i> Giá theo ngày *</label>
-                <input type="number" id="price-per-day" value={price.perDay} onChange={(e) => setPrice({...price, perDay:e.target.value})} step='5' />
+                <input type="number" id="price-per-day" value={price.perDay} onChange={(e) => setPrice({...price, perDay:e.target.value})} step='5000' />
               </div>
               <div className='price-per-week'>
                 <label htmlFor="price-per-week"><i className="fa-regular fa-money-check-dollar"></i> Giá theo tuần *</label>
-                <input type="number" id="price-per-week" value={price.perWeek} onChange={(e) => setPrice({...price, perWeek:e.target.value})} step='5' />
+                <input type="number" id="price-per-week" value={price.perWeek} onChange={(e) => setPrice({...price, perWeek:e.target.value})} step='5000' />
               </div>
               <div className='price-per-month'>
                 <label htmlFor="price-per-month"><i className="fa-regular fa-money-check-dollar"></i> Giá theo tháng *</label>
-                <input type="number" id="price-per-month" value={price.perMonth} onChange={(e) =>setPrice({...price, perMonth:e.target.value})} step='5' />
+                <input type="number" id="price-per-month" value={price.perMonth} onChange={(e) =>setPrice({...price, perMonth:e.target.value})} step='5000' />
               </div>
             </div>
           </div>
@@ -260,7 +263,10 @@ const Addbike = () => {
           <div className='rental-type'><i className="fa-regular fa-file"></i> Hình thức nhận xe: Nhận tại nhà chủ xe/Giao nhận tận nơi</div>
           <div className='rental-type-price'><i className="fa-regular fa-money-check-dollar"></i> Giá giao tận nơi: 10k/km</div>
 
-          <button className='next-btn' onClick={handleSubmit}>Đăng ký</button>
+          <button className='next-btn' type= "submit" onClick={handleSubmit} disabled={isSubmitting}>
+            {isSubmitting ? 'Đang xử lý...' : 'Đăng ký xe'}
+          </button>
+         
         </div>
       </div>
     </div>

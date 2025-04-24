@@ -145,7 +145,8 @@
 
 .wrap-date-time {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    gap: 20px;
     font-weight: 700;
 }
 

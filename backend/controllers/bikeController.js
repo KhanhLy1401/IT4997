@@ -1,5 +1,6 @@
 import Bike from '../models/Bike.js'
 import { uploadToCloudinary } from "../config/cloudinary.js";
+import axios from 'axios';
 
 
 export const addBike = async (req, res) => {
@@ -133,4 +134,24 @@ export const deleteAllBikes = async (req, res) => {
     }
 };
 
-
+export const getDistance = async (req, res) => {
+    // const { origins, destinations } = req.query;
+    const API_KEY=process.env.API_KEY;
+    console.log(API_KEY);
+    const origins = 'Hà Nội';
+    const destinations = 'Thành phố Hồ Chí Minh';
+  
+    if (!origins || !destinations) {
+      return res.status(400).json({ error: 'Thiếu thông tin origins hoặc destinations' });
+    }
+  
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origins)}&destinations=${encodeURIComponent(destinations)}&key=${API_KEY}`;
+  
+    try {
+      const response = await axios.get(url);
+      return res.json(response.data);
+    } catch (error) {
+      console.error('Lỗi khi gọi Google API:', error.message);
+      return res.status(500).json({ error: 'Lỗi khi gọi Google API', detail: error.message });
+    }
+};

@@ -4,11 +4,13 @@ import Payment from '../models/Payment.js';
 import Rental from '../models/Rental.js';
 
 
+const IPN_URL= process.env.IPN_URL;
 const accessKey = 'F8BBA842ECF85';
 const secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
 const partnerCode = 'MOMO';
 const redirectUrl = 'http://localhost:3000/';
-const ipnUrl = 'https://51b1-42-116-146-219.ngrok-free.app/payment/ipn';
+
+const ipnUrl = `${IPN_URL}/payment/ipn`;
 const requestType = "payWithMethod";
 const lang = 'vi';
 

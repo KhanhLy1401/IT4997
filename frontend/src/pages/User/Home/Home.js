@@ -1,23 +1,40 @@
 import React from 'react'
 import './Home.css'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import AuthModal from '../../../components/Auth/Auth.js';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-import AddressAutocomplete from '../../../components/Address/AddressAutoComplete.js';
 import LocationPicker from '../../../components/LocationPicker/LocationPicker.js';
 
 
 const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
-  const [location, setLocation] = useState('');
-  const [startDate, setStartDate] = useState(null); 
-  const [endDate, setEndDate] = useState(null);
-  const navigate = useNavigate();
 
+  const [pickupDate, setPickupDate] = useState('');
+  const [pickupTime, setPickupTime] = useState("");
+  const [returnDate, setReturnDate] = useState('')
+  const [returnTime, setReturnTime] = useState('')
+  const navigate = useNavigate();
+  const [location, setLocation] = useState({
+      province: '',
+      district: '',
+      ward: '',
+  });
+
+
+
+
+const generateTimeOptions = () => {
+    const options = [];
+    for (let hour = 5; hour <= 22; hour++) {
+      for (let min of [0, 30]) {
+        if (hour === 22 && min > 0) continue; // giới hạn đến 22:00
+        const hh = hour.toString().padStart(2, "0");
+        const mm = min.toString().padStart(2, "0");
+        options.push(`${hh}:${mm}`);
+      }
+    }
+    return options;
+};
 
     
     const [bikes, setBikes] = useState([]);
@@ -25,17 +42,26 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
     const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(bikes.length / itemsPerPage);
 
+  const handleLocationChange = (location) => {
+    setLocation({
+      province: location.province,
+      district: location.district ,
+      ward: location.ward ,
+    });
+  };
+
+
   // Cắt danh sách theo trang hiện tại
   const startIndex = (currentPage - 1) * itemsPerPage;
   const selectedBikes = bikes.slice(startIndex, startIndex + itemsPerPage);
 
   const handleSearch = () => {
+    
+  
     // Chuyển startDate, endDate sang chuỗi, ví dụ định dạng ISO hoặc timestamp
-    const start = startDate ? startDate.toISOString() : '';
-    const end = endDate ? endDate.toISOString() : '';
 
     // Chuyển trang kèm query params: ?location=...&start=...&end=...
-    navigate(`/search?location=${encodeURIComponent(location)}&start=${start}&end=${end}`);
+    navigate(`/search?province=${location.province}&district=${location.district}&ward=${location.ward}&startDate=${pickupDate}&startTime=${pickupTime}&endDate=${returnDate}&endTime=${returnTime}`);
   };
 
       
@@ -44,7 +70,6 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
           const fetchBikes = async () => {
             try {
               const response = await axios.get('http://localhost:5000/bike/get-all-bikes');
-              console.log("bikes", response.data);
               // Giả sử API trả về dữ liệu dạng mảng của các bike, hoặc điều chỉnh theo cấu trúc API của bạn
               // const distance = await axios.get("https://router.project-osrm.org/route/v1/driving/106.7009,10.7769;106.7020,10.7765?overview=false");
               // console.log("Khoảng cách", distance.data.routes[0]?.distance / 1000);
@@ -67,21 +92,25 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
             <div className='booking-bar'>
                 <div className='booking-bar-title'>Bạn cần thuê xe máy ?</div>
                 <div className='booking-location'>
-                    <span className='booking-bar-subtitle'><AddressAutocomplete onSelectAddress={(addr) => setLocation(addr)} /></span>
+                    {/* <span className='booking-bar-subtitle'><AddressAutocomplete onSelectAddress={(addr) => setLocation(addr)} /></span> */}
+                    <span className='booking-bar-subtitle'><LocationPicker onLocationChange={handleLocationChange} /></span>
                 </div>
                 <div className='booking-date'>
                     <div className='booking-date-from'>
 
                       <div className='booking-date-title'>Ngày nhận xe</div>
                       <div className='booking-day'>
-                        <DatePicker
-                          className='datepicker'
-                          selected={startDate}
-                          onChange={(date) => setStartDate(date)}
-                          showTimeSelect    // Cho phép chọn giờ
-                          dateFormat="dd/MM/yyyy HH:mm"
-                          placeholderText="Ngày bắt đầu thuê"
+                        <input
+                          type='date'
+                          value={pickupDate}
+                          onChange={(e) => setPickupDate(e.target.value)}
+                          required
                         />
+                        <select value={pickupTime} onChange={(e) => setPickupTime(e.target.value)}>
+                          {generateTimeOptions().map((time) => (
+                            <option key={time} value={time}>{time}</option>
+                          ))}
+                        </select>
                           <i class="fa-solid fa-calendars"></i>
                       </div>
                     
@@ -90,14 +119,17 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
                       <div className='booking-date-title'>Ngày trả xe</div>
 
                       <div className='booking-day'>
-                        <DatePicker className='datepicker'
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        showTimeSelect    // Cho phép chọn giờ
-                        dateFormat="dd/MM/yyyy HH:mm"
-                        placeholderText="Ngày trả xe"
-                        minDate={startDate} // Chỉ cho phép chọn ngày sau startDate
-                      />
+                        <input
+                            type='date'
+                            value={returnDate}
+                            onChange={(e) => setReturnDate(e.target.value)}
+                            required
+                          />
+                          <select value={returnTime} onChange={(e) => setReturnTime(e.target.value)}>
+                            {generateTimeOptions().map((time) => (
+                              <option key={time} value={time}>{time}</option>
+                            ))}
+                          </select>
                         <i class="fa-solid fa-calendars"></i></div>
                     </div>
                     
@@ -123,7 +155,7 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
                   <div className="motor-name">{bike.title}</div>
                   <div className="motor-feature">
                     <div className='motor-feature-item'>
-                      <div className="motor-capacity"><i class="fa-regular fa-globe"></i> Dung tích: {bike.capacity || ""}</div>
+                      <div className="motor-capacity"><i class="fa-regular fa-globe"></i> Dung tích: {bike?.capacity } cm<sup>3</sup></div>
                       <div className='motor-fuel'><i className="fa-solid fa-gas-pump"></i> Xăng </div>
                     </div>
                     <div className="motor-type"><i class="fa-regular fa-motorcycle"></i> Loại xe: {bike.bikeType || "Xe số"}</div>
@@ -218,7 +250,7 @@ const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
                 <a className='btn-register' href='/owner/register-form'>Đăng ký ngay</a>
             </div>
             <div className='explore-img'>
-                <img src='/assets/register_owner.jpg'/>
+                <img src='/assets/register_owner.jpg' alt=''/>
             </div>
         </div>
 

@@ -1,11 +1,10 @@
 
 import React, { useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./RentalForm.css";
 
 const RentalForm = () => {
-  const { id } = useParams(); 
   const API_URL = process.env.REACT_APP_API_URL;
   const { state } = useLocation();
   const email = localStorage.getItem('user');
@@ -60,17 +59,19 @@ const RentalForm = () => {
       ownerId: state.bikeOwnerId, 
       userId,
       bikeId: state.bikeId,
+      bikeImage: state.bikeImage,
       startDate: state.startDate,
       endDate: state.endDate,
       totalPrice: state.totalPrice,
       paymentStatus: paymentMethod === 'before' ? 'pending' : 'unpaid',
       status: 'pending'
     };
-    console.log(rentalData)
+    console.log("rentaldata", rentalData)
   
     try {
       // 2. Tạo đơn thuê (POST /rental/create)
       const rentalRes = await axios.post(`${API_URL}/rental/add`, rentalData);
+      console.log(rentalData);
       const rental = rentalRes.data.newRental;
       const rentalId = rental._id;
   

@@ -6,6 +6,7 @@ export const  createRental = async (req, res) => {
         const {ownerId,
             userId,
             bikeId,
+            bikeImage,
             startDate,
             endDate,
             totalPrice,
@@ -16,6 +17,7 @@ export const  createRental = async (req, res) => {
             ownerId,
             userId,
             bikeId,
+            bikeImage,
             startDate,
             endDate,
             totalPrice,
@@ -23,6 +25,11 @@ export const  createRental = async (req, res) => {
             status
         })
         await newRental.save();
+        console.log("BODY:", req.body);           // kiểm tra có bikeImage không
+        console.log("NEW RENTAL:", newRental);    // trước khi lưu
+        const savedRental = await newRental.save();
+        console.log("SAVED RENTAL:", savedRental);  // sau khi lưu
+
         res.status(201).json({message: "Tạo đơn thành công", newRental})
 
     } catch (error) {
@@ -39,6 +46,17 @@ export const getRentalById = async (req, res) => {
 
 
     } catch(error) {
+        res.status(500).json ({message: error.message});
+    }
+}
+
+export const getAllRentalByUserId = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const rentals = await Rental.find({ userId: userId });
+        return res.status(200).json(rentals);
+    } catch(error) {
+        console.error ("Lỗi getAllRentalByUserId:", error.message);
         res.status(500).json ({message: error.message});
     }
 }

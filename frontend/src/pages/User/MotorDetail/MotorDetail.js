@@ -14,10 +14,32 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
     const navigate = useNavigate();
     const [bike, setBike] = useState();
     const API_URL = process.env.REACT_APP_API_URL;
+    const [pickupDate, setPickupDate] = useState('');
     const [pickupDateTime, setPickupDateTime] = useState('');
+    const [pickupTime, setPickupTime] = useState("05:00");
+    const [returnDate, setReturnDate] = useState('')
     const [returnDateTime, setReturnDateTime] = useState('')
+    const [returnTime, setReturnTime] = useState('05:00')
     const [rentalDuration, setRentalDuration] = useState(0) // đơn vị ngày (thập phân)
     const [totalPrice, setTotalPrice] = useState(0)
+
+    const getCombinedDateTime = (date, time) => {
+        return `${date}T${time}`;
+    };
+      
+
+    const generateTimeOptions = () => {
+        const options = [];
+        for (let hour = 5; hour <= 22; hour++) {
+          for (let min of [0, 30]) {
+            if (hour === 22 && min > 0) continue; // giới hạn đến 22:00
+            const hh = hour.toString().padStart(2, "0");
+            const mm = min.toString().padStart(2, "0");
+            options.push(`${hh}:${mm}`);
+          }
+        }
+        return options;
+    };
 
 
     useEffect(() => {
@@ -32,11 +54,14 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
         };
 
         fetchData();
+
     }, [API_URL]);
 
     useEffect(() => {
         if (!bike || !bike.price) return;
-        
+        const pickupDateTime = getCombinedDateTime(pickupDate, pickupTime);
+        const returnDateTime = getCombinedDateTime(returnDate, returnTime);
+        console.log("datetime", pickupDateTime+returnDateTime)
       
         const pickup = new Date(pickupDateTime);
         const dropoff = new Date(returnDateTime);
@@ -49,19 +74,22 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
           setRentalDuration(days);
       
           const pricePerDay = bike.price.perDay || 0;
-          const price = pricePerDay * days;
+          const price = Math.ceil(pricePerDay * days);
           setTotalPrice(price);
         } else {
           setRentalDuration(0);
           setTotalPrice(0);
         }
-      }, [pickupDateTime, returnDateTime, bike]); // ✅ sửa lại dependency, chỉ cần theo dõi `bike`
+      }, [pickupDate, pickupTime, returnDate, returnTime, bike]); // ✅ sửa lại dependency, chỉ cần theo dõi `bike`
       
   if (!bike) {
     return <div>Không tìm thấy xe</div>;
   }
 
+
+
   const handleRentalChange = () => {
+   
     if (!pickupDateTime || !returnDateTime) {
         alert("Vui lòng chọn thời gian nhận và trả xe.");
         return;
@@ -139,22 +167,32 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                             <label>Nhận xe</label>
                             <div className='wrap-date-time'>
                                 <input
-                                type='datetime-local'
-                                value={pickupDateTime}
-                                min={new Date().toISOString().slice(0,16)}
-                                onChange={(e) => setPickupDateTime(e.target.value)}
-                                required/>
+                                    type='date'
+                                    value={pickupDate}
+                                    onChange={(e) => setPickupDate(e.target.value)}
+                                    required
+                                />
+                                <select value={pickupTime} onChange={(e) => setPickupTime(e.target.value)}>
+                                    {generateTimeOptions().map((time) => (
+                                        <option key={time} value={time}>{time}</option>
+                                ))}
+                                </select>
                             </div>
                         </div>
                         <div className='motor-detail-booking-to'>
                             <label>Trả xe</label>
                             <div className='wrap-date-time'>
                                 <input
-                                type='datetime-local'
-                                min={pickupDateTime}
-                                value={returnDateTime}
-                                onChange={(e) => setReturnDateTime(e.target.value)}
-                                required />
+                                    type='date'
+                                    value={returnDate}
+                                    onChange={(e) => setReturnDate(e.target.value)}
+                                    required
+                                />
+                                <select value={returnTime} onChange={(e) => setReturnTime(e.target.value)}>
+                                    {generateTimeOptions().map((time) => (
+                                        <option key={time} value={time}>{time}</option>
+                                ))}
+                                </select>
                             </div>
                         </div>
                     </div>

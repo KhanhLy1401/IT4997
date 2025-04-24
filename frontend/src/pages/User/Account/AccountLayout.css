@@ -1,0 +1,41 @@
+/* Tổng thể trang */
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f8f8;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .account-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+  }
+  
+  /* Sidebar */
+  .sidebar-account {
+    width: 250px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-account ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-account ul li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .sidebar-account ul .active {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .sidebar-account ul .logout {
+    color: red;
+  }

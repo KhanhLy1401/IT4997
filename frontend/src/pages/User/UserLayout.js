@@ -11,9 +11,13 @@ import "./UserLayout.css";
 import Search from "./Find/Search.js";
 import AuthModal from "../../components/Auth/Auth.js"; // Import AuthModal
 import Addbike from "./Owner/AddBike/Addbike.js";
-import AccountPage from "./Account/Account.js";
+import AccountLayout from "./Account/AccountLayout.js";
 import RentPage from "./RentPage/RentPage.js";
 import RentalForm from "./RentalForm/RentalForm.js";
+import BookingPage from './Account/BookingPage/BookingPage.js'
+import AccountPage from './Account/AccountPage/Account.js'
+import Favorite from "./Account/Favorite/Favorite.js";
+import BikeManagement from "./Account/BikeManagement/BikeManagement.js";
 
 const UserLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,7 +52,12 @@ const UserLayout = () => {
           <Route path="/search" element={<Search />} />
           <Route path="/owner/add-bike" element={<Addbike />} />
           <Route path="/rent/:id" element={<RentPage />} />
-          <Route path="/account" element={<AccountPage />} />
+          <Route path="/account" element={<AccountLayout />}>
+            <Route index element={<AccountPage />} />
+            <Route path="my-bookings" element={<BookingPage />} />
+            <Route path="favorites" element={<Favorite />} />
+            <Route path="bikes" element={<BikeManagement/>} />
+          </Route>
           <Route path="/rental-form/:id" element={<RentalForm />} />
           <Route path="/rent-page" element={<RentPage />} />
         </Routes>

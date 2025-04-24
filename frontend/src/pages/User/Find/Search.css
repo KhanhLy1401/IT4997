@@ -77,3 +77,12 @@
     flex-direction: row;
     justify-content: space-between ;
 }
+
+.search .time,
+.search .address {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:10px;
+}
+
