@@ -97,6 +97,17 @@ export const getBikeById = async (req, res) => {
 
 }
 
+export const getBikesByOwnerId = async (req,res) => {
+    try {
+        const ownerId = req.params.id;
+        const bikes = await Bike.find({ownerId: ownerId});
+
+        return res.status(200).json(bikes);
+    } catch (error) {
+        return res.status(500).json({error: error.message});
+    }
+}
+
 export const deleteBikeById = async (req, res) => {
     try {
         const bikeId = req.params.id;

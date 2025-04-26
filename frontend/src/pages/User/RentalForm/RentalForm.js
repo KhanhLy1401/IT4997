@@ -13,6 +13,7 @@ const RentalForm = () => {
   const [paymentMethod, setPaymentMethod] = useState('before'); 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const userId = localStorage.getItem('_id');
+  console.log("State", state);
 
   // Xử lý khi người dùng chọn phương thức thanh toán
   // const handlePaymentSubmit = async (event) => {
@@ -71,7 +72,7 @@ const RentalForm = () => {
     try {
       // 2. Tạo đơn thuê (POST /rental/create)
       const rentalRes = await axios.post(`${API_URL}/rental/add`, rentalData);
-      console.log(rentalData);
+      console.log("rentalData",rentalData);
       const rental = rentalRes.data.newRental;
       const rentalId = rental._id;
   

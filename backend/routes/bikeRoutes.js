@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addBike, getAllBikes, getBikeById,deleteBikeById, deleteAllBikes, getDistance } from "../controllers/bikeController.js";
+import { addBike, getAllBikes, getBikeById,deleteBikeById, deleteAllBikes, getDistance, getBikesByOwnerId } from "../controllers/bikeController.js";
 import {upload} from "../config/multer.js";
 
 
@@ -15,6 +15,7 @@ router.post('/add',upload.fields([
 router.get('/get-all-bikes', getAllBikes)
 router.delete('/delete-bikes', deleteAllBikes);
 router.get('/distance', getDistance);
+router.get('/get-by-owner/:id', getBikesByOwnerId);
 
 router.get('/:id', getBikeById);
 router.delete('/:id', deleteBikeById);

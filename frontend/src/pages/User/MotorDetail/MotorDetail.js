@@ -57,12 +57,14 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
 
     }, [API_URL]);
 
+
     useEffect(() => {
         if (!bike || !bike.price) return;
-        const pickupDateTime = getCombinedDateTime(pickupDate, pickupTime);
-        const returnDateTime = getCombinedDateTime(returnDate, returnTime);
+        setPickupDateTime(getCombinedDateTime(pickupDate, pickupTime));
+        setReturnDateTime(getCombinedDateTime(returnDate, returnTime));
         console.log("datetime", pickupDateTime+returnDateTime)
       
+
         const pickup = new Date(pickupDateTime);
         const dropoff = new Date(returnDateTime);
       
@@ -89,11 +91,19 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
 
 
   const handleRentalChange = () => {
+
+    if (!localStorage.getItem('user')) {
+        alert("Vui lòng đăng nhập để thuê xe.");
+        setIsOpen(true); // mở AuthModal
+        return;
+    }
    
-    if (!pickupDateTime || !returnDateTime) {
+    if (totalPrice===0) {
         alert("Vui lòng chọn thời gian nhận và trả xe.");
         return;
     };
+
+    console.log(pickupDateTime, "picu")
     navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDateTime, endDate: returnDateTime, rentalDuration: rentalDuration, bikePrice: bike.price?.perDay||"100", totalPrice: totalPrice}})
   }
 
