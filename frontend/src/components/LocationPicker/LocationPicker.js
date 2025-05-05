@@ -124,27 +124,7 @@ useEffect(() => {
         fullAddress
       )}&format=json&addressdetails=1&limit=1`;
   
-      // console.log("🔍 Tìm tọa độ cho:", fullAddress);
-  
-      // fetch(url, {
-      //   headers: {
-      //     "User-Agent": "Mozilla/5.0 (React app)",
-      //     "Accept-Language": "vi"
-      //   }
-      // })
-      //   .then((res) => res.json())
-      //   .then((data) => {
-      //     console.log("📡 Kết quả tọa độ:", data);
-      //     if (data.length > 0) {
-      //       setCoordinates({ lat: data[0].lat, lon: data[0].lon });
-      //     } else {
-      //       setCoordinates(null);
-      //     }
-      //   })
-      //   .catch(err => {
-      //     console.error("❌ Lỗi lấy tọa độ:", err);
-      //     setCoordinates(null);
-      //   });
+
     }
   }, [selectedProvince, selectedDistrict, selectedWard]);
   
@@ -193,14 +173,6 @@ useEffect(() => {
           <option key={w.code} value={w.code}>{w.name}</option>
         ))}
       </select>
-
-      {/* <div style={{ marginTop: "1rem" }}>
-        {coordinates ? (
-          <p>📍 Tọa độ: <strong>{coordinates.lat}</strong>, <strong>{coordinates.lon}</strong></p>
-        ) : selectedWard ? (
-          <p>🔍 Đang tìm tọa độ...</p>
-        ) : null}
-      </div> */}
     </div>
   );
 };

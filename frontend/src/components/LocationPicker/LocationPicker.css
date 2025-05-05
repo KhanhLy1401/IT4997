@@ -8,12 +8,13 @@
     padding: 0.5rem 0.8rem;
     border-radius: 5px;
     border: 1px solid #ccc;
-    font-size: 1rem;
+    font-size: 1  rem;
     background-color: #fff;
-    transition: border 0.3s ease;
+    width: 220px;          /* ép chiều rộng cố định */
+    box-sizing: border-box; /* đảm bảo padding không làm vỡ width */
+    appearance: none;       /* loại bỏ style mặc định của trình duyệt */
   }
   
   .picker:focus {
-    border-color: #12b76a;
+    border-color: #087241;
   }
-  

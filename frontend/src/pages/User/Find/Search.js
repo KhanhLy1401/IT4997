@@ -51,6 +51,9 @@ const Search = () => {
         district: '',
         ward: '',
   });
+
+  const MAPBOX_ACCESS_TOKEN = process.env.REACT_APP_API_URL;
+
   
 
     const generateTimeOptions = () => {
@@ -72,7 +75,7 @@ const Search = () => {
 
 
   const [bikes, setBikes] = useState([]);
-      const itemsPerPage = 10;
+      const itemsPerPage = 100;
       const [currentPage, setCurrentPage] = useState(1);
     const totalPages = Math.ceil(bikes.length / itemsPerPage);
   
@@ -137,6 +140,7 @@ const Search = () => {
               ))}
             </select>
           </div>
+          <div className="filter-btn"><i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm</div>
         </div>
         <div className='search-filter'>
           <div className='repeat-filter'><i class="fa-solid fa-repeat"></i></div>

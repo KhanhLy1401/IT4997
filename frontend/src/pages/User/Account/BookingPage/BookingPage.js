@@ -55,7 +55,7 @@ const BookingPage = ({ bookings }) => {
         </select>
       </div>
 
-      <div className="table-wrapper">
+      <div className="bike-table">
         <table className="rental-table">
           <thead>
             <tr>

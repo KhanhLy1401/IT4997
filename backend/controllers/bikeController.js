@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export const addBike = async (req, res) => {
     try {
-        const { ownerId, ownerName, brand, capacity, bikeType, license_plate, title, description } = req.body;
+        const { ownerId, ownerName, brand, capacity, bikeType, license_plate, title, description, security_deposit, delivery_home } = req.body;
         let { location, price } = req.body;
         const files = req.files;
 
@@ -59,6 +59,8 @@ export const addBike = async (req, res) => {
             description,
             location,
             price,
+            delivery_home,
+            security_deposit,
             status: "pending_approval", // Trạng thái xe là chờ phê duyệt
             images
         });
@@ -145,24 +147,109 @@ export const deleteAllBikes = async (req, res) => {
     }
 };
 
-export const getDistance = async (req, res) => {
-    // const { origins, destinations } = req.query;
-    const API_KEY=process.env.API_KEY;
-    console.log(API_KEY);
-    const origins = 'Hà Nội';
-    const destinations = 'Thành phố Hồ Chí Minh';
+
+// Helper: kiểm tra xe có rảnh không trong khoảng thời gian
+function isBikeAvailable(bike, startDate, startTime, endDate, endTime) {
+    const reqStart = new Date(`${startDate}T${startTime}`);
+    const reqEnd = new Date(`${endDate}T${endTime}`);
   
-    if (!origins || !destinations) {
-      return res.status(400).json({ error: 'Thiếu thông tin origins hoặc destinations' });
+    for (const period of bike.rentedPeriods) {
+      const periodStart = new Date(`${period.startDate.toISOString().split("T")[0]}T${period.startTime}`);
+      const periodEnd = new Date(`${period.endDate.toISOString().split("T")[0]}T${period.endTime}`);
+      if (reqStart < periodEnd && reqEnd > periodStart) {
+        return false;
+      }
     }
+    return true;
+}
   
-    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origins)}&destinations=${encodeURIComponent(destinations)}&key=${API_KEY}`;
+export const searchAvailableBikes = async (req, res) => {
+    const {
+      province,
+      district,
+      ward,
+      startDate,
+      startTime,
+      endDate,
+      endTime
+    } = req.body;
   
     try {
-      const response = await axios.get(url);
-      return res.json(response.data);
+      const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
+  
+      // 👉 Bước 1: Suy ra toạ độ từ địa chỉ người dùng chọn
+      const address = `${ward}, ${district}, ${province}`;
+      const geoUserRes = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json`,
+        {
+          params: {
+            access_token: MAPBOX_TOKEN,
+            limit: 1
+          }
+        }
+      );
+  
+      const userCoords = geoUserRes.data.features[0]?.geometry?.coordinates;
+      if (!userCoords) {
+        return res.status(400).json({ error: "Không tìm được vị trí từ địa chỉ bạn chọn" });
+      }
+  
+      const origin = `${userCoords[0]},${userCoords[1]}`;
+      console.log("origin", userCoords[0], userCoords[1]);
+  
+      // 👉 Bước 2: Tìm xe ở cùng tỉnh và trạng thái available
+      const bikes = await Bike.find({
+        "location.province": province,
+      });
+  
+      // 👉 Bước 3: Lọc xe rảnh trong khoảng thời gian yêu cầu
+      const availableBikes = bikes.filter((bike) =>
+        isBikeAvailable(bike, startDate, startTime, endDate, endTime)
+      );
+  
+      // 👉 Bước 4: Tính khoảng cách từ địa chỉ người dùng đến từng xe
+      const distancePromises = availableBikes.map(async (bike) => {
+        const destAddress = `${bike.location.ward}, ${bike.location.district}, ${bike.location.province}`;
+  
+        const geoRes = await axios.get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(destAddress)}.json`,
+          {
+            params: {
+              access_token: MAPBOX_TOKEN,
+              limit: 1
+            }
+          }
+        );
+  
+        const destCoords = geoRes.data.features[0]?.geometry?.coordinates;
+        if (!destCoords) return null;
+  
+        const directionsRes = await axios.get(
+          `https://api.mapbox.com/directions/v5/mapbox/driving/${origin};${destCoords[0]},${destCoords[1]}`,
+          {
+            params: {
+              access_token: MAPBOX_TOKEN,
+              overview: "false"
+            }
+          }
+        );
+  
+        const distanceMeters = directionsRes.data.routes[0]?.distance || Infinity;
+  
+        return {
+          ...bike.toObject(),
+          distance: distanceMeters
+        };
+      });
+  
+      const bikesWithDistance = (await Promise.all(distancePromises)).filter(Boolean);
+  
+      // 👉 Bước 5: Sắp xếp theo khoảng cách tăng dần
+      const sortedBikes = bikesWithDistance.sort((a, b) => a.distance - b.distance);
+  
+      res.json(sortedBikes);
     } catch (error) {
-      console.error('Lỗi khi gọi Google API:', error.message);
-      return res.status(500).json({ error: 'Lỗi khi gọi Google API', detail: error.message });
+      console.error("Search bike error:", error.message);
+      res.status(500).json({ error: "Lỗi server" });
     }
-};
+  };

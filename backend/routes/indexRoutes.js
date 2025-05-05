@@ -5,6 +5,7 @@ import bikeRoutes from './bikeRoutes.js';
 import rentalRoutes from './rentalRoutes.js'
 import adminRoutes from './adminRoutes.js'
 import paymentRoutes from './paymentRoutes.js'
+import reviewRoutes from './reviewRoutes.js'
 const router = express.Router();
 
 router.use('/auth', authRoutes);
@@ -13,5 +14,6 @@ router.use('/user',userRoutes);
 router.use('/rental', rentalRoutes);
 router.use('/admin', adminRoutes);
 router.use('/payment', paymentRoutes);
+router.use('/review', reviewRoutes);
 
 export default router;

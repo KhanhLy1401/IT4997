@@ -8,6 +8,8 @@ export const  createRental = async (req, res) => {
             bikeId,
             bikeImage,
             startDate,
+            startTime,
+            endTime,
             endDate,
             totalPrice,
             paymentStatus,
@@ -20,6 +22,8 @@ export const  createRental = async (req, res) => {
             bikeImage,
             startDate,
             endDate,
+            startTime,
+            endTime,
             totalPrice,
             paymentStatus,
             status
@@ -61,6 +65,18 @@ export const getAllRentalByUserId = async (req, res) => {
     }
 }
 
+export const getAllRentalByOwnerId = async (req, res) => {
+    try {
+        const ownerId = req.params.id;
+        const rentals = await Rental.find({ ownerId: ownerId });
+        return res.status(200).json(rentals);
+    } catch(error) {
+        console.error ("Lỗi getAllRentalByOwnerId:", error.message);
+        res.status(500).json ({message: error.message});
+    }
+}
+
+
 export const getAllRental = async (req, res) => {
     try {
         const rentals = await Rental.find({});
@@ -73,7 +89,7 @@ export const getAllRental = async (req, res) => {
 
 export  const updateRentalStatus = async (req, res ) => {
     try {
-        const validStatuses = ["Pending", "Confirmed", "Ongoing", "Completed", "Canceled"];
+        const validStatuses = ["pending", "confirmed", "in_progress", "completed", "canceled"];
 
         const id = req.params.id;
         const newStatus = req.body.status;
@@ -87,7 +103,7 @@ export  const updateRentalStatus = async (req, res ) => {
         rental.status = newStatus;
         await rental.save();
 
-        if(newStatus === "Canceled" || newStatus === "Completed") {
+        if(newStatus === "canceled" || newStatus === "completed") {
             await Bike.findByIdAndUpdate(rental.bikeId, {status: "available"});
         }
 

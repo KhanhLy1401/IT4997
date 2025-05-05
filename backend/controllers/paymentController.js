@@ -29,7 +29,7 @@ const IPN_URL= process.env.IPN_URL;
 const accessKey = 'F8BBA842ECF85';
 const secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
 const partnerCode = 'MOMO';
-const redirectUrl = 'http://localhost:3000/';
+const redirectUrl = 'http://localhost:3000/account/my-bookings';
 
 const ipnUrl = `${IPN_URL}/payment/ipn`;
 const requestType = "payWithMethod";
@@ -55,7 +55,7 @@ export const sendPaymentSuccessEmail = async (toEmail, customerName, phone, bike
 
 
 export const createPayment = async (req, res) => {
-  const { amount, orderId, orderInfo, rentalId } = req.body;
+  const { amount, orderId, orderInfo, rentalId,  } = req.body;
   const requestId = orderId;
   const extraData = '';
   const expiryTime = Date.now() + 600 * 1000; // 600 giây = 10 phút

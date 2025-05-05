@@ -31,6 +31,7 @@ body {
     cursor: pointer;
   }
   
+
   .sidebar-account ul .active {
     color: green;
     font-weight: bold;
@@ -38,4 +39,11 @@ body {
   
   .sidebar-account ul .logout {
     color: red;
+  }
+
+  .sidebar-account a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 1rem;
   }

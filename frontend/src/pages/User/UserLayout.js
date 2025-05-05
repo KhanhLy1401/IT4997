@@ -50,10 +50,11 @@ const UserLayout = () => {
           <Route path="/owner/register" element={<Register isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
           <Route path="/owner/register-form" element={<RegisterPage isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/owner/add-bike" element={<Addbike />} />
+          {/* <Route path="/owner/add-bike" element={<Addbike />} /> */}
           <Route path="/rent/:id" element={<RentPage />} />
           <Route path="/account" element={<AccountLayout />}>
-            <Route index element={<AccountPage />} />
+            <Route index path="my-account" element={<AccountPage />} />
+            <Route path="add-bike" element={<Addbike/>}/>
             <Route path="my-bookings" element={<BookingPage />} />
             <Route path="favorites" element={<Favorite />} />
             <Route path="bikes" element={<BikeManagement/>} />

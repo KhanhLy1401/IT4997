@@ -4,6 +4,13 @@ const imageSchema = new mongoose.Schema({
     public_id: { type: String, required: true }
   }, { _id: false });
 
+const rentedPeriodSchema = new mongoose.Schema({
+    startDate: Date,
+    endDate: Date,
+    startTime: String,
+    endTime: String,
+});
+
 const bikeSchema = new mongoose.Schema({
     ownerId: String,
     ownerName: String,
@@ -11,6 +18,7 @@ const bikeSchema = new mongoose.Schema({
     bikeType: String,
     title: String,
     description: String,
+    delivery_home: {type: Boolean, default: false},
     location: {
         province: String,
         district: String,
@@ -26,12 +34,17 @@ const bikeSchema = new mongoose.Schema({
         perWeek: Number,
         perMonth: Number
     },
+    rentedPeriods: [rentedPeriodSchema],
     rental_count: { type: Number, default: 0 },
     rental_type: { type: String, enum: ['fixed_location', 'flexible_delivery'] },
     status: {
         type: String,
         enum: ['pending_approval', 'available', 'rented', 'locked'], 
         default: 'pending_approval'
+    },
+    security_deposit: {
+        type: String,
+        default: "no_deposit"
     },
     images: {
         front: imageSchema,

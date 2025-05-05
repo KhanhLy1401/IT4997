@@ -9,7 +9,9 @@ const rentalSchema = new mongoose.Schema({
   userId: { type: String, required: true },
   bikeId: { type: String, required: true },
   startDate: { type: Date, required: true },
+  startTime: String,
   endDate: { type: Date, required: true },
+  endTime: String,
   totalPrice: { type: Number, required: true },
   bikeImage: String,
 

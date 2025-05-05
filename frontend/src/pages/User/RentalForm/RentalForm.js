@@ -15,40 +15,7 @@ const RentalForm = () => {
   const userId = localStorage.getItem('_id');
   console.log("State", state);
 
-  // Xử lý khi người dùng chọn phương thức thanh toán
-  // const handlePaymentSubmit = async (event) => {
-  //   event.preventDefault();
-  //   if(!state) {
-  //     console.log("state", state);
-  //     return;
-  //   }
 
-  //   // Thông tin khách hàng và thông tin đơn hàng
-  //   const rentalData = {
-  //     ownerId: state?.ownerId,
-  //     userId: state?.userId,
-  //     bikeId: state?.bikeId,
-  //     startDate: state?.startDate,
-  //     endDate: state?.endDate,
-  //     totalPrice: state?.totalPrice,
-  //     // paymentMethod, // Trả trước hoặc trả sau
-  //   };
-
-  //   try {
-  //     // Gửi yêu cầu tạo đơn hàng đến backend
-  //     const response = await axios.post(`${API_URL}/payment/create`, rentalData);
-      
-  //     // Nhận về URL thanh toán của MoMo
-  //     const { payUrl } = response.data;
-
-  //     if (payUrl) {
-  //       // Chuyển hướng người dùng đến MoMo để thanh toán
-  //       window.location.href = payUrl;
-  //     }
-  //   } catch (error) {
-  //     console.error("Error creating payment:", error);
-  //   }
-  // };
 
   const handlePaymentSubmit = async (event) => {
     event.preventDefault();
@@ -62,6 +29,8 @@ const RentalForm = () => {
       bikeId: state.bikeId,
       bikeImage: state.bikeImage,
       startDate: state.startDate,
+      startTime: state.startTime,
+      endTime: state.endTime,
       endDate: state.endDate,
       totalPrice: state.totalPrice,
       paymentStatus: paymentMethod === 'before' ? 'pending' : 'unpaid',

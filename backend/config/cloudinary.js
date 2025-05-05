@@ -19,6 +19,7 @@ export const uploadToCloudinary = async (filePath) => {
         public_id: result.public_id
       };
     } catch (error) {
+      console.log(error.message);
       throw new Error("Lỗi khi tải ảnh lên Cloudinary");
     }
   };

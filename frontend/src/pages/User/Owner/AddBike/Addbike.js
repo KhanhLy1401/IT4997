@@ -28,6 +28,8 @@ const Addbike = () => {
 
   const [registrationImage, setRegistrationImage] = useState(null);
   const [insuranceImage, setInsuranceImage] = useState(null);
+  const [securityDeposit, setSecurityDeposit] = useState("no_deposit");
+  const [deliveryHome, setDeliveryHome] = useState(false);
   const [sideImage, setSideImage] = useState(null);
   const [frontImage, setFrontImage] = useState(null);
   const [licensePlateImage, setLicensePlateImage] = useState(null);
@@ -125,9 +127,8 @@ const Addbike = () => {
 
     formData.append("bike_registration", registrationImage);
     formData.append("bike_insurance", insuranceImage);
-    // formData.append("images_front", image.front);
-    // formData.append("images_back", image.back);
-    // formData.append("images_side", image.side);
+    formData.append("security_deposit", securityDeposit);
+    formData.append("delivery_home", deliveryHome); 
     formData.append("images_front", image.front);
     formData.append("images_back", image.back);
     formData.append("images_side", image.side);
@@ -259,6 +260,30 @@ const Addbike = () => {
               </div>
             </div>
           </div>
+
+          <div className='bike-security-deposit'>
+            <label><i className="fa-regular fa-lock"></i> Thế chấp khi thuê xe</label>
+            <input
+              type="text"
+              placeholder="Nhập số tiền hoặc để trống nếu không cần thế chấp "
+              value={securityDeposit === "no_deposit" ? "" : securityDeposit}
+              onChange={(e) => {
+                const val = e.target.value.trim();
+                setSecurityDeposit(val === "" ? "no_deposit" : val);
+              }}
+            />
+          </div>
+
+          <div className='bike-delivery-option'>
+            <label>
+              <input
+                type="checkbox"
+                checked={deliveryHome}
+                onChange={(e) => setDeliveryHome(e.target.checked)}
+              /> Giao xe tận nơi
+            </label>
+          </div>
+
 
           <div className='rental-type'><i className="fa-regular fa-file"></i> Hình thức nhận xe: Nhận tại nhà chủ xe/Giao nhận tận nơi</div>
           <div className='rental-type-price'><i className="fa-regular fa-money-check-dollar"></i> Giá giao tận nơi: 10k/km</div>

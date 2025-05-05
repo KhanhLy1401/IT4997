@@ -9,20 +9,23 @@ const AccountLayout = () => {
         <h2>Xin chào bạn!</h2>
         <ul>
           <li>
-            <i className="fa-light fa-user"></i>
-            <NavLink to="/account">Tài khoản của tôi</NavLink>
+            <NavLink to="/account/my-account"><i className="fa-light fa-user"></i> Tài khoản của tôi</NavLink>
           </li>
           <li>
-            <i className="fa-regular fa-heart"></i> 
-            <NavLink to ="/account/favorites">Xe yêu thích</NavLink>
+            
+            <NavLink to ="/account/favorites"><i className="fa-regular fa-heart"></i> Xe yêu thích</NavLink>
           </li>
           <li>
-            <i className="fa-regular fa-motorcycle"></i> 
-            <NavLink to='/account/bikes'>Xe của tôi</NavLink>
+            
+            <NavLink to='/account/add-bike'><i className="fa-solid fa-arrow-up-from-bracket"></i> Đăng xe</NavLink>
           </li>
           <li>
-            <i className="fa-regular fa-box-check"></i>
-            <NavLink to="/account/my-bookings">Chuyến của tôi</NavLink>
+            
+            <NavLink to='/account/bikes'><i className="fa-regular fa-motorcycle"></i> Xe của tôi</NavLink>
+          </li>
+          <li>
+            
+            <NavLink to="/account/my-bookings"><i className="fa-regular fa-box-check"></i> Chuyến của tôi</NavLink>
           </li>
           <li><i className="fa-regular fa-map-pin"></i> Địa chỉ của tôi</li>
           <li className="logoutt"><i className="fa-solid fa-left-from-bracket"></i> Đăng xuất</li>

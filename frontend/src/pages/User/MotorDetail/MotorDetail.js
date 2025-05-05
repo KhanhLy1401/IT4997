@@ -104,7 +104,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
     };
 
     console.log(pickupDateTime, "picu")
-    navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDateTime, endDate: returnDateTime, rentalDuration: rentalDuration, bikePrice: bike.price?.perDay||"100", totalPrice: totalPrice}})
+    navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDate, endDate: returnDate, startTime: pickupTime, endTime: returnTime, rentalDuration: rentalDuration, bikePrice: bike.price?.perDay||"100", totalPrice: totalPrice}})
   }
 
   return (

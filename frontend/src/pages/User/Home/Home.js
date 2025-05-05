@@ -10,9 +10,9 @@ import LocationPicker from '../../../components/LocationPicker/LocationPicker.js
 const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
 
   const [pickupDate, setPickupDate] = useState('');
-  const [pickupTime, setPickupTime] = useState("");
+  const [pickupTime, setPickupTime] = useState("5:00");
   const [returnDate, setReturnDate] = useState('')
-  const [returnTime, setReturnTime] = useState('')
+  const [returnTime, setReturnTime] = useState('5:00')
   const navigate = useNavigate();
   const [location, setLocation] = useState({
       province: '',
