@@ -431,3 +431,9 @@
     color: #12b76a;
     font-weight: 600;
 }
+
+.day-time-pick {
+    border: 1px solid #9e9e9e;
+    padding: 5px;
+    border-radius: 5px;
+}

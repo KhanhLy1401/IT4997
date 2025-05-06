@@ -1,0 +1,82 @@
+.dashboard {
+    padding: 1.5rem;
+    background-color: #f3f4f6;
+    min-height: 100vh;
+  }
+  
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 2rem;
+  }
+  
+  .summary-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 30px 15px;
+  }
+
+  .summary-card .item-1 {
+    flex-grow: 1;
+  }
+
+  .summary-card .item-2 {
+    flex-grow: 2;
+  }
+  
+  .summary-card .highlight-number {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .chart-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  .chart-card-1 {
+    width: 100%;
+    background: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .list-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .list-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .list-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .list-card li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+  }
+  

@@ -173,6 +173,9 @@ export const searchAvailableBikes = async (req, res) => {
       endDate,
       endTime
     } = req.body;
+
+
+
   
     try {
       const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
@@ -195,7 +198,6 @@ export const searchAvailableBikes = async (req, res) => {
       }
   
       const origin = `${userCoords[0]},${userCoords[1]}`;
-      console.log("origin", userCoords[0], userCoords[1]);
   
       // 👉 Bước 2: Tìm xe ở cùng tỉnh và trạng thái available
       const bikes = await Bike.find({
@@ -249,6 +251,8 @@ export const searchAvailableBikes = async (req, res) => {
   
       res.json(sortedBikes);
     } catch (error) {
+      console.error("Received body:", req.body);
+
       console.error("Search bike error:", error.message);
       res.status(500).json({ error: "Lỗi server" });
     }

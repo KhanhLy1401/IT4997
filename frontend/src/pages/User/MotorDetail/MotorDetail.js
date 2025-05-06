@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faStar } from "@fortawesome/free-solid-svg-icons";
 import './MotorDetail.css'
@@ -21,7 +21,47 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
     const [returnDateTime, setReturnDateTime] = useState('')
     const [returnTime, setReturnTime] = useState('05:00')
     const [rentalDuration, setRentalDuration] = useState(0) // đơn vị ngày (thập phân)
-    const [totalPrice, setTotalPrice] = useState(0)
+    let [totalPrice, setTotalPrice] = useState(0)
+    const {state} = useLocation();
+    const [isDelivery, setIsDelivery] = useState(false);
+    const [address, setAddress] = useState('');
+
+    const handleDeliveryChange = (e) => {
+        setIsDelivery(e.target.checked);
+    };
+    console.log("state truyền từ search", state);
+
+    useEffect(()=>{
+        if(state){
+            setPickupDate(state.startDate);
+            setPickupTime(state.startTime);
+            setReturnDate(state.endDate);
+            setReturnTime(state.endTime);
+        }
+        setPickupDateTime(getCombinedDateTime(pickupDate, pickupTime));
+        setReturnDateTime(getCombinedDateTime(returnDate, returnTime));
+        console.log("datetime", pickupDateTime+returnDateTime)
+      
+
+        const pickup = new Date(pickupDateTime);
+        const dropoff = new Date(returnDateTime);
+      
+        const diffInMs = dropoff - pickup;
+        const diffInHours = diffInMs / (1000 * 60 * 60);
+      
+        if (diffInHours > 0) {
+          const days = diffInHours / 24;
+          setRentalDuration(days);
+      
+          const pricePerDay = bike.price.perDay || 0;
+          const price = Math.ceil(pricePerDay * days);
+          setTotalPrice(price);
+        } else {
+          setRentalDuration(0);
+          setTotalPrice(0);
+        }
+    }
+    , [])
 
     const getCombinedDateTime = (date, time) => {
         return `${date}T${time}`;
@@ -82,7 +122,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
           setRentalDuration(0);
           setTotalPrice(0);
         }
-      }, [pickupDate, pickupTime, returnDate, returnTime, bike]); // ✅ sửa lại dependency, chỉ cần theo dõi `bike`
+      }, [pickupDate, pickupTime, returnDate, returnTime, bike]); 
       
   if (!bike) {
     return <div>Không tìm thấy xe</div>;
@@ -104,7 +144,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
     };
 
     console.log(pickupDateTime, "picu")
-    navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDate, endDate: returnDate, startTime: pickupTime, endTime: returnTime, rentalDuration: rentalDuration, bikePrice: bike.price?.perDay||"100", totalPrice: totalPrice}})
+    navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDate, endDate: returnDate, startTime: pickupTime, endTime: returnTime, rentalDuration: rentalDuration, bikePrice: bike.price?.perDay||"", totalPrice: totalPrice, isDelivery: isDelivery}})
   }
 
   return (
@@ -130,23 +170,23 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                 </div>
                 <div className='motor-detail-feature-2'>
                     <div className='motor-detail-feature-title'>Đặc điểm</div>
-                    <div className='motor-detail-feature-2-brand'>Hãng {bike.brand}- {bike.bikeType} - dung tích {bike.capacity}  </div>
+                    <div className='motor-detail-feature-2-brand'>Hãng xe: {bike.brand} <br/> Loại xe: {bike.bikeType} <br/> Dung tích: {bike.capacity} cm<sup>3</sup>  </div>
                 </div>
 
                 <div className='motor-detail-feature-2'>
                     <div className='motor-detail-feature-title'>Địa chỉ nhận xe</div>
-                    <div className='motor-detail-feature-2-brand'> {(bike.location?.province + ", "+  bike.location?.district + ", "+ bike.location?.ward) || "No location"}  </div>
+                    <div className='motor-detail-feature-2-brand'> {(bike.location?.ward + ", "+  bike.location?.district + ", "+ bike.location?.province) || "No location"}  </div>
                 </div>
                 
                 <div className='motor-detail-feature-3'>
                     <div className='motor-detail-feature-title'>Mô tả</div>
-                    <div className='motor-detail-feature-3-desc'>{bike.description}</div>
+                    <div className='motor-detail-feature-3-desc'>Xe đã trang bị đầy đủ 2 mũ bảo hiểm khi nhận xe <br/> Xe có đầy đủ giấy tờ và bảo hiểm xe máy <br/>{bike.description}</div>
                 </div>
                 <div className='motor-detail-licenses'>
                     <div className='motor-detail-feature-title'>Giấy tờ thuê xe</div>
                     <div className='motor-detail-license'>
-                        GPLX(đối chiếu) & CCCD(đối chiếu VNeID)
-                        GPLX(đối chiếu) & Passport(giữ lại)
+                        GPLX(đối chiếu) & CCCD(đối chiếu VNeID) <br/>
+                        GPLX(đối chiếu) & Passport(giữ lại) <br/>
                     </div>
                     
 
@@ -154,8 +194,9 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                 <div className='motor-detail-terms'>
                     <div className='motor-detail-feature-title'>Điều khoản thuê xe</div>
                     <div className='motor-detail-license'>
-                        Tài sản thế chấp(chủ xe giữ lại)
-                        Đặt cọc bằng tiền mặt hoặc bằng tài sản có giá trị từ 10trieu trở lên
+                        Tài sản thế chấp(chủ xe giữ lại) <br/>
+                        {bike?.security_deposit=="no_deposit"?"Miễn thế chấp tài sản":bike.security_deposit}
+
                     </div>
                 </div>
                 <div className='motor-detail-policy'>
@@ -207,16 +248,38 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                         </div>
                     </div>
                     <div className='motor-detail-booking-address'>
-                        <label>Giao xe tận nơi</label>
-                        <div className='wrap-address'>Địa chỉ</div>
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                checked={isDelivery} 
+                                onChange={handleDeliveryChange} 
+                            />
+                            Giao xe tận nơi
+                        </label>
+
+                        {isDelivery && (
+                            <div className='delivery-address'>
+                                <div>{state?.province}, {state?.district}, {state?.ward}</div>
+                                <label htmlFor='address'>Địa chỉ cụ thể: <br/></label>
+                                <input
+                                    id='address'
+                                    type='text'
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                    placeholder='Nhập địa chỉ nhận xe'
+                                />
+                                <div className='address-distance'>Khoảng cách giao xe: {(Math.ceil(state?.distance / 10) / 100).toFixed(2)} km</div>
+                            </div>
+                        )}
                     </div>
+    
                     <div className='motor-detail-booking-price-duration'>
                         <div className='motor-detail-booking-price'>Đơn giá: {bike.price?.perDay || "0"} vnđ/ ngày</div>
                         <div className='motor-detail-booking-duration'>Số ngày thuê: {rentalDuration.toFixed(2)} </div>
 
                     </div>
                     <div className='motor-detail-booking-total'>
-                        Tổng cộng: {totalPrice.toLocaleString()} vnđ
+                        Tổng cộng: {isDelivery? (totalPrice=totalPrice+(Math.ceil(state?.distance / 10) / 100) || 50000).toFixed(2)*10000 : totalPrice.toLocaleString()} vnđ
                     </div>
                     <div className='motor-detail-booking-btn' onClick={() =>handleRentalChange() }>
                         Chọn thuê

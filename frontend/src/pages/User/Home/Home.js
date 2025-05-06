@@ -10,9 +10,9 @@ import LocationPicker from '../../../components/LocationPicker/LocationPicker.js
 const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
 
   const [pickupDate, setPickupDate] = useState('');
-  const [pickupTime, setPickupTime] = useState("5:00");
+  const [pickupTime, setPickupTime] = useState("hh:mm");
   const [returnDate, setReturnDate] = useState('')
-  const [returnTime, setReturnTime] = useState('5:00')
+  const [returnTime, setReturnTime] = useState('hh:mm')
   const navigate = useNavigate();
   const [location, setLocation] = useState({
       province: '',
@@ -55,24 +55,51 @@ const generateTimeOptions = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const selectedBikes = bikes.slice(startIndex, startIndex + itemsPerPage);
 
-  const handleSearch = () => {
-    
+  const handleSearch = async () => {
+    if (
+      !pickupDate ||
+      pickupTime === "hh:mm" ||
+      !returnDate ||
+      returnTime === "hh:mm"
+    ) {
+      alert("Vui lòng điền đầy đủ ngày và giờ nhận/trả xe!");
+      return;
+    }
+
+
+    try {
+      const response = await axios.post('http://localhost:5000/bike/search', {
+        province: location.province,
+        district: location.district, 
+        ward: location.ward,         
+        startDate: pickupDate,
+        startTime: pickupTime,
+        endDate: returnDate,
+        endTime: returnTime
+      } );
+      console.log("Kết quả tìm kiếm:", response.data);
+      navigate(`/search?province=${location.province}&district=${location.district}&ward=${location.ward}&startDate=${pickupDate}&startTime=${pickupTime}&endDate=${returnDate}&endTime=${returnTime}`, {
+        state: response.data
+      });
+      // TODO: xử lý kết quả
+  
+    } catch (error) {
+      console.error("Lỗi khi gọi API:", error.message);
+      alert("Không thể tìm xe, vui lòng thử lại sau!");
+      return;
+    }
   
     // Chuyển startDate, endDate sang chuỗi, ví dụ định dạng ISO hoặc timestamp
 
     // Chuyển trang kèm query params: ?location=...&start=...&end=...
-    navigate(`/search?province=${location.province}&district=${location.district}&ward=${location.ward}&startDate=${pickupDate}&startTime=${pickupTime}&endDate=${returnDate}&endTime=${returnTime}`);
+
   };
 
       
     useEffect(() => {
-          // Gọi API lấy dữ liệu xe từ backend
           const fetchBikes = async () => {
             try {
               const response = await axios.get('http://localhost:5000/bike/get-all-bikes');
-              // Giả sử API trả về dữ liệu dạng mảng của các bike, hoặc điều chỉnh theo cấu trúc API của bạn
-              // const distance = await axios.get("https://router.project-osrm.org/route/v1/driving/106.7009,10.7769;106.7020,10.7765?overview=false");
-              // console.log("Khoảng cách", distance.data.routes[0]?.distance / 1000);
               setBikes(response.data);
             } catch (error) {
               console.error("Lỗi khi lấy dữ liệu xe:", error);
@@ -98,15 +125,19 @@ const generateTimeOptions = () => {
                 <div className='booking-date'>
                     <div className='booking-date-from'>
 
-                      <div className='booking-date-title'>Ngày nhận xe</div>
+                      <div className='booking-date-title'>Ngày nhận xe - Giờ nhận xe</div>
                       <div className='booking-day'>
                         <input
+                          className="day-time-pick"
                           type='date'
                           value={pickupDate}
+                          min={new Date().toISOString().split("T")[0]}
                           onChange={(e) => setPickupDate(e.target.value)}
                           required
                         />
-                        <select value={pickupTime} onChange={(e) => setPickupTime(e.target.value)}>
+                        <select className="day-time-pick" value={pickupTime} onChange={(e) => setPickupTime(e.target.value)}>
+
+                          <option value="hh:mm"  disabled>hh:mm</option>
                           {generateTimeOptions().map((time) => (
                             <option key={time} value={time}>{time}</option>
                           ))}
@@ -116,19 +147,22 @@ const generateTimeOptions = () => {
                     
                     </div>
                     <div className='booking-date-to'>
-                      <div className='booking-date-title'>Ngày trả xe</div>
+                      <div className='booking-date-title'>Ngày trả xe-Giờ trả xe</div>
 
                       <div className='booking-day'>
                         <input
+                            className="day-time-pick"
                             type='date'
                             value={returnDate}
+                            min={pickupDate}
                             onChange={(e) => setReturnDate(e.target.value)}
                             required
                           />
-                          <select value={returnTime} onChange={(e) => setReturnTime(e.target.value)}>
-                            {generateTimeOptions().map((time) => (
-                              <option key={time} value={time}>{time}</option>
-                            ))}
+                          <select className="day-time-pick" value={returnTime} onChange={(e) => setReturnTime(e.target.value)}>
+                          <option value="hh:mm" disabled>hh:mm</option>
+                          {generateTimeOptions().map((time) => (
+                            <option key={time} value={time}>{time}</option>
+                          ))}
                           </select>
                         <i class="fa-solid fa-calendars"></i></div>
                     </div>

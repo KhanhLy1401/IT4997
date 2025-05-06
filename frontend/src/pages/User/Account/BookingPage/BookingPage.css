@@ -58,12 +58,12 @@
     display: inline-block;
   }
   
-  .status.\đã-thanh-toán {
+  .status.\Đã-thanh-toán {
     background-color: #d1fae5;
     color: #065f46;
   }
   
-  .status.\đang-thuê {
+  .status.\Đang-thuê {
     background-color: #dbeafe;
     color: #1e40af;
   }
@@ -90,4 +90,9 @@
     color: #333;
     font-size: 2rem;
     margin-bottom: 2rem;
+  }
+
+  .review-box {
+    background-color: #fff;
+    padding: 5px
   }

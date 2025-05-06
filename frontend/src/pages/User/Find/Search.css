@@ -89,3 +89,15 @@
 .filter-btn {
     align-items: center;
 }
+
+.filter-options {
+    display: flex;
+    flex-direction: row;
+    gap: 40px
+}
+
+.distance-search {
+    font-weight: 600;
+    color: #f26a2b;
+    font-size: 1.2rem;
+}

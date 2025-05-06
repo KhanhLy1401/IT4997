@@ -1,5 +1,6 @@
 import Bike from "../models/Bike.js";
 import Rental from "../models/Rental.js";
+import mongoose from "mongoose";
 
 export const  createRental = async (req, res) => {
     try {
@@ -79,7 +80,7 @@ export const getAllRentalByOwnerId = async (req, res) => {
 
 export const getAllRental = async (req, res) => {
     try {
-        const rentals = await Rental.find({});
+        const rentals = await Rental.find({status: "completed"});
         if(!rentals) return res.status(404).json({message: "Không tìm thấy đơn nào"});
         else return res.status(200).json(rentals)
     } catch(error) {
@@ -103,8 +104,22 @@ export  const updateRentalStatus = async (req, res ) => {
         rental.status = newStatus;
         await rental.save();
 
-        if(newStatus === "canceled" || newStatus === "completed") {
-            await Bike.findByIdAndUpdate(rental.bikeId, {status: "available"});
+
+            // Cập nhật trạng thái
+        rental.status = newStatus;
+        await rental.save();
+
+        // Nếu là completed: set xe về 'available' và tăng rental_count
+        if (newStatus === "completed") {
+        await Bike.findByIdAndUpdate(rental.bikeId, {
+            $set: { status: "available" },
+            $inc: { rental_count: 1 }
+        });
+        }
+
+        // Nếu là canceled: chỉ set về available
+        else if (newStatus === "canceled") {
+        await Bike.findByIdAndUpdate(rental.bikeId, { status: "available" });
         }
 
         return res.status(200).json({
@@ -117,3 +132,198 @@ export  const updateRentalStatus = async (req, res ) => {
         return res.status(500).json({ error: error.message });
     }
 }
+
+export const getRecentRevenue = async (req, res) => {
+    const { ownerId } = req.params;
+    const months = parseInt(req.query.months) || 6;
+
+    try {
+    const now = new Date();
+    const startDate = new Date(now.getFullYear(), now.getMonth() - months + 1, 1);
+
+    const revenueData = await Rental.aggregate([
+        {
+        $match: {
+            ownerId: ownerId,
+            createdAt: { $gte: startDate }
+        }
+        },
+        {
+        $group: {
+            _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+            totalRevenue: { $sum: "$totalPrice" }
+        }
+        },
+        {
+        $sort: { _id: 1 }
+        }
+    ]);
+
+    // ✅ Tạo danh sách tháng theo giờ địa phương (local time)
+    const monthsList = [];
+    for (let i = months - 1; i >= 0; i--) {
+        const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        monthsList.push(`${year}-${month}`);
+    }
+
+    // Gộp kết quả
+    const revenueMap = {};
+    for (const item of revenueData) {
+        revenueMap[item._id] = item.totalRevenue;
+    }
+
+    const result = monthsList.map(month => ({
+        month,
+        totalRevenue: revenueMap[month] || 0
+    }));
+
+    res.json(result);
+
+    } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+    }
+
+}
+
+export const getMonthlyRentalCount = async (req, res) => {
+    const { ownerId } = req.params;
+    const months = parseInt(req.query.months) || 12;
+  
+    try {
+      const now = new Date();
+      const startDate = new Date(now.getFullYear(), now.getMonth() - months + 1, 1);
+  
+      const rentalCounts = await Rental.aggregate([
+        {
+          $match: {
+            ownerId: ownerId,
+            createdAt: { $gte: startDate }
+          }
+        },
+        {
+          $group: {
+            _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+            count: { $sum: 1 }
+          }
+        },
+        {
+          $sort: { _id: 1 }
+        }
+      ]);
+  
+      // Tạo danh sách tháng gần đây
+      const monthsList = [];
+      for (let i = months - 1; i >= 0; i--) {
+        const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        monthsList.push(`${year}-${month}`);
+      }
+  
+      const rentalMap = {};
+      for (const item of rentalCounts) {
+        rentalMap[item._id] = item.count;
+      }
+  
+      const result = monthsList.map(month => ({
+        month,
+        rentalCount: rentalMap[month] || 0
+      }));
+  
+      res.json(result);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error' });
+    }
+};
+  
+// export const getBikeTypeInRental = async (req, res) => {
+//     try {
+//         // Sử dụng aggregate để nhóm theo loại xe và đếm số lượng xe
+//         const bikeCounts = await Rental.aggregate([
+//           {
+//             $lookup: {
+//               from: 'Bike',  // Tên collection của Bike
+//               localField: 'bikeId',  // Trường bikeId trong Rental
+//               foreignField: '_id',  // Trường _id trong Bike
+//               as: 'bikeDetails'  // Tạo một mảng bikeDetails chứa thông tin của xe
+//             }
+//           },
+//           {
+//             $unwind: '$bikeDetails'  // Phân tách mảng bikeDetails thành các document riêng biệt
+//           },
+//           {
+//             $group: {
+//               _id: '$bikeDetails.bikeType',  // Nhóm theo loại xe (manual hoặc automatic)
+//               count: { $sum: 1 }  // Đếm số lượng xe cho mỗi loại
+//             }
+//           },
+//           {
+//             $project: {
+//               _id: 0,  // Không hiển thị _id
+//               bikeType: '$_id',  // Trả về loại xe
+//               count: 1  // Trả về số lượng xe
+//             }
+//           }
+//         ]);
+    
+//         // Trả về kết quả
+//         res.json(bikeCounts);
+//       } catch (error) {
+//         res.status(500).json({ error: 'Lỗi khi đếm xe' });
+//       }
+// }
+
+export const getBikeTypeInRental = async (req, res) => {
+    try {
+      const { ownerId } = req.params; // Lấy ownerId từ params của URL (hoặc từ body nếu bạn muốn gửi theo POST)
+  
+      // Sử dụng aggregate để nhóm theo loại xe và đếm số lượng xe
+      const bikeCounts = await Rental.aggregate([
+        {
+          $match: {
+            ownerId: ownerId  // Lọc theo ownerId
+          }
+        },
+        {
+            $addFields: {
+            bikeIdObject: { $toObjectId: "$bikeId" }
+        }
+        },
+        {
+        $lookup: {
+            from: 'bikes',
+            localField: 'bikeIdObject',
+            foreignField: '_id',
+            as: 'bikeDetails'
+        }
+        },
+        {
+          $unwind: '$bikeDetails'  // Phân tách mảng bikeDetails thành các document riêng biệt
+        },
+        {
+          $group: {
+            _id: '$bikeDetails.bikeType',  // Nhóm theo loại xe (manual hoặc automatic)
+            count: { $sum: 1 }  // Đếm số lượng xe cho mỗi loại
+          }
+        },
+        {
+          $project: {
+            _id: 0,  // Không hiển thị _id
+            bikeType: '$_id',  // Trả về loại xe
+            count: 1  // Trả về số lượng xe
+          }
+        }
+      ]);
+  
+      // Trả về kết quả
+      res.json(bikeCounts);
+    } catch (error) {
+    console.error(error.message);
+      res.status(500).json({ error: 'Lỗi khi đếm xe' });
+    }
+};
+

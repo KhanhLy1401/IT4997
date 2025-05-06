@@ -361,14 +361,8 @@ const [message, setMessage] = useState("");
                     <td>{bike.title}</td>
                     <td>{bike?.totalPrice}</td>
                     <td>
-                      {new Date(bike.startDate).toLocaleString("vi-VN", {
-                      timeZone: "Asia/Ho_Chi_Minh",
-                      hour12: false
-                      })}-
-                      {new Date(bike.endDate).toLocaleString("vi-VN", {
-                      timeZone: "Asia/Ho_Chi_Minh",
-                      hour12: false
-                      })}
+                      {bike.startTime} {new Date(bike.startDate).toLocaleDateString('vi-VN')} -
+                      {bike.endTime} {new Date(bike.endDate).toLocaleDateString("vi-VN")}
                     </td>
                     <td>
                       {bike.totalPrice} VNĐ

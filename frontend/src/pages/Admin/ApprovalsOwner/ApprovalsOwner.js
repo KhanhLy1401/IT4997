@@ -30,7 +30,7 @@ const ApprovalsOwner = () => {
     }, [API_URL]);
 
     const handleApprove = async (userId) => {
-        const isConfirmed = window.confirm("Are you sure you want to approve?");
+        const isConfirmed = window.confirm("Bạn có chắc chắn duyệt chủ xe này?");
     
         if (!isConfirmed) return;
         try {
@@ -65,6 +65,7 @@ const ApprovalsOwner = () => {
                 },
                 body: JSON.stringify({ _id: userId, action: "reject" }),
             });
+            console.log(response);
 
             if (response.ok) {
                 alert("Từ chối thành công!");
@@ -126,7 +127,7 @@ const ApprovalsOwner = () => {
                                 <>
                                     <tr key={user._id}>
                                         <td>{index + 1}</td>
-                                        <td><img src={user.avatar_url} alt="avatar" /></td>
+                                        <td><img src={user.avatar_url.url} alt="avatar" /></td>
                                         <td>{user.fullName}</td>
                                         <td>{user.address}</td>
                                         <td><i className="fa-solid fa-angle-down" onClick={() => toggleDetails(user._id)}></i></td>
@@ -141,10 +142,10 @@ const ApprovalsOwner = () => {
                                                 
                                                 <div className='detail-approval-user'>
                                                     <div className='detail-left'>
-                                                        <img src={user.avatar_url} alt="User"  />
-                                                        <img src={user.license_image_url} alt="Front" />
-                                                        <img src={user.citizen_images.front} alt="Front" />
-                                                        <img src={user.citizen_images.back} alt="Front"  />
+                                                        <img src={user.avatar_url.url} alt="User"  />
+                                                        <img src={user.license_image_url.url} alt="Front" />
+                                                        <img src={user.citizen_images.front.url} alt="Front" />
+                                                        <img src={user.citizen_images.back.url} alt="Front"  />
 
                                                     </div>
                                                     <div className='detail-right'>

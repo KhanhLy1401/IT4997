@@ -15,7 +15,7 @@ router.post('/add',upload.fields([
 router.get('/get-all-bikes', getAllBikes)
 router.delete('/delete-bikes', deleteAllBikes);
 router.get('/get-by-owner/:id', getBikesByOwnerId);
-router.get('/search', searchAvailableBikes);
+router.post('/search', searchAvailableBikes);
 
 router.get('/:id', getBikeById);
 router.delete('/:id', deleteBikeById);

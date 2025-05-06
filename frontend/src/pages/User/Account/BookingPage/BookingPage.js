@@ -6,11 +6,16 @@ import axios from "axios";
 
 const BookingPage = ({ bookings }) => {
   const [statusFilter, setStatusFilter] = useState("Tất cả");
+  const [selectedBikeId, setSelectedBikeId] = useState(null);
+  const [rating, setRating] = useState(5); // 1-5 sao
+  const [comment, setComment] = useState("");
+
   const [currentPage, setCurrentPage] = useState(1);
   const [rentals, SetRentals] = useState(null);
   const itemsPerPage = 5;
   const API_URL = process.env.REACT_APP_API_URL;
   const userId = localStorage.getItem('_id');
+
 
   const filteredBookings = statusFilter === "Tất cả"
     ? bookings
@@ -27,6 +32,21 @@ const BookingPage = ({ bookings }) => {
     setCurrentPage(1);
   };
    
+  const handleSubmitReview = async (bikeId) => {
+    try {
+      await axios.post(`${API_URL}/review/add`, {
+        bikeId,
+        userId,
+        rating,
+        comment,
+      });
+      alert("Gửi đánh giá thành công!");
+      setSelectedBikeId(null); // ẩn form
+    } catch (error) {
+      console.error("Gửi đánh giá thất bại:", error.message);
+    }
+  };
+  
   const getRentalByUser = async (req, res) => {
     try {
       const response = await axios.get(`${API_URL}/rental/user/${userId}`);
@@ -68,29 +88,70 @@ const BookingPage = ({ bookings }) => {
               <th>Hành động</th>
             </tr>
           </thead>
-          <tbody>
+            <tbody>
             {rentals?.map((rental, index) => (
-              <tr key={index}>
-                <td>
-                  <img src={rental.bikeImage} alt={rental.bikeName} className="bike-image" />
-                </td>
-                <td>{rental.bikeName}</td>
-                <td>{rental.ownerName}</td>
-                <td>
-                  {rental.startDate} - {rental.endDate}
-                </td>
-                <td className="price">{rental.totalPrice}₫</td>
-                <td>
-                  <span className={`status ${rental.status.toLowerCase().replace(/\s+/g, '-')}`}>
-                    {rental.status}
-                  </span>
-                </td>
-                <td>
-                  <button className="action-button">Xem chi tiết</button>
-                </td>
-              </tr>
+              <React.Fragment key={index}>
+                <tr>
+                  <td><img src={rental.bikeImage} alt={rental.bikeName} className="bike-image" /></td>
+                  <td>{rental?.bikeName}</td>
+                  <td>{rental?.ownerName}</td>
+                  <td>
+                    {rental.startTime} {new Date(rental.startDate).toLocaleDateString('vi-VN')} - 
+                    {rental.endTime} {new Date(rental.endDate).toLocaleDateString('vi-VN')}
+                  </td>
+                  <td className="price">{rental.totalPrice}₫</td>
+                  <td>
+                    <span className={`status ${rental.status.toLowerCase().replace(/\s+/g, '-')}`}>
+                      {rental.status === "confirmed" ? "Đã xác nhận" : rental.status}
+                    </span>
+                  </td>
+                  <td>
+                    {rental.status === "completed" ? (
+                      <button onClick={() => setSelectedBikeId(rental.bikeId)}>Đánh giá</button>
+                    ) : (
+                      <button className="action-button">Xem chi tiết</button>
+                    )}
+                  </td>
+                </tr>
+
+                {selectedBikeId === rental.bikeId && (
+                  <tr>
+                    <td colSpan="7">
+                      <div className="review-box">
+                        <div className="star-rating">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <span
+                              key={star}
+                              style={{
+                                fontSize: "20px",
+                                cursor: "pointer",
+                                color: star <= rating ? "#ffc107" : "#e4e5e9",
+                              }}
+                              onClick={() => setRating(star)}
+                            >
+                              <i className="fa-solid fa-star"></i>
+                            </span>
+                          ))}
+                        </div>
+                        <textarea
+                          rows="3"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                          placeholder="Nhập nhận xét của bạn..."
+                          style={{ width: "100%", marginTop: "10px" }}
+                        ></textarea>
+                        <div style={{ marginTop: "10px" }}>
+                          <button onClick={() => handleSubmitReview(rental.bikeId)}>Gửi đánh giá</button>
+                          <button onClick={() => setSelectedBikeId(null)} style={{ marginLeft: "10px" }}>Hủy</button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </React.Fragment>
             ))}
           </tbody>
+
         </table>
       </div>
 
