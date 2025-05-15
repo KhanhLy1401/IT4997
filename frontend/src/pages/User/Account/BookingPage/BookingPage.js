@@ -12,7 +12,7 @@ const BookingPage = ({ bookings }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [rentals, SetRentals] = useState(null);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const API_URL = process.env.REACT_APP_API_URL;
   const userId = localStorage.getItem('_id');
 
@@ -21,7 +21,7 @@ const BookingPage = ({ bookings }) => {
     ? bookings
     : bookings?.filter((booking) => booking.status === statusFilter);
 
-  const totalPages = Math.ceil(filteredBookings?.length / itemsPerPage );
+  const totalPages = Math.ceil(filteredBookings?.length / itemsPerPage ) || 1;
   const currentBookings = filteredBookings?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -80,8 +80,8 @@ const BookingPage = ({ bookings }) => {
           <thead>
             <tr>
               <th>Hình ảnh</th>
-              <th>Tên xe</th>
-              <th>Chủ xe</th>
+              {/* <th>Tên xe</th>
+              <th>Chủ xe</th> */}
               <th>Thời gian thuê</th>
               <th>Giá</th>
               <th>Trạng thái</th>
@@ -93,8 +93,8 @@ const BookingPage = ({ bookings }) => {
               <React.Fragment key={index}>
                 <tr>
                   <td><img src={rental.bikeImage} alt={rental.bikeName} className="bike-image" /></td>
-                  <td>{rental?.bikeName}</td>
-                  <td>{rental?.ownerName}</td>
+                  {/* <td>{rental?.bikeName}</td>
+                  <td>{rental?.ownerName}</td> */}
                   <td>
                     {rental.startTime} {new Date(rental.startDate).toLocaleDateString('vi-VN')} - 
                     {rental.endTime} {new Date(rental.endDate).toLocaleDateString('vi-VN')}
@@ -102,7 +102,7 @@ const BookingPage = ({ bookings }) => {
                   <td className="price">{rental.totalPrice}₫</td>
                   <td>
                     <span className={`status ${rental.status.toLowerCase().replace(/\s+/g, '-')}`}>
-                      {rental.status === "confirmed" ? "Đã xác nhận" : rental.status}
+                      {rental.status === "confirmed" ? "Đã xác nhận" : (rental.status==="completed"?"Hoàn thành": rental.status)}
                     </span>
                   </td>
                   <td>

@@ -40,8 +40,8 @@ const Header = ({ setIsOpen, setIsLogin, setIsAuthOpen, user, setUser }) => {
               }}><i class="fa-duotone fa-solid fa-right-from-bracket"> </i>
               </span></span>
             <div className='dropdown-menu'>
-              <NavLink to="/account">Hồ sơ</NavLink>
-              <NavLink to="/my-bookings">Đơn thuê xe</NavLink>
+              <NavLink to="/account/my-account">Hồ sơ</NavLink>
+              <NavLink to="/account/my-bookings">Đơn thuê xe</NavLink>
               
             </div>
           </div>

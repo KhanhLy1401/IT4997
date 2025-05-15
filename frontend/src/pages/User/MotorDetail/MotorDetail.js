@@ -14,6 +14,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
     const navigate = useNavigate();
     const [bike, setBike] = useState();
     const API_URL = process.env.REACT_APP_API_URL;
+    const API_FLASK = process.env.REACT_APP_API_FLASK;
     const [pickupDate, setPickupDate] = useState('');
     const [pickupDateTime, setPickupDateTime] = useState('');
     const [pickupTime, setPickupTime] = useState("05:00");
@@ -29,7 +30,6 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
     const handleDeliveryChange = (e) => {
         setIsDelivery(e.target.checked);
     };
-    console.log("state truyền từ search", state);
 
     useEffect(()=>{
         if(state){
@@ -61,7 +61,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
           setTotalPrice(0);
         }
     }
-    , [])
+    , [pickupDate, pickupTime, returnDate, returnTime])
 
     const getCombinedDateTime = (date, time) => {
         return `${date}T${time}`;
@@ -87,7 +87,9 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
             try {
                 const response = await axios.get(`${API_URL}/bike/${id}`);
                 setBike(response.data);
-                // console.log(bike)
+                console.log(API_FLASK);
+                const recommendation = await axios.get(`${API_FLASK}/recommend/content?bikeId=${id}`)
+                console.log("Recommendation",recommendation);
             } catch (error) {
                 console.error('Lỗi lấy chi tiets xe:', error.message);
             }
@@ -203,6 +205,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                     <div className='motor-detail-feature-title'>Chính sách hủy xe</div>
 
                 </div>
+                <div>Xe gợi ý cho Bạn</div>
             </div>
             <div className='motor-detail-booking'>
                 <div className='motor-detail-booking-1'>
@@ -267,6 +270,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
                                     placeholder='Nhập địa chỉ nhận xe'
+                                    required
                                 />
                                 <div className='address-distance'>Khoảng cách giao xe: {(Math.ceil(state?.distance / 10) / 100).toFixed(2)} km</div>
                             </div>
@@ -279,7 +283,9 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
 
                     </div>
                     <div className='motor-detail-booking-total'>
-                        Tổng cộng: {isDelivery? (totalPrice=totalPrice+(Math.ceil(state?.distance / 10) / 100) || 50000).toFixed(2)*10000 : totalPrice.toLocaleString()} vnđ
+                        Tổng cộng: {isDelivery
+                            ? (Math.round((totalPrice + Math.ceil(state?.distance / 10) / 100) * 10)).toLocaleString()
+                            : totalPrice.toLocaleString()} vnđ
                     </div>
                     <div className='motor-detail-booking-btn' onClick={() =>handleRentalChange() }>
                         Chọn thuê
@@ -288,7 +294,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                     
                 </div>
                 <div className='extra-charge'>
-                    Phụ phí
+                    {/* Phụ phí */}
                 </div>
             </div>
         </div>

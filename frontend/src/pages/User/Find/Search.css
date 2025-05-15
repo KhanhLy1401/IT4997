@@ -101,3 +101,7 @@
     color: #f26a2b;
     font-size: 1.2rem;
 }
+.price-from-to {
+    border-radius: 5px;
+    padding: 5px;
+}

@@ -30,7 +30,7 @@ const Dashboard = () => {
             setUser(response.data);
             setOwner(response2.data);
             setBike(response3.data);
-            setSuccessRental(response4.data.filter(rental => rental.status==="Completed").length);
+            setSuccessRental(response4.data.filter(rental => rental.status==="completed").length);
             
         }
         fetchData();

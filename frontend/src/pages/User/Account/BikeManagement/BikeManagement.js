@@ -157,22 +157,10 @@ const [message, setMessage] = useState("");
           Tất cả xe
         </button>
         <button
-          className={`tab ${activeTab === 'statistics' ? 'active' : ''}`}
-          onClick={() => handleTabClick('statistics')}
-        >
-          Thống kê
-        </button>
-        <button
           className={`tab ${activeTab === 'toDoList' ? 'active' : ''}`}
           onClick={() => handleTabClick('toDoList')}
         >
           Danh sách việc cần làm
-        </button>
-        <button
-          className={`tab ${activeTab === 'hiddenBikes' ? 'active' : ''}`}
-          onClick={() => handleTabClick('hiddenBikes')}
-        >
-          Tạm ẩn
         </button>
       </div>
 
@@ -342,8 +330,8 @@ const [message, setMessage] = useState("");
             <thead>
               <tr>
                 <th>Ảnh</th>
-                <th>Tên xe</th>
-                <th>Người thuê</th>
+                {/* <th>Tên xe</th>
+                <th>Người thuê</th> */}
                 <th>Ngày thuê</th>
                 <th>Tổng tiền</th>
                 <th>Loại giao</th>
@@ -358,8 +346,8 @@ const [message, setMessage] = useState("");
                     <td className="product-cell">
                       <img src={bike?.bikeImage} alt={bike.title} className="bike-thumb" />
                     </td>
-                    <td>{bike.title}</td>
-                    <td>{bike?.totalPrice}</td>
+                    {/* <td>{bike.title}</td>
+                    <td>{bike?.totalPrice}</td> */}
                     <td>
                       {bike.startTime} {new Date(bike.startDate).toLocaleDateString('vi-VN')} -
                       {bike.endTime} {new Date(bike.endDate).toLocaleDateString("vi-VN")}
@@ -394,8 +382,8 @@ const [message, setMessage] = useState("");
             <thead>
               <tr>
                 <th>Ảnh</th>
-                <th>Tên xe</th>
-                <th>Người thuê</th>
+                {/* <th>Tên xe</th>
+                <th>Người thuê</th> */}
                 <th>Ngày thuê</th>
                 <th>Tổng tiền</th>
                 <th>Loại giao</th>
@@ -410,8 +398,8 @@ const [message, setMessage] = useState("");
                     <td className="product-cell">
                       <img src={bike?.bikeImage} alt={bike.title} className="bike-thumb" />
                     </td>
-                    <td>{bike.title}</td>
-                    <td>{bike?.totalPrice}</td>
+                    {/* <td>{bike.title}</td>
+                    <td>{bike?.totalPrice}</td> */}
                     <td>
                       {new Date(bike.startDate).toLocaleString("vi-VN", {
                       timeZone: "Asia/Ho_Chi_Minh",
@@ -443,17 +431,17 @@ const [message, setMessage] = useState("");
           </table>
 
 
-          <h2 className='list-rented-bike'>Danh sách xe đang cho thuê</h2>
+          <h2 className='list-rented-bike'>Danh sách xe đã hoàn thành</h2>
           <table className="bike-table">
             <thead>
               <tr>
                 <th>Ảnh</th>
-                <th>Tên xe</th>
-                <th>Người thuê</th>
+                {/* <th>Tên xe</th> */}
+                {/* <th>Người thuê</th> */}
                 <th>Ngày thuê</th>
                 <th>Tổng tiền</th>
                 <th>Loại giao</th>
-                <th>Xác nhận</th>
+                <th>Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -464,8 +452,8 @@ const [message, setMessage] = useState("");
                     <td className="product-cell">
                       <img src={bike?.bikeImage} alt={bike.title} className="bike-thumb" />
                     </td>
-                    <td>{bike.title}</td>
-                    <td>{bike?.totalPrice}</td>
+                    {/* <td>{bike.title}</td> */}
+                    {/* <td>{bike?.totalPrice}</td> */}
                     <td>
                       {new Date(bike.startDate).toLocaleString("vi-VN", {
                       timeZone: "Asia/Ho_Chi_Minh",
@@ -487,7 +475,7 @@ const [message, setMessage] = useState("");
                         className="action-btn"
                         onClick={() => handleCompleted(bike._id)}
                       >
-                        Xác nhận hoàn thành
+                        Xem đánh giá
                       </button>
 
                     </td>

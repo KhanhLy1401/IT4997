@@ -154,7 +154,7 @@ const Search = () => {
                 </option>
               ))}
             </select>
-            <div>Tìm kiếm</div>
+            {/* <div>Tìm kiếm</div> */}
           </div>
           
         </div>
@@ -183,16 +183,20 @@ const Search = () => {
               <label>
                 Giá từ:
                 <input
+                  className='price-from-to'
                   type='number'
                   value={minPrice}
+                  step="5000"
                   onChange={(e) => setMinPrice(Number(e.target.value))}
                 />
               </label>
               <label>
                 Giá đến:
                 <input
+                  className='price-from-to'
                   type='number'
                   value={maxPrice}
+                  step="5000"
                   onChange={(e) => setMaxPrice(Number(e.target.value))}
                 />
               </label>

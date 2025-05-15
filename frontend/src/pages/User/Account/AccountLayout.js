@@ -31,7 +31,7 @@ const AccountLayout = () => {
             
             <NavLink to="/account/my-bookings"><i className="fa-regular fa-box-check"></i> Chuyến của tôi</NavLink>
           </li>
-          <li><i className="fa-regular fa-map-pin"></i> Địa chỉ của tôi</li>
+          {/* <li><i className="fa-regular fa-map-pin"></i> Địa chỉ của tôi</li> */}
           <li className="logoutt"><i className="fa-solid fa-left-from-bracket"></i> Đăng xuất</li>
         </ul>
       </aside>

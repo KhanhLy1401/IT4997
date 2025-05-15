@@ -197,14 +197,14 @@ const Dashboard = () => {
             </ul>
           </div>
 
-          <div className="list-card">
+          {/* <div className="list-card">
             <h3>Top Users</h3>
             <ul>
               {topUsers?.map((u) => (
                 <li key={u.name}><span>{u.name}</span><span>{u.value}</span></li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
       

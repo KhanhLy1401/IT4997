@@ -94,7 +94,7 @@ const RentalForm = () => {
           <p>Đơn giá: {state.bikePrice} đ</p>
           <p>Thời gian thuê: × {state.rentalDuration.toFixed(2)} ngày</p>
           <p><strong>Tổng: {state.totalPrice.toFixed(2)} đ</strong></p>
-          <p>Đặt cọc: {(state.totalPrice * 0.3).toFixed(2)} đ</p>
+          {/* <p>Đặt cọc: {(state.totalPrice * 0.3).toFixed(2)} đ</p> */}
         </div>
       </div>
 
@@ -116,10 +116,10 @@ const RentalForm = () => {
                   value="before" 
                   onChange={() => setPaymentMethod('before')} 
                 />
-                <span>Trả trước (giảm 5%)</span>
+                <span>Thanh toán</span>
               </label>
             </div>
-            <div className="option">
+            {/* <div className="option">
               <label>
                 <input 
                   type="radio" 
@@ -130,7 +130,7 @@ const RentalForm = () => {
                 />
                 <span>Trả sau</span>
               </label>
-            </div>
+            </div> */}
           </div>
 
           <div className="form-buttons">

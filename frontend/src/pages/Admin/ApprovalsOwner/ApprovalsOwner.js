@@ -35,7 +35,7 @@ const ApprovalsOwner = () => {
         if (!isConfirmed) return;
         try {
             const response = await fetch(`${API_URL}/admin/approve-owner`, {
-                method: "POST",
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                 },

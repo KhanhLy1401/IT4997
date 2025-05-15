@@ -13,7 +13,12 @@
     background-color: #fff;
 }
 
-
+.add-bike-description {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 5px 0px 2px;
+    text-align: center;
+}
 
 .add-step {
     display: flex;

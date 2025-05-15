@@ -133,7 +133,6 @@ const Addbike = () => {
     formData.append("images_back", image.back);
     formData.append("images_side", image.side);
 
-    console.log("form add bike", formData);
     try {
       const response = await axios.post(`${API_URL}/bike/add`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -146,6 +145,8 @@ const Addbike = () => {
       }
       
       alert("Đăng ký xe thành công!");
+      navigate("/account/bikes");
+
       
     } catch (error) {
       alert("Đã có lỗi xảy ra khi gửi dữ liệu.");
@@ -156,7 +157,7 @@ const Addbike = () => {
 
   return (
     <div className='add-bike-page'>
-      <div className='add-bike-description'>Đừng để xe bạn rảnh rỗi. Đăng ký ngay để kiếm thêm thu nhập</div>
+      <div className='add-bike-description'>Đăng xe</div>
       <div className="add-bike">
         <div className="add-step">
           <i className="fa-light fa-person-biking-mountain fa-5x"></i>
