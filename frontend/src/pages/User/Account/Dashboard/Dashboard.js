@@ -92,7 +92,7 @@ const Dashboard = () => {
     }
 
     const getTopBike = async () => {
-      const response = await axios.get(`http://localhost:5000/bike/get-by-owner/${ownerId}`);
+      const response = await axios.get(`${API_URL}/bike/get-by-owner/${ownerId}`);
       const sorted = response.data.sort((a, b) => b.rental_count - a.rental_count);
       setTopBike(sorted);
     }
