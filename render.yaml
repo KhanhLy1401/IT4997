@@ -1,0 +1,29 @@
+services:
+  # 1. Frontend (React)
+  - type: static
+    name: react-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: build
+    rootDir: frontend
+
+  # 2. Backend (Node.js)
+  - type: web
+    name: node-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: PORT
+        value: 10000
+
+  # 3. Backend (Flask / Python)
+  - type: web
+    name: flask-backend
+    env: python
+    plan: free
+    rootDir: backend/recommendation
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
