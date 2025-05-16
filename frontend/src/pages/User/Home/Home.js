@@ -8,6 +8,8 @@ import LocationPicker from '../../../components/LocationPicker/LocationPicker.js
 
 
 const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
+  const API_URL = process.env.REACT_APP_API_URL;
+
 
   const [pickupDate, setPickupDate] = useState('');
   const [pickupTime, setPickupTime] = useState("hh:mm");
@@ -68,7 +70,7 @@ const generateTimeOptions = () => {
 
 
     try {
-      const response = await axios.post('http://localhost:5000/bike/search', {
+      const response = await axios.post(`${API_URL}/bike/search`, {
         province: location.province,
         district: location.district, 
         ward: location.ward,         
@@ -99,7 +101,7 @@ const generateTimeOptions = () => {
     useEffect(() => {
           const fetchBikes = async () => {
             try {
-              const response = await axios.get('http://localhost:5000/bike/get-all-bikes');
+              const response = await axios.get(`${API_URL}/bike/get-all-bikes`);
               setBikes(response.data);
             } catch (error) {
               console.error("Lỗi khi lấy dữ liệu xe:", error);

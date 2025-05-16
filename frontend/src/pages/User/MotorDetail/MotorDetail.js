@@ -26,6 +26,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
     const {state} = useLocation();
     const [isDelivery, setIsDelivery] = useState(false);
     const [address, setAddress] = useState('');
+    const [recommendBikes, setRecommendBikes]=useState();
 
     const handleDeliveryChange = (e) => {
         setIsDelivery(e.target.checked);
@@ -89,7 +90,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                 setBike(response.data);
                 console.log(API_FLASK);
                 const recommendation = await axios.get(`${API_FLASK}/recommend/content?bikeId=${id}`)
-                console.log("Recommendation",recommendation);
+                setRecommendBikes(recommendation.data);                
             } catch (error) {
                 console.error('Lỗi lấy chi tiets xe:', error.message);
             }
@@ -97,7 +98,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
 
         fetchData();
 
-    }, [API_URL]);
+    }, [API_URL,id]);
 
 
     useEffect(() => {
@@ -125,6 +126,7 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
           setTotalPrice(0);
         }
       }, [pickupDate, pickupTime, returnDate, returnTime, bike]); 
+
       
   if (!bike) {
     return <div>Không tìm thấy xe</div>;
@@ -205,7 +207,40 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                     <div className='motor-detail-feature-title'>Chính sách hủy xe</div>
 
                 </div>
-                <div>Xe gợi ý cho Bạn</div>
+                <div>
+                    <div className='motor-detail-feature-title'>Xe tương tự cho bạn</div>
+                    <div className="motor" >
+                        {recommendBikes?.map((bike) => (
+                        <div key={bike._id} onClick={() => navigate(`/motor-detail/${bike._id}`)} className="motor-img">
+                            <div className='img-container'><img
+                            src={bike.images?.front?.url || "/assets/anhxemay.jpg"}
+                            alt={bike.title}
+                            /></div>
+                            <div>
+                            <div className="motor-name">{bike.title}</div>
+                            <div className="motor-feature">
+                                <div className='motor-feature-item'>
+                                <div className="motor-capacity"><i class="fa-regular fa-globe"></i> Dung tích: {bike?.capacity } cm<sup>3</sup></div>
+                                <div className='motor-fuel'><i className="fa-solid fa-gas-pump"></i> Xăng </div>
+                                </div>
+                                <div className="motor-type"><i class="fa-regular fa-motorcycle"></i> Loại xe: {bike.bikeType || "Xe số"}</div>
+                                <div className="motor-brand"><i className="fa-regular fa-tags" ></i> Hãng: {bike.brand}</div>
+                            
+                            </div>
+                            <div className='line-motor'></div>
+                            <div className="motor-address">
+                                <i class="fa-solid fa-location-dot location-dot"></i> {bike.location?.province || "Hanoi"}
+                            </div>
+                            <div className="motor-rating">
+                                <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
+                                <div className='motor-price'> <span>{bike.price?.perDay/1000  || 0}K</span>/ngày </div>
+                            </div>
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+
+                </div>
             </div>
             <div className='motor-detail-booking'>
                 <div className='motor-detail-booking-1'>

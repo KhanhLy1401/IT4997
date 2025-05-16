@@ -14,16 +14,12 @@ connectDB();
 const port = process.env.PORT;
 
 const app = express();
-// const https = require('https');
-// const fs = require('fs');
 
 //middlewares
 app.use(cors());
-// app.use(bodyParser.json());
 app.use(express.json());
 app.use('/', router);
 
-// app.use('/', router);
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);
 });
