@@ -30,34 +30,11 @@ const Dashboard = () => {
   const [topBike, setTopBike]=useState(null);
 
 
-
-
-
   const rentalsByType = [
     { name: "Xe số", value: 35 },
     { name: "Xe tay ga", value: 45 },
   ];
 
-  const newUsersData = [
-    { month: "Jan", value: 50 },
-    { month: "Feb", value: 90 },
-    { month: "Mar", value: 140 },
-    { month: "Apr", value: 220 }
-  ];
-
-  const topVehicles = [
-    { name: "Honda Click", value: 287 },
-    { name: "Yamaha Mio", value: 259 },
-    { name: "Giant Escape", value: 194 },
-    { name: "Honda Air Blade", value: 181 }
-  ];
-
-  const topUsers = [
-    { name: "John Smith", value: 34 },
-    { name: "Sarah Lee", value: 29 },
-    { name: "Emily Wilson", value: 26 },
-    { name: "David Brown", value: 24 }
-  ];
 
   const COLORS = [ "#00C49F", "#FFBB28"];
 

@@ -82,7 +82,6 @@ export const getAllBikes = async (req, res) => {
     } catch(error) {
         res.status(500).json({error: error.message});
     }
-
 }
 
 export const getBikeById = async (req, res) => {

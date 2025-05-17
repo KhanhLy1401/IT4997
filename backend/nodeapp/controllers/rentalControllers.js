@@ -188,6 +188,53 @@ export const getRecentRevenue = async (req, res) => {
 
 }
 
+export const getAllRecentRevenue = async (req, res) => {
+  const months = parseInt(req.query.months) || 6;
+
+  try {
+    const now = new Date();
+    const startDate = new Date(now.getFullYear(), now.getMonth() - months + 1, 1);
+
+    const revenueData = await Rental.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: startDate }
+        }
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+          totalRevenue: { $sum: "$totalPrice" }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    // Tạo danh sách các tháng cần hiển thị
+    const monthsList = [];
+    for (let i = months - 1; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      monthsList.push(`${y}-${m}`);
+    }
+
+    // Gộp dữ liệu từ aggregate
+    const revenueMap = Object.fromEntries(revenueData.map(item => [item._id, item.totalRevenue]));
+
+    const result = monthsList.map(month => ({
+      month,
+      totalRevenue: revenueMap[month] || 0
+    }));
+
+    res.json(result);
+  } catch (err) {
+    console.error("[getAllRecentRevenue] error:", err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
 export const getMonthlyRentalCount = async (req, res) => {
     const { ownerId } = req.params;
     const months = parseInt(req.query.months) || 12;
