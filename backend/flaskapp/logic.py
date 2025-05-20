@@ -13,7 +13,7 @@ def prepare_tfidf_matrix(bikes):
     tfidf = vect.fit_transform(docs) #Chuyển sang ma trận TF-IDF
     return tfidf, vect
 
-def recommend_by_content(bike_id, top_n=5):
+def recommend_by_content(bike_id, top_n=4):
     bike = bikes_col.find_one({"_id": ObjectId(bike_id)}) 
     province = bike["location"]["province"]
     bikes = list(bikes_col.find({"location.province": province})) #Lấy toàn bộ xe cùng tỉnh với xe ng dùng

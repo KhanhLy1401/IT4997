@@ -29,7 +29,7 @@ const IPN_URL= process.env.IPN_URL;
 const accessKey = 'F8BBA842ECF85';
 const secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
 const partnerCode = 'MOMO';
-const redirectUrl = 'http://localhost:3000/account/my-bookings';
+const redirectUrl = 'https://rental-motorbike-web.onrender.com/account/my-bookings';
 
 const ipnUrl = `${IPN_URL}/payment/ipn`;
 const requestType = "payWithMethod";
