@@ -1,0 +1,16 @@
+.user-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: auto;
+}
+
+.zalo {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+}
+
+.zalo img {
+    width: 60px;
+}

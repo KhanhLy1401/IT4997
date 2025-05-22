@@ -3,9 +3,10 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './Header.css';
 
-const Header = ({ setIsOpen, setIsLogin, setIsAuthOpen, user, setUser }) => {
+const Header = ({ user, setUser }) => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
+  
   return (
     <div className='header'>
       <div className='left-header'>
@@ -30,9 +31,9 @@ const Header = ({ setIsOpen, setIsLogin, setIsAuthOpen, user, setUser }) => {
       </div>
       
       <div className='right-header'>
-        {user ? ( 
+        { user ? ( 
           <div className='user-menu'>
-            <span className='user-name'> {user}   <span onClick={() => {
+            <span className='user-name'> {user || ''}   <span onClick={() => {
                 setUser(null);
                 localStorage.removeItem("fullName");
                 localStorage.removeItem("role");
@@ -47,16 +48,10 @@ const Header = ({ setIsOpen, setIsLogin, setIsAuthOpen, user, setUser }) => {
           </div>
         ) : (
           <>
-            <div 
-              className='sign-up' 
-              onClick={() => { setIsAuthOpen(true); setIsLogin(false); }} 
-            >
+            <div className='sign-up' onClick={() => navigate('/sign-in')}>
               Đăng ký
             </div>
-            <div 
-              className='sign-in' 
-              onClick={() => { setIsAuthOpen(true); setIsLogin(true); }} 
-            >
+            <div className='sign-in' onClick={() => navigate('/sign-in')}>
               Đăng nhập
             </div>
           </>

@@ -18,40 +18,46 @@ import AccountPage from './Account/AccountPage/Account.js'
 import Favorite from "./Account/Favorite/Favorite.js";
 import BikeManagement from "./Account/BikeManagement/BikeManagement.js";
 import Dashboard from "./Account/Dashboard/Dashboard.js";
-import Auth from "../../components/Auth/SignIn.js";
-import RequireOwner from "../../auth/RequireOwner.js";
 
 const UserLayout = () => {
-
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+  const [isAuthOpen, setIsAuthOpen] = useState(false); // Điều khiển modal Auth
   const [user, setUser] = useState(localStorage.getItem("user") || null);
 
   return (
     <div className="user-layout">
       <Header
+        setIsOpen={setIsOpen}
+        setIsLogin={setIsLogin}
+        setIsAuthOpen={setIsAuthOpen} // Truyền xuống Header
         user={user}
         setUser={setUser}
       />
-    
+      
+      <AuthModal
+        isOpen={isAuthOpen}
+        setIsOpen={setIsAuthOpen}
+        isLogin={isLogin}
+        setIsLogin={setIsLogin}
+        setUser={setUser} // Truyền setUser vào AuthModal
+      />
 
       <div className="main">
-
         <Routes>
-          <Route path="/sign-in" element={<Auth setUser={setUser}/>} />
-
-          <Route path="/" element={<Home />} />
-
-          <Route path="/motor-detail/:id" element={<MotorDetail  />} />
-          <Route path="/owner/register" element={<Register />} />
-          <Route path="/owner/register-form" element={<RegisterPage />} />
+          <Route path="/" element={<Home isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
+          <Route path="/motor-detail/:id" element={<MotorDetail isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
+          <Route path="/owner/register" element={<Register isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
+          <Route path="/owner/register-form" element={<RegisterPage isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />} />
           <Route path="/search" element={<Search />} />
           <Route path="/owner/add-bike" element={<Addbike />} />
           <Route path="/account" element={<AccountLayout />}>
             <Route index path="my-account" element={<AccountPage />} />
-            <Route path="add-bike" element={<RequireOwner><Addbike/></RequireOwner>}/>
-            <Route path="dashboard" element={<RequireOwner><Dashboard/></RequireOwner>}/>
+            <Route path="add-bike" element={<Addbike/>}/>
+            <Route path="dashboard" element={<Dashboard/>}/>
             <Route path="my-bookings" element={<BookingPage />} />
             <Route path="favorites" element={<Favorite />} />
-            <Route path="bikes" element={<RequireOwner><BikeManagement/></RequireOwner>} />
+            <Route path="bikes" element={<BikeManagement/>} />
           </Route>
           <Route path="/rental-form/:id" element={<RentalForm />} />
         </Routes>

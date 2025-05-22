@@ -103,7 +103,7 @@ const AuthModal = ({ isOpen, setIsOpen, isLogin, setIsLogin, setUser }) => {
         <p className="switch-mode">
           {isLogin ? "Chưa có tài khoản?" : "Đã có tài khoản?"}{" "}
           <span onClick={() => setIsLogin(!isLogin)}>
-            {isLogin ? "Đăng ký" : "Đăng nhập"} ngay
+            {isLogin ? "Đăng ký" : "Đăng nhập"} 
           </span>
         </p>
       </div>
