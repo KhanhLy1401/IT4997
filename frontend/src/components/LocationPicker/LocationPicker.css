@@ -1,7 +1,7 @@
-.location-picker {
+/* .location-picker {
     display: flex;
     flex-direction: row;
-    gap: 1rem; /* khoảng cách giữa các dropdown */
+    gap: 1rem; 
   }
   
   .picker {
@@ -10,11 +10,56 @@
     border: 1px solid #ccc;
     font-size: 1  rem;
     background-color: #fff;
-    width: 220px;          /* ép chiều rộng cố định */
-    box-sizing: border-box; /* đảm bảo padding không làm vỡ width */
-    appearance: none;       /* loại bỏ style mặc định của trình duyệt */
+    width: 220px;          
+    box-sizing: border-box; 
+    appearance: none;       
   }
   
   .picker:focus {
     border-color: #087241;
   }
+
+   */
+
+   .location-picker {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* giúp xuống dòng nếu không đủ chỗ */
+  gap: 1rem;
+}
+
+/* Mặc định (Desktop - >= 1025px) */
+.picker {
+  padding: 0.5rem 0.8rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #fff;
+  width: 220px;
+  box-sizing: border-box;
+  appearance: none;
+}
+
+.picker:focus {
+  border-color: #087241;
+}
+
+/* Tablet (width từ 768px đến 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .picker {
+    width: 180px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Smartphone (width < 768px) */
+@media (max-width: 767px) {
+  .location-picker {
+    flex-direction: column; /* stack các dropdown theo chiều dọc */
+  }
+
+  .picker {
+    width: 100%; /* full width container */
+    font-size: 0.9rem;
+  }
+}

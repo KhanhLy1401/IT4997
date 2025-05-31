@@ -90,10 +90,7 @@ const generateTimeOptions = () => {
       alert("Không thể tìm xe, vui lòng thử lại sau!");
       return;
     }
-  
-    // Chuyển startDate, endDate sang chuỗi, ví dụ định dạng ISO hoặc timestamp
 
-    // Chuyển trang kèm query params: ?location=...&start=...&end=...
 
   };
 
@@ -167,8 +164,7 @@ const generateTimeOptions = () => {
                           ))}
                           </select>
                         <i class="fa-solid fa-calendars"></i></div>
-                    </div>
-                    
+                    </div>     
 
                 </div>
 
