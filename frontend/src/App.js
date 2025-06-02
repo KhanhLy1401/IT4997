@@ -11,7 +11,6 @@ function App() {
       <div className="App">
         <div className="main-content">
           <Routes>
-            {/* <Route path="/admin/*" element={<AdminLayout />} /> */}
             <Route
               path="/admin/*"
               element={

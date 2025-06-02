@@ -1,12 +1,13 @@
 
-import React from 'react';
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './Header.css';
 
-const Header = ({ user, setUser }) => {
+const Header = ({user, setUser}) => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
   
+
   return (
     <div className='header'>
       <div className='left-header'>

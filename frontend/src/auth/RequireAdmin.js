@@ -7,10 +7,11 @@ const RequireAdmin = ({ children }) => {
   const user = localStorage.getItem('token'); 
   const decoded = jwtDecode(user);
   const isAdmin = decoded?.role === 'admin'; 
+  console.log("token", decoded);
 
   if (!isAdmin) {
     alert("Bạn không phải quản trị viên vui lòng đăng nhập dưới quyền quản trị viên ")
-  console.log("Decoded token:", decoded);
+    console.log("Decoded token:", decoded);
 
     return <Navigate to="/" replace />; // chuyển hướng nếu không phải admin
   }

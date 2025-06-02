@@ -2,12 +2,11 @@
   import axios from 'axios';
   import { useNavigate } from "react-router-dom";
   import './RegisterPage.css'
-  import AuthModal from '../../../../components/Auth/Auth.js';
 
 
 
 
-  const RegisterPage = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
+  const RegisterPage = () => {
     const navigate = useNavigate();
     const API_URL = process.env.REACT_APP_API_URL;
 
@@ -140,7 +139,6 @@
 
     return (
       <div className='register-page'>
-        <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
         <div className='register-page-img'> <img src="https://images2.thanhnien.vn/Uploaded/ngocthanh/2022_10_09/check-in-9148.jpg"/></div>
 
         <div className='rp-container'>

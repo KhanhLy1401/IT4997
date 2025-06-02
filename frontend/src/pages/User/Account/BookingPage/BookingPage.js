@@ -80,8 +80,6 @@ const BookingPage = ({ bookings }) => {
           <thead>
             <tr>
               <th>Hình ảnh</th>
-              {/* <th>Tên xe</th>
-              <th>Chủ xe</th> */}
               <th>Thời gian thuê</th>
               <th>Giá</th>
               <th>Trạng thái</th>
@@ -93,8 +91,6 @@ const BookingPage = ({ bookings }) => {
               <React.Fragment key={index}>
                 <tr>
                   <td><img src={rental.bikeImage} alt={rental.bikeName} className="bike-image" /></td>
-                  {/* <td>{rental?.bikeName}</td>
-                  <td>{rental?.ownerName}</td> */}
                   <td>
                     {rental.startTime} {new Date(rental.startDate).toLocaleDateString('vi-VN')} - 
                     {rental.endTime} {new Date(rental.endDate).toLocaleDateString('vi-VN')}

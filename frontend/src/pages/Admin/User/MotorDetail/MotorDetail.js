@@ -3,13 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faStar } from "@fortawesome/free-solid-svg-icons";
 import './MotorDetail.css'
-import AuthModal from '../../../components/Auth/Auth.js';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 
 
 
-const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
+const MotorDetail = () => {
     const { id } = useParams(); // Lấy id từ URL
     const navigate = useNavigate();
     const [bike, setBike] = useState();
@@ -138,7 +137,6 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
 
     if (!localStorage.getItem('user')) {
         alert("Vui lòng đăng nhập để thuê xe.");
-        setIsOpen(true); // mở AuthModal
         return;
     }
    
@@ -154,7 +152,6 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
   return (
     <div className='motor-detail'>
 
-        <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
         <div className='motor-detail-imgs'>
             <div className='md-main-img'>
                 <img src={bike.images?.front?.url||'/assets/anhxemayphu.jpg'} alt='' />

@@ -1,6 +1,5 @@
 import React from 'react'
 import './Home.css'
-import AuthModal from '../../../components/Auth/Auth.js';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -110,7 +109,6 @@ const generateTimeOptions = () => {
   return (
     <div className='root'>
         <div className='home'>
-            <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
             <div className='hero-title'>MOTORENT - Thuê xe ngay</div>
             <div className='hero-subtitle'>Cùng bạn chinh phục mọi nẻo đường</div>
             <div className="home-line"></div>

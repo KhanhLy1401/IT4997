@@ -52,7 +52,7 @@ export const signInUser = async (req, res) => {
     }
 
     // So sánh mật khẩu
-    const isPasswordValid =  bcrypt.compare(password, user.password);
+    const isPasswordValid = bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Sai mật khẩu.' });
     }

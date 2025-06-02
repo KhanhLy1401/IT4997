@@ -3,13 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faStar } from "@fortawesome/free-solid-svg-icons";
 import './MotorDetail.css'
-import AuthModal from '../../../components/Auth/Auth.js';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 
 
 
-const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
+const MotorDetail = () => {
     const { id } = useParams(); // Lấy id từ URL
     const navigate = useNavigate();
     const [bike, setBike] = useState();
@@ -23,6 +22,8 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
     const [returnTime, setReturnTime] = useState('05:00')
     const [rentalDuration, setRentalDuration] = useState(0) // đơn vị ngày (thập phân)
     let [totalPrice, setTotalPrice] = useState(0)
+    const [comment, setComment] = useState(null);
+    const [avarageRating, setAvarageRating] = useState(null);
     const {state} = useLocation();
     const [isDelivery, setIsDelivery] = useState(false);
     const [address, setAddress] = useState('');
@@ -87,8 +88,10 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${API_URL}/bike/${id}`);
+                const response2 = await axios.get(`http://localhost:5000/review/get-by-bike/${id}`);
                 setBike(response.data);
-                console.log(API_FLASK);
+                setComment(response2.data.reviews);
+                setAvarageRating(response2.data.averageRating);
                 const recommendation = await axios.get(`${API_FLASK}/recommend/content?bikeId=${id}`)
                 setRecommendBikes(recommendation.data);                
             } catch (error) {
@@ -129,7 +132,12 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
 
       
   if (!bike) {
-    return <div>Không tìm thấy xe</div>;
+    return <div>
+        <div style={{ textAlign: "center", marginTop: "40px" }}>
+            <i className="fas fa-spinner fa-spin fa-3x" style={{ color: "#12b76a" }}></i>
+            <p>Đang tìm thông tin xe...</p>
+            </div>
+    </div>;
   }
 
 
@@ -138,7 +146,6 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
 
     if (!localStorage.getItem('user')) {
         alert("Vui lòng đăng nhập để thuê xe.");
-        setIsOpen(true); // mở AuthModal
         return;
     }
    
@@ -154,7 +161,6 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
   return (
     <div className='motor-detail'>
 
-        <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
         <div className='motor-detail-imgs'>
             <div className='md-main-img'>
                 <img src={bike.images?.front?.url||'/assets/anhxemayphu.jpg'} alt='' />
@@ -241,6 +247,44 @@ const MotorDetail = ({ isOpen, setIsOpen, isLogin, setIsLogin}) => {
                     </div>
 
                 </div>
+
+                {comment? <div class="review-container">
+                    
+                    <div class="review-header">
+                    
+                    
+                    </div>
+
+                        {comment && comment.length > 0 && (
+                        <div className="motor-detail-comments">
+                            <div className="motor-detail-feature-title">Đánh giá</div>
+                            <span class="star"><i className="fa-solid fa-star"></i></span>
+                            <span class="rating">{avarageRating} </span>
+                            <span class="count">• {comment?.length} đánh giá</span>
+                            {comment.map((c, i) => (
+                            <div class="review-box">
+                            <img src="/assets/avatar.png" alt="Avatar" class="avatar" />
+                                <div class="review-content">
+                                    <div class="review-top">
+                                    <span class="name">user{c.userId}</span>
+                                    <span class="date">{c.createdAt.slice(0, 10)}</span>
+                                    </div>
+                                    <div class="stars">{[...Array(c.rating)].map((_, index) => (
+                                        <i className="fa-solid fa-star"></i>
+                                    ))}</div>
+                                    <p class="comment">{c.comment}</p>
+                                </div>
+                            </div>
+                            ))}
+                        </div>
+                        )}
+                        
+
+                    {/* <div class="see-more">
+                    <button>Xem thêm</button>
+                    </div> */}
+                </div>: ""}
+                
             </div>
             <div className='motor-detail-booking'>
                 <div className='motor-detail-booking-1'>

@@ -1,13 +1,11 @@
-import React from 'react'
 import './Home.css'
-import AuthModal from '../../../components/Auth/Auth.js';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LocationPicker from '../../../components/LocationPicker/LocationPicker.js';
 
 
-const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
+const Home = () => {
   const API_URL = process.env.REACT_APP_API_URL;
 
 
@@ -83,17 +81,13 @@ const generateTimeOptions = () => {
       navigate(`/search?province=${location.province}&district=${location.district}&ward=${location.ward}&startDate=${pickupDate}&startTime=${pickupTime}&endDate=${returnDate}&endTime=${returnTime}`, {
         state: response.data
       });
-      // TODO: xử lý kết quả
   
     } catch (error) {
       console.error("Lỗi khi gọi API:", error.message);
       alert("Không thể tìm xe, vui lòng thử lại sau!");
       return;
     }
-  
-    // Chuyển startDate, endDate sang chuỗi, ví dụ định dạng ISO hoặc timestamp
 
-    // Chuyển trang kèm query params: ?location=...&start=...&end=...
 
   };
 
@@ -113,7 +107,6 @@ const generateTimeOptions = () => {
   return (
     <div className='root'>
         <div className='home'>
-            <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} isLogin={isLogin} setIsLogin={setIsLogin} />
             <div className='hero-title'>MOTORENT - Thuê xe ngay</div>
             <div className='hero-subtitle'>Cùng bạn chinh phục mọi nẻo đường</div>
             <div className="home-line"></div>
@@ -321,5 +314,6 @@ const generateTimeOptions = () => {
 }
 
 export default Home;
+
 
 

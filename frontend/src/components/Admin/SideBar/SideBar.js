@@ -50,7 +50,7 @@ const SideBar = () => {
         
         <NavLink to="/admin/transactions" className='menu-item' activeclassname="active">
           <FontAwesomeIcon icon={faMoneyBill} />
-          <span>Quản lý giao dịch</span>
+          <span>Quản lý đơn thuê</span>
         </NavLink>
       </div>
 

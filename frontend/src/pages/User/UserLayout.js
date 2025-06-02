@@ -9,7 +9,6 @@ import Register from "./Owner/Register/Register.js";
 import RegisterPage from "./Owner/RegisterPage/RegisterPage.js";
 import "./UserLayout.css";
 import Search from "./Find/Search.js";
-import AuthModal from "../../components/Auth/Auth.js"; // Import AuthModal
 import Addbike from "./Owner/AddBike/Addbike.js";
 import AccountLayout from "./Account/AccountLayout.js";
 import RentalForm from "./RentalForm/RentalForm.js";

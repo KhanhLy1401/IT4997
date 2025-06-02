@@ -4,7 +4,7 @@ import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import './SignIn.css';
 
-const Auth = ({ setUser }) => {
+const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -22,15 +22,16 @@ const Auth = ({ setUser }) => {
       if (isLogin) {
         response = await axios.post(`${API_URL}/auth/sign-in`, { email, password });
         const userData = response.data.token;
+        localStorage.setItem('token',userData);
         if (userData) {
           const decoded = jwtDecode(userData);
+          
           console.log("decoded",decoded);
           localStorage.setItem("user", decoded.email);
           localStorage.setItem("_id", decoded._id);
           localStorage.setItem("role", decoded.role);
           localStorage.setItem("phone", decoded.phone);
           localStorage.setItem("fullName", decoded.fullName);
-          setUser(decoded.fullName);
           alert("Đăng nhập thành công!");
           navigate("/");
         }
@@ -91,13 +92,13 @@ const Auth = ({ setUser }) => {
               required
             />
             {error && <p className="error">{error}</p>}
-            <button type="submit">{isLogin ? 'LOGIN' : 'REGISTER'}</button>
+            <button type="submit">{isLogin ? 'Đăng nhập' : 'Đăng ký '}</button>
           </form>
 
           <div className="social-login">
             <p className="switch-text">
               {isLogin ? "Chưa có tài khoản?" : "Đã có tài khoản?"}
-              <span onClick={() => setIsLogin(!isLogin)}>
+              <span className='login-btn' onClick={() => setIsLogin(!isLogin)}>
                 {isLogin ? " Đăng ký" : " Đăng nhập"}
               </span>
             </p>
