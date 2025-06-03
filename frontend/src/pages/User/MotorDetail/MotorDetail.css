@@ -225,18 +225,18 @@
 
 .review-box {
   display: flex;
-  padding: 16px;
+  padding: 30px;
   border: 1px solid #e1e1e1;
   border-radius: 10px;
   margin-bottom: 16px;
+  margin-top: 16px;
   align-items: flex-start;
 }
 
-.avatar {
+.review-box .avatar {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  object-fit: cover;
   margin-right: 16px;
 }
 

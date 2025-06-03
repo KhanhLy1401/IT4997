@@ -58,11 +58,15 @@ const UserLayout = () => {
 
       <Footer />
 
-      <div className="zalo">
+      <div className="contact-buttons">
         <a href="https://zalo.me/0946234129" target="_blank" rel="noopener noreferrer" className="zalo">
           <img src="/assets/zalo.svg" alt="Zalo" />
         </a>
+        <a href="https://m.me/khanhly.phan.1029" target="_blank" rel="noopener noreferrer" className="messenger">
+          <img src="/assets/messenger.svg" alt="Messenger" />
+        </a>
       </div>
+      
     </div>
   );
 };

@@ -5,11 +5,11 @@
     height: 100%;
     min-height: 100vh;
     font-size: 1rem;
-    /* position: fixed; */
 }
 
-.avatar {
-    padding: 10px;
+
+.sidebar .avatar {
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;

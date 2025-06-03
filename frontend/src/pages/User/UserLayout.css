@@ -4,13 +4,19 @@
     width: 100%;
     margin: auto;
 }
-
-.zalo {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
+.contact-buttons {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px; 
 }
 
-.zalo img {
-    width: 60px;
+.zalo img,
+.messenger img {
+  width: 50px; 
+  height: 50px;
+  cursor: pointer;
 }

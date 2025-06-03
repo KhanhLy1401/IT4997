@@ -11,41 +11,77 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const API_URL = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
     
-    e.preventDefault();
-    setError('');
-    try {
-      let response;
-      if (isLogin) {
-        response = await axios.post(`${API_URL}/auth/sign-in`, { email, password });
-        const userData = response.data.token;
-        localStorage.setItem('token',userData);
-        if (userData) {
-          const decoded = jwtDecode(userData);
+  //   e.preventDefault();
+  //   setError('');
+  //   try {
+  //     let response;
+  //     if (isLogin) {
+  //       response = await axios.post(`${API_URL}/auth/sign-in`, { email, password });
+  //       const userData = response.data.token;
+  //       localStorage.setItem('token',userData);
+  //       if (userData) {
+  //         const decoded = jwtDecode(userData);
           
-          console.log("decoded",decoded);
-          localStorage.setItem("user", decoded.email);
-          localStorage.setItem("_id", decoded._id);
-          localStorage.setItem("role", decoded.role);
-          localStorage.setItem("phone", decoded.phone);
-          localStorage.setItem("fullName", decoded.fullName);
-          alert("Đăng nhập thành công!");
-          navigate("/");
-        }
-      } else {
-        await axios.post(`${API_URL}/auth/sign-up`, { fullName, phone, email, password });
-        alert("Đăng ký thành công!");
-        setIsLogin(true); // chuyển về trang đăng nhập sau khi đăng ký
-      }
-    } catch (err) {
-      console.log(err.message);
-      setError(err.response?.data?.message || "Có lỗi xảy ra!");
-    }
-  };
+  //         console.log("decoded",decoded);
+  //         localStorage.setItem("user", decoded.email);
+  //         localStorage.setItem("_id", decoded._id);
+  //         localStorage.setItem("role", decoded.role);
+  //         localStorage.setItem("phone", decoded.phone);
+  //         localStorage.setItem("fullName", decoded.fullName);
+  //         alert("Đăng nhập thành công!");
+  //         navigate("/");
+  //       }
+  //     } else {
+  //       await axios.post(`${API_URL}/auth/sign-up`, { fullName, phone, email, password });
+  //       alert("Đăng ký thành công!");
+  //       setIsLogin(true); // chuyển về trang đăng nhập sau khi đăng ký
+  //     }
+  //   } catch (err) {
+  //     console.log(err.message);
+  //     setError(err.response?.data?.message || "Có lỗi xảy ra!");
+  //   }
+  // };
 
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (isSubmitting) return; // tránh gửi lại nếu đang xử lý
+  setIsSubmitting(true); // bắt đầu xử lý
+  setError('');
+
+  try {
+    let response;
+    if (isLogin) {
+      response = await axios.post(`${API_URL}/auth/sign-in`, { email, password });
+      const userData = response.data.token;
+      localStorage.setItem('token', userData);
+      if (userData) {
+        const decoded = jwtDecode(userData);
+        localStorage.setItem("user", decoded.email);
+        localStorage.setItem("_id", decoded._id);
+        localStorage.setItem("role", decoded.role);
+        localStorage.setItem("phone", decoded.phone);
+        localStorage.setItem("fullName", decoded.fullName);
+        alert("Đăng nhập thành công!");
+        navigate("/");
+        window.location.reload();
+      }
+    } else {
+      await axios.post(`${API_URL}/auth/sign-up`, { fullName, phone, email, password });
+      alert("Đăng ký thành công!");
+      setIsLogin(true); // chuyển về đăng nhập
+    }
+  } catch (err) {
+    console.log(err.message);
+    setError(err.response?.data?.message || "Có lỗi xảy ra!");
+  } finally {
+    setIsSubmitting(false); // kết thúc xử lý
+  }
+};
   return (
     <div className="fancy-container">
       <div className="fancy-box">
@@ -86,13 +122,15 @@ const Auth = () => {
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Mật khẩu"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
             {error && <p className="error">{error}</p>}
-            <button type="submit">{isLogin ? 'Đăng nhập' : 'Đăng ký '}</button>
+            <button className='login-btn' type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Đang xử lý..." : isLogin ? 'Đăng nhập' : 'Đăng ký'}
+              </button>
           </form>
 
           <div className="social-login">
@@ -101,6 +139,7 @@ const Auth = () => {
               <span className='login-btn' onClick={() => setIsLogin(!isLogin)}>
                 {isLogin ? " Đăng ký" : " Đăng nhập"}
               </span>
+              
             </p>
           </div>
         </div>
