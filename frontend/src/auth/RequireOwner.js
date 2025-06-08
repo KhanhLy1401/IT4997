@@ -1,10 +1,12 @@
 // src/components/RequireAdmin.js
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
 
 const RequireOwner = ({ children }) => {
-  const user = localStorage.getItem('role'); // hoặc từ context/auth
-  const isOwner = user?.role === 'owner'; // tùy vào cách bạn lưu role
+  const user = localStorage.getItem('token'); 
+  const decoded = jwtDecode(user);
+  const isOwner = decoded?.role === 'owner'; 
 
   if (!isOwner) {
     return <>

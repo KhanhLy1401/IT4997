@@ -6,8 +6,6 @@ import './MotorDetail.css'
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 
-
-
 const MotorDetail = () => {
     const { id } = useParams(); // Lấy id từ URL
     const navigate = useNavigate();
@@ -88,7 +86,7 @@ const MotorDetail = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${API_URL}/bike/${id}`);
-                const response2 = await axios.get(`http://localhost:5000/review/get-by-bike/${id}`);
+                const response2 = await axios.get(`${API_URL}/review/get-by-bike/${id}`);
                 setBike(response.data);
                 setComment(response2.data.reviews);
                 setAvarageRating(response2.data.averageRating);
@@ -166,11 +164,13 @@ const MotorDetail = () => {
                 <img src={bike.images?.front?.url||'/assets/anhxemayphu.jpg'} alt='' />
             </div>
             <div className='md-sub-img'>
-                <img src={bike.images?.front?.url || '/assets/anhxemayphu.jpg'} alt='' />
                 <img src={bike.images?.back?.url || '/assets/anhxemayphu.jpg'} alt='' />
                 <img src={bike.images?.side?.url || '/assets/anhxemayphu.jpg'} alt='' />
             </div>
         </div>
+        
+
+
         <div className='motor-detail-main'>
             <div className='motor-detail-des'>
                 <div className='motor-detail-name'>{bike.title}</div>
@@ -211,7 +211,12 @@ const MotorDetail = () => {
                 </div>
                 <div className='motor-detail-policy'>
                     <div className='motor-detail-feature-title'>Chính sách hủy xe</div>
+                            <div className='motor-detail-license'>
+                                Hủy trước thời gian nhận xe ít nhất là 6 tiếng <br />
+                                Phí hủy: 10% giá trị đơn hàng
 
+
+                            </div>
                 </div>
                 <div>
                     <div className='motor-detail-feature-title'>Xe tương tự cho bạn</div>
@@ -289,8 +294,8 @@ const MotorDetail = () => {
             <div className='motor-detail-booking'>
                 <div className='motor-detail-booking-1'>
                     Phí giao nhận xe tại địa chỉ khách hàng tính theo:<br/>
-                    -Dưới 5km: 50.000 vnđ / lượt <br/>
-                    -Từ 5km: 10.000 vnđ / km
+                    -Dưới 10km: 10.000 vnđ / km <br/>
+                    -Từ 10km: 7.000 vnđ / km
 
                 </div>
                 <div className='motor-detail-booking-2'>

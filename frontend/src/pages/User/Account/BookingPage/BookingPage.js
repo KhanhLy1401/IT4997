@@ -1,10 +1,12 @@
 // File: BookedBikesPage.jsx
 
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./BookingPage.css";
 import axios from "axios";
 
 const BookingPage = ({ bookings }) => {
+  const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState("Tất cả");
   const [selectedBikeId, setSelectedBikeId] = useState(null);
   const [rating, setRating] = useState(5); // 1-5 sao
@@ -51,6 +53,7 @@ const BookingPage = ({ bookings }) => {
     try {
       const response = await axios.get(`${API_URL}/rental/user/${userId}`);
       SetRentals(response.data);
+      console.log("rentals", response.data);
     } catch(error) {
       console.log("error in getRentalByUser", error.message);
     }
@@ -105,7 +108,13 @@ const BookingPage = ({ bookings }) => {
                     {rental.status === "completed" ? (
                       <button onClick={() => setSelectedBikeId(rental.bikeId)}>Đánh giá</button>
                     ) : (
-                      <button className="action-button">Xem chi tiết</button>
+                      <button
+                        className="action-button"
+                        onClick={() => navigate(`/account/my-bookings/${rental._id}`, { state: { rental } })}
+                      >
+                        Xem chi tiết
+                      </button>
+
                     )}
                   </td>
                 </tr>

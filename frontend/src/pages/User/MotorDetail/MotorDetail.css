@@ -39,7 +39,7 @@
 
 .md-sub-img img {
     width: 100%;
-    height: calc(33.333% - 7px); 
+    height: calc(50% - 7px); 
     border-radius: 8px;
     object-fit: cover;
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './BikeManagement.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const BikeManagement = () => {
   const API_URL = process.env.REACT_APP_API_URL;
@@ -13,9 +14,10 @@ const BikeManagement = () => {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [titleFilter, setTitleFilter] = useState('');
   const [minPrice, setMinPrice] = useState('');
-const [maxPrice, setMaxPrice] = useState('');
-const [loading, setLoading] = useState(false);
-const [message, setMessage] = useState("");
+  const [maxPrice, setMaxPrice] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
 
 
@@ -230,7 +232,7 @@ const [message, setMessage] = useState("");
                     hour12: false
                   })}</td>
                   <td>
-                    <button className="action-btn">Chi tiết</button>
+                    <button className="action-btn" onClick={() => navigate(`/account/bikes/${bike._id}`, { state: { bike } })}>Chi tiết</button>
                     <button className='action-hide'>Ẩn xe</button>
                     <button className='action-hide'>Chỉnh sửa</button>
                   </td>

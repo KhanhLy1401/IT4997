@@ -1,0 +1,284 @@
+Date : 2025-06-08 03:24:32
+Directory : c:\Users\khanh\IT4997\rental-motorbike-web\frontend
+Total : 181 files,  57586 codes, 433 comments, 12081 blanks, all 70100 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| PostCSS          |         90 |     35,710 |        317 |     11,406 |     47,433 |
+| JSON             |          6 |     16,930 |          0 |          0 |     16,930 |
+| JavaScript       |         73 |      5,046 |         99 |        670 |      5,815 |
+| Markdown         |          1 |         38 |          0 |         33 |         71 |
+| XML              |          3 |         35 |          1 |          2 |         38 |
+| HTML             |          1 |         20 |         23 |          1 |         44 |
+| Properties       |          3 |         -9 |          1 |         -2 |        -10 |
+| pip requirements |          1 |        -49 |          0 |          0 |        -49 |
+| Python           |          3 |       -135 |         -8 |        -29 |       -172 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                               | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                  |        181 |     57,586 |        433 |     12,081 |     70,100 |
+| . (Files)                                                                                                          |          4 |     18,591 |          2 |         36 |     18,629 |
+| ..                                                                                                                 |         33 |     -3,194 |        -95 |       -364 |     -3,653 |
+| ..\backend                                                                                                         |         33 |     -3,194 |        -95 |       -364 |     -3,653 |
+| ..\backend (Files)                                                                                                 |          1 |         -6 |          0 |         -1 |         -7 |
+| ..\backend\flaskapp                                                                                                |          5 |       -186 |         -8 |        -30 |       -224 |
+| ..\backend\nodeapp                                                                                                 |         27 |     -3,002 |        -87 |       -333 |     -3,422 |
+| ..\backend\nodeapp (Files)                                                                                         |          4 |     -1,665 |         -4 |        -10 |     -1,679 |
+| ..\backend\nodeapp\config                                                                                          |          3 |        -50 |         -1 |        -15 |        -66 |
+| ..\backend\nodeapp\controllers                                                                                     |          7 |     -1,052 |        -80 |       -263 |     -1,395 |
+| ..\backend\nodeapp\models                                                                                          |          5 |       -135 |         -2 |        -17 |       -154 |
+| ..\backend\nodeapp\routes                                                                                          |          8 |       -100 |          0 |        -28 |       -128 |
+| public                                                                                                             |          5 |         80 |         24 |          4 |        108 |
+| public (Files)                                                                                                     |          2 |         45 |         23 |          2 |         70 |
+| public\assets                                                                                                      |          3 |         35 |          1 |          2 |         38 |
+| src                                                                                                                |        139 |     42,109 |        502 |     12,405 |     55,016 |
+| src (Files)                                                                                                        |          7 |         70 |          7 |         15 |         92 |
+| src\auth                                                                                                           |          2 |         33 |          2 |         13 |         48 |
+| src\components                                                                                                     |         12 |        861 |         88 |        144 |      1,093 |
+| src\components\Address                                                                                             |          2 |         97 |          2 |         14 |        113 |
+| src\components\Admin                                                                                               |          2 |        109 |          0 |         14 |        123 |
+| src\components\Admin\SideBar                                                                                       |          2 |        109 |          0 |         14 |        123 |
+| src\components\Auth                                                                                                |          2 |        225 |         30 |         30 |        285 |
+| src\components\Footer                                                                                              |          2 |        119 |          2 |         19 |        140 |
+| src\components\Header                                                                                              |          2 |        155 |          0 |         30 |        185 |
+| src\components\LocationPicker                                                                                      |          2 |        156 |         54 |         37 |        247 |
+| src\fontawesome                                                                                                    |         46 |     31,351 |        234 |     10,637 |     42,222 |
+| src\fontawesome\css                                                                                                |         46 |     31,351 |        234 |     10,637 |     42,222 |
+| src\pages                                                                                                          |         72 |      9,794 |        171 |      1,596 |     11,561 |
+| src\pages\Admin                                                                                                    |         42 |      5,407 |        106 |        875 |      6,388 |
+| src\pages\Admin (Files)                                                                                            |          2 |         41 |          0 |          8 |         49 |
+| src\pages\Admin\ApprovalsBike                                                                                      |          2 |        158 |         21 |         23 |        202 |
+| src\pages\Admin\ApprovalsLicense                                                                                   |          2 |         75 |          1 |         13 |         89 |
+| src\pages\Admin\ApprovalsOwner                                                                                     |          2 |        359 |          2 |         60 |        421 |
+| src\pages\Admin\Bike                                                                                               |          2 |        269 |          7 |         47 |        323 |
+| src\pages\Admin\Dashboard                                                                                          |          2 |        142 |         22 |         18 |        182 |
+| src\pages\Admin\User                                                                                               |         28 |      4,119 |         45 |        663 |      4,827 |
+| src\pages\Admin\User (Files)                                                                                       |          2 |         64 |          0 |         10 |         74 |
+| src\pages\Admin\UserManagement                                                                                     |          2 |        244 |          8 |         43 |        295 |
+| src\pages\Admin\User\Account                                                                                       |         12 |      1,576 |         22 |        235 |      1,833 |
+| src\pages\Admin\User\Account (Files)                                                                               |          2 |         77 |          2 |         17 |         96 |
+| src\pages\Admin\User\Account\AccountPage                                                                           |          2 |        262 |          7 |         48 |        317 |
+| src\pages\Admin\User\Account\BikeManagement                                                                        |          2 |        599 |          3 |         73 |        675 |
+| src\pages\Admin\User\Account\BookingPage                                                                           |          2 |        234 |          2 |         33 |        269 |
+| src\pages\Admin\User\Account\Dashboard                                                                             |          2 |        226 |          7 |         42 |        275 |
+| src\pages\Admin\User\Account\Favorite                                                                              |          2 |        178 |          1 |         22 |        201 |
+| src\pages\Admin\User\Find                                                                                          |          2 |        322 |          1 |         42 |        365 |
+| src\pages\Admin\User\Home                                                                                          |          2 |        649 |          1 |        109 |        759 |
+| src\pages\Admin\User\MotorDetail                                                                                   |          2 |        470 |          0 |         76 |        546 |
+| src\pages\Admin\User\Owner                                                                                         |          6 |        818 |          4 |        152 |        974 |
+| src\pages\Admin\User\Owner\AddBike                                                                                 |          2 |        416 |          2 |         72 |        490 |
+| src\pages\Admin\User\Owner\Register                                                                                |          2 |         79 |          0 |         10 |         89 |
+| src\pages\Admin\User\Owner\RegisterPage                                                                            |          2 |        323 |          2 |         70 |        395 |
+| src\pages\Admin\User\RentalForm                                                                                    |          2 |        220 |         17 |         39 |        276 |
+| src\pages\User                                                                                                     |         30 |      4,387 |         65 |        721 |      5,173 |
+| src\pages\User (Files)                                                                                             |          2 |         84 |          0 |         16 |        100 |
+| src\pages\User\Account                                                                                             |         12 |      1,574 |         22 |        235 |      1,831 |
+| src\pages\User\Account (Files)                                                                                     |          2 |         77 |          2 |         17 |         96 |
+| src\pages\User\Account\AccountPage                                                                                 |          2 |        262 |          7 |         48 |        317 |
+| src\pages\User\Account\BikeManagement                                                                              |          2 |        601 |          3 |         73 |        677 |
+| src\pages\User\Account\BookingPage                                                                                 |          2 |        230 |          2 |         33 |        265 |
+| src\pages\User\Account\Dashboard                                                                                   |          2 |        226 |          7 |         42 |        275 |
+| src\pages\User\Account\Favorite                                                                                    |          2 |        178 |          1 |         22 |        201 |
+| src\pages\User\Find                                                                                                |          2 |        323 |          1 |         42 |        366 |
+| src\pages\User\Home                                                                                                |          2 |        687 |         20 |        119 |        826 |
+| src\pages\User\MotorDetail                                                                                         |          2 |        579 |          1 |         98 |        678 |
+| src\pages\User\Owner                                                                                               |          8 |        920 |          4 |        172 |      1,096 |
+| src\pages\User\Owner\AddBike                                                                                       |          2 |        416 |          2 |         72 |        490 |
+| src\pages\User\Owner\BikeDetail                                                                                    |          2 |         98 |          0 |         22 |        120 |
+| src\pages\User\Owner\Register                                                                                      |          2 |         80 |          0 |         10 |         90 |
+| src\pages\User\Owner\RegisterPage                                                                                  |          2 |        326 |          2 |         68 |        396 |
+| src\pages\User\RentalForm                                                                                          |          2 |        220 |         17 |         39 |        276 |
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                                                           | language         | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\flaskapp\.env                                                   | Properties       |         -2 |          0 |         -1 |         -3 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\flaskapp\app.py                                                 | Python           |        -29 |         -1 |         -6 |        -36 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\flaskapp\logic.py                                               | Python           |        -96 |         -7 |        -18 |       -121 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\flaskapp\models.py                                              | Python           |        -10 |          0 |         -5 |        -15 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\flaskapp\requirements.txt                                       | pip requirements |        -49 |          0 |          0 |        -49 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\.env                                                    | Properties       |         -9 |         -1 |         -2 |        -12 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\config\cloudinary.js                                    | JavaScript       |        -22 |          0 |         -6 |        -28 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\config\db.js                                            | JavaScript       |        -11 |          0 |         -5 |        -16 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\config\multer.js                                        | JavaScript       |        -17 |         -1 |         -4 |        -22 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\controllers\adminController.js                          | JavaScript       |       -122 |         -1 |        -34 |       -157 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\controllers\authController.js                           | JavaScript       |        -46 |         -8 |        -19 |        -73 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\controllers\bikeController.js                           | JavaScript       |       -202 |        -14 |        -52 |       -268 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\controllers\paymentController.js                        | JavaScript       |       -144 |         -8 |        -37 |       -189 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\controllers\rentalControllers.js                        | JavaScript       |       -279 |        -45 |        -53 |       -377 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\controllers\reviewController.js                         | JavaScript       |       -117 |         -2 |        -33 |       -152 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\controllers\userControllers.js                          | JavaScript       |       -142 |         -2 |        -35 |       -179 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\index.js                                                | JavaScript       |        -16 |         -3 |         -6 |        -25 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\models\Bike.js                                          | JavaScript       |        -55 |          0 |         -5 |        -60 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\models\Payment.js                                       | JavaScript       |        -10 |          0 |         -2 |        -12 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\models\Rental.js                                        | JavaScript       |        -28 |         -2 |         -6 |        -36 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\models\Review.js                                        | JavaScript       |        -10 |          0 |         -2 |        -12 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\models\User.js                                          | JavaScript       |        -32 |          0 |         -2 |        -34 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\package-lock.json                                       | JSON             |     -1,609 |          0 |         -1 |     -1,610 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\package.json                                            | JSON             |        -31 |          0 |         -1 |        -32 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\routes\adminRoutes.js                                   | JavaScript       |        -10 |          0 |         -2 |        -12 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\routes\authRoutes.js                                    | JavaScript       |         -6 |          0 |         -3 |         -9 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\routes\bikeRoutes.js                                    | JavaScript       |        -18 |          0 |         -6 |        -24 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\routes\indexRoutes.js                                   | JavaScript       |        -17 |          0 |         -2 |        -19 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\routes\paymentRoutes.js                                 | JavaScript       |         -6 |          0 |         -2 |         -8 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\routes\rentalRoutes.js                                  | JavaScript       |        -14 |          0 |         -6 |        -20 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\routes\reviewRoutes.js                                  | JavaScript       |         -9 |          0 |         -3 |        -12 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\nodeapp\routes\userRoutes.js                                    | JavaScript       |        -20 |          0 |         -4 |        -24 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\backend\package-lock.json                                               | JSON             |         -6 |          0 |         -1 |         -7 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\.env                                                           | Properties       |          2 |          2 |          1 |          5 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\README.md                                                      | Markdown         |         38 |          0 |         33 |         71 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\package-lock.json                                              | JSON             |     18,500 |          0 |          1 |     18,501 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\package.json                                                   | JSON             |         51 |          0 |          1 |         52 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\public\assets\messenger.svg                                    | XML              |         16 |          1 |          0 |         17 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\public\assets\payment.svg                                      | XML              |          1 |          0 |          0 |          1 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\public\assets\zalo.svg                                         | XML              |         18 |          0 |          2 |         20 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\public\index.html                                              | HTML             |         20 |         23 |          1 |         44 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\public\manifest.json                                           | JSON             |         25 |          0 |          1 |         26 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\App.css                                                    | PostCSS          |          0 |          0 |          1 |          1 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\App.js                                                     | JavaScript       |         28 |          0 |          4 |         32 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\App.test.js                                                | JavaScript       |          7 |          0 |          2 |          9 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\auth\RequireAdmin.js                                       | JavaScript       |         15 |          1 |          6 |         22 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\auth\RequireOwner.js                                       | JavaScript       |         18 |          1 |          7 |         26 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\Address\AddressAutoComplete.css                 | PostCSS          |         18 |          1 |          3 |         22 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\Address\AddressAutoComplete.js                  | JavaScript       |         79 |          1 |         11 |         91 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\Admin\SideBar\SideBar.js                        | JavaScript       |         58 |          0 |          8 |         66 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\Admin\SideBar\Sidebar.css                       | PostCSS          |         51 |          0 |          6 |         57 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\Auth\SignIn.css                                 | PostCSS          |        114 |          0 |         19 |        133 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\Auth\SignIn.js                                  | JavaScript       |        111 |         30 |         11 |        152 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\Footer\Footer.css                               | PostCSS          |         64 |          2 |         11 |         77 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\Footer\Footer.js                                | JavaScript       |         55 |          0 |          8 |         63 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\Header\Header.css                               | PostCSS          |        101 |          0 |         17 |        118 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\Header\Header.js                                | JavaScript       |         54 |          0 |         13 |         67 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\LocationPicker\LocationPicker.css               | PostCSS          |         34 |         25 |          7 |         66 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\components\LocationPicker\LocationPicker.js                | JavaScript       |        122 |         29 |         30 |        181 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\all.css                                    | PostCSS          |     14,507 |          7 |      4,929 |     19,443 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\all.min.css                                | PostCSS          |          3 |          5 |          1 |          9 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\brands.css                                 | PostCSS          |      1,072 |          5 |        533 |      1,610 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\brands.min.css                             | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\duotone-light.css                          | PostCSS          |         43 |          5 |          9 |         57 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\duotone-light.min.css                      | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\duotone-regular.css                        | PostCSS          |         43 |          5 |          9 |         57 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\duotone-regular.min.css                    | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\duotone-thin.css                           | PostCSS          |         43 |          5 |          9 |         57 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\duotone-thin.min.css                       | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\duotone.css                                | PostCSS          |         39 |          5 |          9 |         53 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\duotone.min.css                            | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\fontawesome.css                            | PostCSS          |     13,305 |          7 |      4,374 |     17,686 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\fontawesome.min.css                        | PostCSS          |          3 |          5 |          1 |          9 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\light.css                                  | PostCSS          |         12 |          5 |          3 |         20 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\light.min.css                              | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\regular.css                                | PostCSS          |         12 |          5 |          3 |         20 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\regular.min.css                            | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-duotone-light.css                    | PostCSS          |         43 |          5 |          9 |         57 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-duotone-light.min.css                | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-duotone-regular.css                  | PostCSS          |         43 |          5 |          9 |         57 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-duotone-regular.min.css              | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-duotone-solid.css                    | PostCSS          |         51 |          5 |          9 |         65 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-duotone-solid.min.css                | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-duotone-thin.css                     | PostCSS          |         43 |          5 |          9 |         57 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-duotone-thin.min.css                 | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-light.css                            | PostCSS          |         12 |          5 |          3 |         20 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-light.min.css                        | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-regular.css                          | PostCSS          |         12 |          5 |          3 |         20 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-regular.min.css                      | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-solid.css                            | PostCSS          |         12 |          5 |          3 |         20 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-solid.min.css                        | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-thin.css                             | PostCSS          |         12 |          5 |          3 |         20 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\sharp-thin.min.css                         | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\solid.css                                  | PostCSS          |         12 |          5 |          3 |         20 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\solid.min.css                              | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\svg-with-js.css                            | PostCSS          |        387 |          5 |         70 |        462 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\svg-with-js.min.css                        | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\thin.css                                   | PostCSS          |         12 |          5 |          3 |         20 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\thin.min.css                               | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\v4-font-face.css                           | PostCSS          |         18 |          5 |          4 |         27 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\v4-font-face.min.css                       | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\v4-shims.css                               | PostCSS          |      1,566 |          5 |        624 |      2,195 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\v4-shims.min.css                           | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\v5-font-face.css                           | PostCSS          |         25 |          5 |          5 |         35 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\fontawesome\css\v5-font-face.min.css                       | PostCSS          |          1 |          5 |          0 |          6 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\index.css                                                  | PostCSS          |         12 |          0 |          2 |         14 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\index.js                                                   | JavaScript       |         10 |          3 |          3 |         16 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\AdminLayout.css                                | PostCSS          |         14 |          0 |          4 |         18 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\AdminLayout.js                                 | JavaScript       |         27 |          0 |          4 |         31 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\ApprovalsBike\ApprovalsBike.css                | PostCSS          |          0 |          0 |          1 |          1 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\ApprovalsBike\ApprovalsBike.js                 | JavaScript       |        158 |         21 |         22 |        201 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\ApprovalsLicense\ApprovalsLicense.css          | PostCSS          |          0 |          0 |          1 |          1 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\ApprovalsLicense\ApprovalsLicense.js           | JavaScript       |         75 |          1 |         12 |         88 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\ApprovalsOwner\ApprovalsOwner.css              | PostCSS          |        184 |          1 |         33 |        218 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\ApprovalsOwner\ApprovalsOwner.js               | JavaScript       |        175 |          1 |         27 |        203 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\Bike\BikeManagement.css                        | PostCSS          |        144 |          1 |         27 |        172 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\Bike\BikeManagement.js                         | JavaScript       |        125 |          6 |         20 |        151 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\Dashboard\Dashboard.css                        | PostCSS          |         54 |          0 |          8 |         62 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\Dashboard\Dashboard.js                         | JavaScript       |         88 |         22 |         10 |        120 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\UserManagement\UserManagement.css              | PostCSS          |        117 |          3 |         22 |        142 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\UserManagement\UserManagement.js               | JavaScript       |        127 |          5 |         21 |        153 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\AccountLayout.css                 | PostCSS          |         39 |          2 |          8 |         49 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\AccountLayout.js                  | JavaScript       |         38 |          0 |          9 |         47 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\AccountPage\Account.css           | PostCSS          |        120 |          5 |         28 |        153 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\AccountPage\Account.js            | JavaScript       |        142 |          2 |         20 |        164 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\BikeManagement\BikeManagement.css | PostCSS          |        157 |          1 |         22 |        180 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\BikeManagement\BikeManagement.js  | JavaScript       |        442 |          2 |         51 |        495 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\BookingPage\BookingPage.css       | PostCSS          |         81 |          1 |         16 |         98 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\BookingPage\BookingPage.js        | JavaScript       |        153 |          1 |         17 |        171 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\Dashboard\Dashboard.css           | PostCSS          |         69 |          0 |         13 |         82 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\Dashboard\Dashboard.js            | JavaScript       |        157 |          7 |         29 |        193 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\Favorite\Favorite.css             | PostCSS          |        106 |          1 |         18 |        125 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Account\Favorite\Favorite.js              | JavaScript       |         72 |          0 |          4 |         76 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Find\Search.css                           | PostCSS          |         90 |          1 |         16 |        107 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Find\Search.js                            | JavaScript       |        232 |          0 |         26 |        258 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Home\Home.css                             | PostCSS          |        374 |          0 |         65 |        439 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Home\Home.js                              | JavaScript       |        275 |          1 |         44 |        320 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\MotorDetail\MotorDetail.css               | PostCSS          |        182 |          0 |         26 |        208 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\MotorDetail\MotorDetail.js                | JavaScript       |        288 |          0 |         50 |        338 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Owner\AddBike\Addbike.css                 | PostCSS          |        159 |          2 |         26 |        187 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Owner\AddBike\Addbike.js                  | JavaScript       |        257 |          0 |         46 |        303 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Owner\RegisterPage\RegisterPage.css       | PostCSS          |         90 |          1 |         21 |        112 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Owner\RegisterPage\RegisterPage.js        | JavaScript       |        233 |          1 |         49 |        283 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Owner\Register\Register.css               | PostCSS          |         56 |          0 |          6 |         62 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\Owner\Register\Register.js                | JavaScript       |         23 |          0 |          4 |         27 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\RentalForm\RentalForm.css                 | PostCSS          |        105 |          2 |         20 |        127 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\RentalForm\RentalForm.js                  | JavaScript       |        115 |         15 |         19 |        149 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\UserLayout.css                            | PostCSS          |         14 |          0 |          2 |         16 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\Admin\User\UserLayout.js                             | JavaScript       |         50 |          0 |          8 |         58 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\AccountLayout.css                       | PostCSS          |         39 |          2 |          8 |         49 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\AccountLayout.js                        | JavaScript       |         38 |          0 |          9 |         47 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\AccountPage\Account.css                 | PostCSS          |        120 |          5 |         28 |        153 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\AccountPage\Account.js                  | JavaScript       |        142 |          2 |         20 |        164 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\BikeManagement\BikeManagement.css       | PostCSS          |        157 |          1 |         22 |        180 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\BikeManagement\BikeManagement.js        | JavaScript       |        444 |          2 |         51 |        497 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\BookingPage\BookingPage.css             | PostCSS          |         81 |          1 |         16 |         98 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\BookingPage\BookingPage.js              | JavaScript       |        149 |          1 |         17 |        167 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\Dashboard\Dashboard.css                 | PostCSS          |         69 |          0 |         13 |         82 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\Dashboard\Dashboard.js                  | JavaScript       |        157 |          7 |         29 |        193 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\Favorite\Favorite.css                   | PostCSS          |        106 |          1 |         18 |        125 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Account\Favorite\Favorite.js                    | JavaScript       |         72 |          0 |          4 |         76 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Find\Search.css                                 | PostCSS          |         91 |          1 |         16 |        108 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Find\Search.js                                  | JavaScript       |        232 |          0 |         26 |        258 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Home\Home.css                                   | PostCSS          |        411 |         18 |         77 |        506 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Home\Home.js                                    | JavaScript       |        276 |          2 |         42 |        320 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\MotorDetail\MotorDetail.css                     | PostCSS          |        253 |          0 |         40 |        293 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\MotorDetail\MotorDetail.js                      | JavaScript       |        326 |          1 |         58 |        385 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Owner\AddBike\Addbike.css                       | PostCSS          |        159 |          2 |         26 |        187 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Owner\AddBike\Addbike.js                        | JavaScript       |        257 |          0 |         46 |        303 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Owner\BikeDetail\BikeDetail.css                 | PostCSS          |         49 |          0 |          9 |         58 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Owner\BikeDetail\BikeDetail.js                  | JavaScript       |         49 |          0 |         13 |         62 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Owner\RegisterPage\RegisterPage.css             | PostCSS          |         93 |          1 |         19 |        113 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Owner\RegisterPage\RegisterPage.js              | JavaScript       |        233 |          1 |         49 |        283 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Owner\Register\Register.css                     | PostCSS          |         56 |          0 |          6 |         62 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\Owner\Register\Register.js                      | JavaScript       |         24 |          0 |          4 |         28 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\RentalForm\RentalForm.css                       | PostCSS          |        105 |          2 |         20 |        127 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\RentalForm\RentalForm.js                        | JavaScript       |        115 |         15 |         19 |        149 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\UserLayout.css                                  | PostCSS          |         21 |          0 |          2 |         23 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\pages\User\UserLayout.js                                   | JavaScript       |         63 |          0 |         14 |         77 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\reportWebVitals.js                                         | JavaScript       |         12 |          0 |          2 |         14 |
+| c:\Users\khanh\IT4997\rental-motorbike-web\frontend\src\setupTests.js                                              | JavaScript       |          1 |          4 |          1 |          6 |
+| Total                                                                                                              |                  |     57,586 |        433 |     12,081 |     70,100 |
++--------------------------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+

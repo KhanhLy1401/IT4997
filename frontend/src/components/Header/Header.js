@@ -20,7 +20,7 @@ const Header = ({user, setUser}) => {
             <span>Về Motorent</span>
           </NavLink>
           {
-            role==="owner" ? <NavLink to="/owner/add-bike" className="header-item" activeclassname="active">Đăng xe </NavLink> : <NavLink to="/owner/register" className="header-item" activeclassname="active">
+            role==="owner" ? <NavLink to="/account/my-account" className="header-item" activeclassname="active">Đăng xe </NavLink> : <NavLink to="/owner/register" className="header-item" activeclassname="active">
             <span>Trở thành chủ xe</span>
           </NavLink>
           }

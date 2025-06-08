@@ -173,9 +173,12 @@ export const searchAvailableBikes = async (req, res) => {
       endTime
     } = req.body;
 
-
-
-  
+    if (!province || !district || !ward || !startDate || !startTime || !endDate || !endTime) {
+        return res.status(400).json({
+          error: "Vui lòng điền đầy đủ thông tin: tỉnh, huyện, xã, ngày giờ bắt đầu và kết thúc."
+        });
+    }
+        
     try {
       const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
   
@@ -202,6 +205,10 @@ export const searchAvailableBikes = async (req, res) => {
       const bikes = await Bike.find({
         "location.province": province,
       });
+      
+      if(!bikes) {
+        return res.status(200).json("Không có xe ở tỉnh của bạn");
+      }
   
       // 👉 Bước 3: Lọc xe rảnh trong khoảng thời gian yêu cầu
       const availableBikes = bikes.filter((bike) =>
@@ -252,7 +259,7 @@ export const searchAvailableBikes = async (req, res) => {
     } catch (error) {
       console.error("Received body:", req.body);
 
-      console.error("Search bike error:", error.message);
+      console.error("Search bike error:", error);
       res.status(500).json({ error: "Lỗi server" });
     }
   };

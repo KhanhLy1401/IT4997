@@ -110,7 +110,7 @@ const generateTimeOptions = () => {
             <div className='hero-title'>MOTORENT - Thuê xe ngay</div>
             <div className='hero-subtitle'>Cùng bạn chinh phục mọi nẻo đường</div>
             <div className="home-line"></div>
-            <div className='sub-title'>Trải nghiệm sự khác biệt từ hơn <span>100000</span> xe trên khắp cả nước </div>
+            <div className='sub-title'>Trải nghiệm sự khác biệt từ hơn các loại xe trên khắp miền Bắc </div>
             <div className='booking-bar'>
                 <div className='booking-bar-title'>Bạn cần thuê xe máy ?</div>
                 <div className='booking-location'>

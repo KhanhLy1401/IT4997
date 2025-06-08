@@ -19,7 +19,10 @@ import BikeManagement from "./Account/BikeManagement/BikeManagement.js";
 import Dashboard from "./Account/Dashboard/Dashboard.js";
 import Auth from "../../components/Auth/SignIn.js";
 import RequireOwner from "../../auth/RequireOwner.js";
+import BikeDetail from "./Owner/BikeDetail/BikeDetail.js";
 
+import DirectionMap from "./MotorDetail/Map/Map.js";
+import RentalDetail from "./Account/RentalDetail/RentalDetail.js";
 const UserLayout = () => {
 
   const [user, setUser] = useState(localStorage.getItem("user") || null);
@@ -38,6 +41,8 @@ const UserLayout = () => {
           <Route path="/sign-in" element={<Auth setUser={setUser}/>} />
 
           <Route path="/" element={<Home />} />
+          <Route path="/map" element={<DirectionMap />} />
+
 
           <Route path="/motor-detail/:id" element={<MotorDetail  />} />
           <Route path="/owner/register" element={<Register />} />
@@ -49,8 +54,10 @@ const UserLayout = () => {
             <Route path="add-bike" element={<RequireOwner><Addbike/></RequireOwner>}/>
             <Route path="dashboard" element={<RequireOwner><Dashboard/></RequireOwner>}/>
             <Route path="my-bookings" element={<BookingPage />} />
+            <Route path="my-bookings/:id" element={<RentalDetail />} />
             <Route path="favorites" element={<Favorite />} />
             <Route path="bikes" element={<RequireOwner><BikeManagement/></RequireOwner>} />
+            <Route path="bikes/:id" element={<RequireOwner><BikeDetail/></RequireOwner>} />
           </Route>
           <Route path="/rental-form/:id" element={<RentalForm />} />
         </Routes>
