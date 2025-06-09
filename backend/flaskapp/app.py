@@ -17,11 +17,17 @@ def content_based():
 @app.route("/recommend/user")
 def user_based():
     user_id = request.args.get("userId")
+    print(f"Debug: Received userId = {user_id}")  # Log giá trị userId
     if not user_id:
         return jsonify({"error": "Missing userId"}), 400
-    results = recommend_by_user(user_id)
-    return jsonify(results)
-
+    
+    try:
+        results = recommend_by_user(user_id)
+        print(f"Debug: Results = {results}")  # Log kết quả
+        return jsonify(results)
+    except Exception as e:
+        print(f"Error: {str(e)}")  # Log lỗi
+        return jsonify({"error": str(e)}), 500
 @app.route("/recommend/hybrid")
 def hybrid_based():
     user_id = request.args.get("userId") #lấy userId từ url
