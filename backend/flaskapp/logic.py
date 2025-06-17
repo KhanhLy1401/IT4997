@@ -51,7 +51,7 @@ def get_avg_rating(bike_id):
 def jaccard(set1, set2):
     return len(set1 & set2) / len(set1 | set2) if set1 | set2 else 0 #Jaccard similarity giữa 2 set
 
-def recommend_by_user(user_id, top_n=5):
+def recommend_by_user(user_id, top_n=6):
     user_rentals = build_user_rentals() #Tạo dict lịch sử thuê xe
     if user_id not in user_rentals:
         return []

@@ -24,11 +24,7 @@ const userSchema = new mongoose.Schema({
         account_number: String,
         account_holder: String,
     },
-    license_number: String,
-    license_name: String,
-    license_date: Date,
     license_image_url: imageSchema,
-    license_image_public_id: String,
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);

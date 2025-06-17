@@ -185,8 +185,9 @@ const BookingPage = ({ bookings }) => {
         </button>
       </div>
 
-      <div className='motor-detail-feature-title'>Xe tương tự cho bạn</div>
-                    <div className="motor" >
+      {recommendBikes?<>
+      <div className='motor-detail-feature-title-2'>Xe tương tự cho bạn</div>
+                    <div className="motor-2" >
                         {recommendBikes?.map((bike) => (
                         <div key={bike._id} onClick={() => navigate(`/motor-detail/${bike._id}`)} className="motor-img">
                             <div className='img-container'><img
@@ -216,6 +217,8 @@ const BookingPage = ({ bookings }) => {
                         </div>
                         ))}
                     </div>
+                    </>:<></>}
+      
     </div>
   );
 };

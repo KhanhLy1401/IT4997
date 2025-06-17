@@ -144,35 +144,3 @@ export const unblockUser =  async (req, res) => {
   };
 
 
-export const requestLicense = async (req, res) => {
-    try {
-        const {_id, license_number, license_name, license_date} = req.body;
-        const files = req.files; // Lấy file từ multer
-        const license_image_url = await uploadToCloudinary(files.license_image_url[0].path);
-
-        const existingUser = await User.findById(_id);
-        if (!existingUser) {
-            return res.status(404).json({ message: "User not found in requestLicense" });
-        }
-
-        const { url, public_id } = await uploadToCloudinary(files.license_image_url[0].path);
-
-
-        const updatedUser = await User.findByIdAndUpdate(
-            _id,
-            {
-                license_number,
-                license_image_url: url,
-                license_image_public_id: public_id,
-                license_date,
-                license_name,
-                license_status: "pending" 
-            },
-            { new: true }
-        );
-
-        res.status(200).json({ message: "Yêu cầu đã gửi, chờ phê duyệt", user: updatedUser });
-    } catch (error) {
-        return res.status(500).json({message: error.message});
-    }
-}

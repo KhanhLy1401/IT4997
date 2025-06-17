@@ -7,8 +7,8 @@ const imageSchema = new mongoose.Schema({
 const rentedPeriodSchema = new mongoose.Schema({
     startDate: Date,
     endDate: Date,
-    startTime: String,
-    endTime: String,
+    startTime: Date,
+    endTime: Date,
 });
 
 const bikeSchema = new mongoose.Schema({
@@ -29,11 +29,7 @@ const bikeSchema = new mongoose.Schema({
     license_plate: String,
     bike_registration: imageSchema,
     bike_insurance: imageSchema,
-    price: {
-        perDay: Number,
-        perWeek: Number,
-        perMonth: Number
-    },
+    price: Number,
     rentedPeriods: [rentedPeriodSchema],
     rental_count: { type: Number, default: 0 },
     rental_type: { type: String, enum: ['fixed_location', 'flexible_delivery'] },

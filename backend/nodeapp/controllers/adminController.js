@@ -68,46 +68,6 @@ export const getPendingLicense = async (req, res) => {
     }
 }
 
-
-export const approveLicense = async (req, res) => {
-  try {
-    const { _id, action } = req.body;
-
-    if (!_id) return res.status(400).json({ message: "Thiếu userId" });
-    if (!["approve", "reject"].includes(action)) {
-      return res.status(400).json({ message: "Hành động không hợp lệ" });
-    }
-
-    const user = await User.findById(_id);
-    if (!user) return res.status(404).json({ message: "Không tìm thấy user" });
-
-    // Nếu từ chối → xóa ảnh Cloudinary
-    if (action === "reject" && user.license_image_public_id) {
-      await cloudinary.uploader.destroy(user.license_image_public_id);
-    }
-
-    const updatedUser = await User.findByIdAndUpdate(
-      _id,
-      {
-        license_status: action === "approve" ? "verified" : "rejected",
-        ...(action === "reject" && {
-          license_image_url: null,
-          license_image_public_id: null
-        })
-      },
-      { new: true }
-    );
-
-    res.status(200).json({
-      message: `Yêu cầu cấp phép đã được ${action === "approve" ? "chấp nhận" : "từ chối"}`,
-      user: updatedUser
-    });
-  } catch (error) {
-    console.error("Lỗi server:", error);
-    res.status(500).json({ message: "Lỗi server", error });
-  }
-};
-
 export const getPendingBike = async (req, res) =>{
     try {
         const pendingUsers = await Bike.find({ status: "pending_approval" });

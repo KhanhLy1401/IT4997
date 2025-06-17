@@ -104,3 +104,21 @@
     padding: 6px 8px;
     border-radius: 5px;
   }
+.motor-2{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 xe 1 hàng */
+    gap: 16px; /* khoảng cách giữa các xe, bạn có thể chỉnh */
+    margin-top: 16px;
+}
+
+.motor-img {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.motor-img:hover {
+    transform: translateY(-5px);
+}
