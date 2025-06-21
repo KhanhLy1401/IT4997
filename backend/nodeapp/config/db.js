@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import Bike from '../models/Bike';
 
 const connectDB = async () => {
     try {
