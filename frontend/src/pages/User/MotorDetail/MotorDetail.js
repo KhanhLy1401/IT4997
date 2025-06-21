@@ -53,7 +53,8 @@ const MotorDetail = () => {
           const days = diffInHours / 24;
           setRentalDuration(days);
       
-          const pricePerDay = bike.price.perDay || 0;
+          const pricePerDay = bike.price || 0;
+          console.log("gia", bike.price);
           const price = Math.ceil(pricePerDay * days);
           setTotalPrice(price);
         } else {
@@ -119,7 +120,7 @@ const MotorDetail = () => {
           const days = diffInHours / 24;
           setRentalDuration(days);
       
-          const pricePerDay = bike.price.perDay || 0;
+          const pricePerDay = bike.price || 0;
           const price = Math.ceil(pricePerDay * days);
           setTotalPrice(price);
         } else {
@@ -153,7 +154,7 @@ const MotorDetail = () => {
     };
 
     console.log(pickupDateTime, "picu")
-    navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDate, endDate: returnDate, startTime: pickupTime, endTime: returnTime, rentalDuration: rentalDuration, bikePrice: bike.price?.perDay||"", totalPrice: totalPrice, isDelivery: isDelivery}})
+    navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDate, endDate: returnDate, startTime: pickupTime, endTime: returnTime, rentalDuration: rentalDuration, bikePrice: bike.price||"", totalPrice: totalPrice, isDelivery: isDelivery}})
   }
 
   return (
@@ -244,7 +245,7 @@ const MotorDetail = () => {
                             </div>
                             <div className="motor-rating">
                                 <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
-                                <div className='motor-price'> <span>{bike.price?.perDay/1000  || 0}K</span>/ngày </div>
+                                <div className='motor-price'> <span>{bike.price/1000  || 0}K</span>/ngày </div>
                             </div>
                             </div>
                         </div>
@@ -299,7 +300,7 @@ const MotorDetail = () => {
 
                 </div>
                 <div className='motor-detail-booking-2'>
-                    <div className='motor-detail-booking-prices'>{bike.price?.perDay/1000 || 0}k/ngày</div>
+                    <div className='motor-detail-booking-prices'>{bike.price/1000 || 0}k/ngày</div>
                     <div className='motor-detail-booking-from-to'>
                         <div className='motor-detail-booking-from'>
                             <label>Nhận xe</label>
@@ -362,7 +363,7 @@ const MotorDetail = () => {
                     </div>
     
                     <div className='motor-detail-booking-price-duration'>
-                        <div className='motor-detail-booking-price'>Đơn giá: {bike.price?.perDay || "0"} vnđ/ ngày</div>
+                        <div className='motor-detail-booking-price'>Đơn giá: {bike.price || "0"} vnđ/ ngày</div>
                         <div className='motor-detail-booking-duration'>Số ngày thuê: {rentalDuration.toFixed(2)} </div>
 
                     </div>

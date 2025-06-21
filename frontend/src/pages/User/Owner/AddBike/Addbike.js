@@ -94,18 +94,150 @@ const Addbike = () => {
 
 
 
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   setIsSubmitting(true);
+  //   const formData = new FormData();
+
+  //   const locationData = {
+
+  //     province: location.province,
+  //     district: location.district,
+  //     ward: location.ward,
+  //     detail_location: location.detail_location
+  //   };
+
+  //   const priceData = {
+  //       perDay: price.perDay,
+  //       perWeek: price.perWeek,
+  //       perMonth: price.perMonth
+  //   };
+
+  //   formData.append("ownerId", storedId);
+  //   formData.append("title", title);
+  //   formData.append("ownerName", ownerName);
+  //   formData.append("brand", bikeBrand);
+  //   formData.append("capacity", bikeCapacity);
+  //   formData.append("license_plate", bikeLicensePlate);
+  //   formData.append("bikeType", bikeType);
+  //   formData.append("description", bikeDescription);
+  //   formData.append("location", JSON.stringify(locationData));
+  //   formData.append("price", JSON.stringify(priceData));
+
+  //   formData.append("bike_registration", registrationImage);
+  //   formData.append("bike_insurance", insuranceImage);
+  //   formData.append("security_deposit", securityDeposit);
+  //   formData.append("delivery_home", deliveryHome); 
+  //   formData.append("images_front", image.front);
+  //   formData.append("images_back", image.back);
+  //   formData.append("images_side", image.side);
+
+  //   try {
+  //     const response = await axios.post(`${API_URL}/bike/add`, formData, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     });
+  //     console.log(response.data);
+  //     if (response.data.message === "Bạn đã gửi yêu  cầu rồi") {
+  //       alert("Bạn đã gửi yêu cầu rồi. Chờ phê duyệt");
+  //       navigate("/");
+  //       return;
+  //     }
+      
+  //     alert("Đăng ký xe thành công!");
+  //     navigate("/account/bikes");
+
+      
+  //   } catch (error) {
+  //     alert("Đã có lỗi xảy ra khi gửi dữ liệu.");
+  //     console.error(error.message);
+  //   }
+  //   setIsSubmitting(false);
+  // };
+const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Kiểm tra từng trường:
+    if (!title) {
+        alert("Vui lòng nhập tiêu đề cho xe!");
+        return;
+    }
+
+    if (!ownerName) {
+      alert("Vui lòng nhập tên chủ xe!");
+        return;
+    }
+
+    if (!bikeBrand) {
+        alert("Vui lòng chọn hãng xe!");
+        return;
+    }
+
+    if (!bikeCapacity) {
+        alert("Vui lòng nhập dung tích xe!");
+        return;
+    }
+
+    if (!bikeLicensePlate) {
+        alert("Vui lòng nhập biển số xe!");
+        return;
+    }
+
+    if (!bikeType) {
+        alert("Vui lòng chọn loại xe!");
+        return;
+    }
+
+    if (!bikeDescription) {
+        alert("Vui lòng nhập mô tả về xe!");
+        return;
+    }
+
+    if (!location.province || !location.district || !location.ward || !location.detail_location) {
+        alert("Vui lòng nhập đầy đủ địa chỉ (Tỉnh / Huyện / Xã / Địa chỉ cụ thể)!");
+        return;
+    }
+
+    if (!price.perDay || !price.perWeek || !price.perMonth) {
+        alert("Vui lòng nhập đầy đủ giá cho ngày / tuần / tháng!");
+        return;
+    }
+
+    if (!registrationImage) {
+        alert("Vui lòng tải lên ảnh đăng ký xe!");
+        return;
+    }
+
+    if (!insuranceImage) {
+        alert("Vui lòng tải lên ảnh bảo hiểm xe!");
+        return;
+    }
+
+    if (!securityDeposit) {
+        alert("Vui lòng nhập tiền đặt cọc!");
+        return;
+    }
+
+    if (deliveryHome === "") {
+        alert("Vui lòng chọn dịch vụ giao xe tận nhà!");
+        return;
+    }
+
+    if (!image.front || !image.back || !image.side) {
+        alert("Vui lòng tải lên đầy đủ 3 ảnh xe (trước, sau, cạnh)!");
+        return;
+    }
+
+    // Nếu tới đây là OK hết rồi:
     setIsSubmitting(true);
+
     const formData = new FormData();
 
     const locationData = {
-
-      province: location.province,
-      district: location.district,
-      ward: location.ward,
-      detail_location: location.detail_location
+        province: location.province,
+        district: location.district,
+        ward: location.ward,
+        detail_location: location.detail_location
     };
 
     const priceData = {
@@ -128,32 +260,35 @@ const Addbike = () => {
     formData.append("bike_registration", registrationImage);
     formData.append("bike_insurance", insuranceImage);
     formData.append("security_deposit", securityDeposit);
-    formData.append("delivery_home", deliveryHome); 
+    formData.append("delivery_home", deliveryHome);
+
     formData.append("images_front", image.front);
     formData.append("images_back", image.back);
     formData.append("images_side", image.side);
 
     try {
-      const response = await axios.post(`${API_URL}/bike/add`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      console.log(response.data);
-      if (response.data.message === "Bạn đã gửi yêu  cầu rồi") {
-        alert("Bạn đã gửi yêu cầu rồi. Chờ phê duyệt");
-        navigate("/");
-        return;
-      }
-      
-      alert("Đăng ký xe thành công!");
-      navigate("/account/bikes");
+        const response = await axios.post(`${API_URL}/bike/add`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
 
-      
+        console.log(response.data);
+
+        if (response.data.message === "Bạn đã gửi yêu  cầu rồi") {
+            alert("Bạn đã gửi yêu cầu rồi. Chờ phê duyệt");
+            navigate("/");
+            return;
+        }
+
+        alert("Đăng ký xe thành công!");
+        navigate("/account/bikes");
+
     } catch (error) {
-      alert("Đã có lỗi xảy ra khi gửi dữ liệu.");
-      console.error(error.message);
+        alert("Đã có lỗi xảy ra khi gửi dữ liệu.");
+        console.error(error.message);
     }
+
     setIsSubmitting(false);
-  };
+};
 
   return (
     <div className='add-bike-page'>

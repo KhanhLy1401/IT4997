@@ -211,7 +211,7 @@ const BookingPage = ({ bookings }) => {
                             </div>
                             <div className="motor-rating">
                                 <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
-                                <div className='motor-price'> <span>{bike.price?.perDay/1000  || 0}K</span>/ngày </div>
+                                <div className='motor-price'> <span>{bike.price/1000  || 0}K</span>/ngày </div>
                             </div>
                             </div>
                         </div>

@@ -49,6 +49,8 @@ const generateTimeOptions = () => {
       district: location.district ,
       ward: location.ward ,
     });
+
+
   };
 
 
@@ -57,6 +59,15 @@ const generateTimeOptions = () => {
   const selectedBikes = bikes.slice(startIndex, startIndex + itemsPerPage);
 
   const handleSearch = async () => {
+    if (
+        !location.province ||
+        !location.district ||
+        !location.ward
+    ) {
+        alert("Vui lòng chọn đầy đủ Tỉnh / Huyện / Xã!");
+        return;
+    }
+
     if (
       !pickupDate ||
       pickupTime === "hh:mm" ||
@@ -67,6 +78,7 @@ const generateTimeOptions = () => {
       return;
     }
 
+    
 
     try {
       const response = await axios.post(`${API_URL}/bike/search`, {
@@ -78,6 +90,8 @@ const generateTimeOptions = () => {
         endDate: returnDate,
         endTime: returnTime
       } );
+
+  
       console.log("Kết quả tìm kiếm:", response.data);
       navigate(`/search?province=${location.province}&district=${location.district}&ward=${location.ward}&startDate=${pickupDate}&startTime=${pickupTime}&endDate=${returnDate}&endTime=${returnTime}`, {
         state: response.data
@@ -99,6 +113,7 @@ const generateTimeOptions = () => {
             try {
               const response = await axios.get(`${API_URL}/bike/get-all-bikes`);
               setBikes(response.data);
+              console.log(response.data);
             } catch (error) {
               console.error("Lỗi khi lấy dữ liệu xe:", error);
             }
@@ -198,7 +213,7 @@ const generateTimeOptions = () => {
                   </div>
                   <div className="motor-rating">
                     <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
-                    <div className='motor-price'> <span>{bike.price?.perDay/1000  || 0}K</span>/ngày </div>
+                    <div className='motor-price'> <span>{bike.price/1000  || 0}K</span>/ngày </div>
                   </div>
                 </div>
               </div>

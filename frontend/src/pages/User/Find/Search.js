@@ -210,6 +210,7 @@ const Search = () => {
       </div>
       <div className='result'>
         <div className='motor'>
+          
           {selectedBikes.map((bike) => (
             <div
               key={bike._id}
