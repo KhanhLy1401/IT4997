@@ -24,7 +24,7 @@ const Addbike = () => {
     detail_location: ''
   });
   
-  const [price, setPrice] = useState({perDay: 0, perWeek: 0, perMonth: 0});
+  const [price, setPrice] = useState(0);
 
   const [registrationImage, setRegistrationImage] = useState(null);
   const [insuranceImage, setInsuranceImage] = useState(null);
@@ -94,67 +94,7 @@ const Addbike = () => {
 
 
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   setIsSubmitting(true);
-  //   const formData = new FormData();
-
-  //   const locationData = {
-
-  //     province: location.province,
-  //     district: location.district,
-  //     ward: location.ward,
-  //     detail_location: location.detail_location
-  //   };
-
-  //   const priceData = {
-  //       perDay: price.perDay,
-  //       perWeek: price.perWeek,
-  //       perMonth: price.perMonth
-  //   };
-
-  //   formData.append("ownerId", storedId);
-  //   formData.append("title", title);
-  //   formData.append("ownerName", ownerName);
-  //   formData.append("brand", bikeBrand);
-  //   formData.append("capacity", bikeCapacity);
-  //   formData.append("license_plate", bikeLicensePlate);
-  //   formData.append("bikeType", bikeType);
-  //   formData.append("description", bikeDescription);
-  //   formData.append("location", JSON.stringify(locationData));
-  //   formData.append("price", JSON.stringify(priceData));
-
-  //   formData.append("bike_registration", registrationImage);
-  //   formData.append("bike_insurance", insuranceImage);
-  //   formData.append("security_deposit", securityDeposit);
-  //   formData.append("delivery_home", deliveryHome); 
-  //   formData.append("images_front", image.front);
-  //   formData.append("images_back", image.back);
-  //   formData.append("images_side", image.side);
-
-  //   try {
-  //     const response = await axios.post(`${API_URL}/bike/add`, formData, {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //     });
-  //     console.log(response.data);
-  //     if (response.data.message === "Bạn đã gửi yêu  cầu rồi") {
-  //       alert("Bạn đã gửi yêu cầu rồi. Chờ phê duyệt");
-  //       navigate("/");
-  //       return;
-  //     }
-      
-  //     alert("Đăng ký xe thành công!");
-  //     navigate("/account/bikes");
-
-      
-  //   } catch (error) {
-  //     alert("Đã có lỗi xảy ra khi gửi dữ liệu.");
-  //     console.error(error.message);
-  //   }
-  //   setIsSubmitting(false);
-  // };
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Kiểm tra từng trường:
@@ -198,8 +138,8 @@ const handleSubmit = async (e) => {
         return;
     }
 
-    if (!price.perDay || !price.perWeek || !price.perMonth) {
-        alert("Vui lòng nhập đầy đủ giá cho ngày / tuần / tháng!");
+    if (!price ) {
+        alert("Vui lòng nhập giá xe");
         return;
     }
 
@@ -240,11 +180,7 @@ const handleSubmit = async (e) => {
         detail_location: location.detail_location
     };
 
-    const priceData = {
-        perDay: price.perDay,
-        perWeek: price.perWeek,
-        perMonth: price.perMonth
-    };
+    const priceData = price
 
     formData.append("ownerId", storedId);
     formData.append("title", title);
@@ -255,7 +191,7 @@ const handleSubmit = async (e) => {
     formData.append("bikeType", bikeType);
     formData.append("description", bikeDescription);
     formData.append("location", JSON.stringify(locationData));
-    formData.append("price", JSON.stringify(priceData));
+    formData.append("price", priceData);
 
     formData.append("bike_registration", registrationImage);
     formData.append("bike_insurance", insuranceImage);
@@ -384,16 +320,9 @@ const handleSubmit = async (e) => {
             <div className='price-per'>
               <div className='price-per-day'>
                 <label htmlFor="price-per-day"><i className="fa-regular fa-money-check-dollar"></i> Giá theo ngày *</label>
-                <input type="number" id="price-per-day" value={price.perDay} onChange={(e) => setPrice({...price, perDay:e.target.value})} step='5000' />
+                <input type="number" id="price-per-day" value={price} onChange={(e) => setPrice(e.target.value)} step='5000' />
               </div>
-              <div className='price-per-week'>
-                <label htmlFor="price-per-week"><i className="fa-regular fa-money-check-dollar"></i> Giá theo tuần *</label>
-                <input type="number" id="price-per-week" value={price.perWeek} onChange={(e) => setPrice({...price, perWeek:e.target.value})} step='5000' />
-              </div>
-              <div className='price-per-month'>
-                <label htmlFor="price-per-month"><i className="fa-regular fa-money-check-dollar"></i> Giá theo tháng *</label>
-                <input type="number" id="price-per-month" value={price.perMonth} onChange={(e) =>setPrice({...price, perMonth:e.target.value})} step='5000' />
-              </div>
+             
             </div>
           </div>
 

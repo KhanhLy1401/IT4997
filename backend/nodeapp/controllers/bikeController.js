@@ -84,6 +84,16 @@ export const getAllBikes = async (req, res) => {
     }
 }
 
+export const getAllBikesNotPending = async (req, res) => {
+    try {   
+        const allBikes = await Bike.find({ status: { $ne: "pending_approval" } });
+        res.status(200).json(allBikes);
+
+    } catch(error) {
+        res.status(500).json({error: error.message});
+    }
+}
+
 export const getBikeById = async (req, res) => {
     try {
         const bikeId = req.params.id;

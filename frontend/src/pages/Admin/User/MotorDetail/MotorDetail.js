@@ -30,43 +30,12 @@ const MotorDetail = () => {
     const handleDeliveryChange = (e) => {
         setIsDelivery(e.target.checked);
     };
+    
 
-    useEffect(()=>{
-        if(state){
-            setPickupDate(state.startDate);
-            setPickupTime(state.startTime);
-            setReturnDate(state.endDate);
-            setReturnTime(state.endTime);
-        }
-        setPickupDateTime(getCombinedDateTime(pickupDate, pickupTime));
-        setReturnDateTime(getCombinedDateTime(returnDate, returnTime));
-        console.log("datetime", pickupDateTime+returnDateTime)
-      
-
-        const pickup = new Date(pickupDateTime);
-        const dropoff = new Date(returnDateTime);
-      
-        const diffInMs = dropoff - pickup;
-        const diffInHours = diffInMs / (1000 * 60 * 60);
-      
-        if (diffInHours > 0) {
-          const days = diffInHours / 24;
-          setRentalDuration(days);
-      
-          const pricePerDay = bike.price.perDay || 0;
-          const price = Math.ceil(pricePerDay * days);
-          setTotalPrice(price);
-        } else {
-          setRentalDuration(0);
-          setTotalPrice(0);
-        }
-    }
-    , [pickupDate, pickupTime, returnDate, returnTime])
-
-    const getCombinedDateTime = (date, time) => {
-        return `${date}T${time}`;
+    const getCombinedDateTime = (dateStr, timeStr) => {
+    return new Date(`${dateStr}T${timeStr}:00`);
     };
-      
+
 
     const generateTimeOptions = () => {
         const options = [];
@@ -100,33 +69,72 @@ const MotorDetail = () => {
     }, [API_URL,id]);
 
 
-    useEffect(() => {
-        if (!bike || !bike.price) return;
-        setPickupDateTime(getCombinedDateTime(pickupDate, pickupTime));
-        setReturnDateTime(getCombinedDateTime(returnDate, returnTime));
-        console.log("datetime", pickupDateTime+returnDateTime)
-      
+    // // 1. Cập nhật datetime khi user chọn ngày/giờ
+    // useEffect(() => {
+    // if (pickupDate && pickupTime && returnDate && returnTime ) {
+    //     const pickupDT = getCombinedDateTime(pickupDate, pickupTime);
+    //     const returnDT = getCombinedDateTime(returnDate, returnTime);
 
-        const pickup = new Date(pickupDateTime);
-        const dropoff = new Date(returnDateTime);
-      
-        const diffInMs = dropoff - pickup;
-        const diffInHours = diffInMs / (1000 * 60 * 60);
-      
-        if (diffInHours > 0) {
-          const days = diffInHours / 24;
-          setRentalDuration(days);
-      
-          const pricePerDay = bike.price.perDay || 0;
-          const price = Math.ceil(pricePerDay * days);
-          setTotalPrice(price);
-        } else {
-          setRentalDuration(0);
-          setTotalPrice(0);
-        }
-      }, [pickupDate, pickupTime, returnDate, returnTime, bike]); 
+    //     console.log("pickupDT:", pickupDT);
+    //     console.log("returnDT:", returnDT);
 
-      
+    //     const diffInMs = returnDT - pickupDT;
+    //     const diffInHours = diffInMs / (1000 * 60 * 60);
+
+    //     if (diffInHours > 0) {
+    //         const days = diffInHours / 24;
+    //         setRentalDuration(days);
+
+    //         const pricePerDay = bike.price || 0;
+    //         const price = Math.ceil(pricePerDay * days);
+    //         setTotalPrice(price);
+    //     } else {
+    //         setRentalDuration(0);
+    //         setTotalPrice(0);
+    //     }
+    // }
+    // }, [pickupDate, pickupTime, returnDate, returnTime]);
+
+const updateRentalInfo = (pickupD, pickupT, returnD, returnT, bikeData) => {
+  if (pickupD && pickupT && returnD && returnT && bikeData) {
+    const pickupDT = getCombinedDateTime(pickupD, pickupT);
+    const returnDT = getCombinedDateTime(returnD, returnT);
+    const diffInMs = returnDT - pickupDT;
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+
+    if (diffInHours > 0) {
+      const days = diffInHours / 24;
+      setRentalDuration(days);
+
+      const pricePerDay = Number(bikeData.price) || 0;
+      const price = Math.ceil(pricePerDay * days);
+      setTotalPrice(price);
+    } else {
+      setRentalDuration(0);
+      setTotalPrice(0);
+    }
+  }
+};
+
+useEffect(() => {
+  if (pickupDate && pickupTime && returnDate && returnTime && bike) {
+    const pickupDT = getCombinedDateTime(pickupDate, pickupTime);
+    const returnDT = getCombinedDateTime(returnDate, returnTime);
+    const diffInMs = returnDT - pickupDT;
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+
+    if (diffInHours > 0) {
+      const days = diffInHours / 24;
+      setRentalDuration(days);
+      const price = Math.ceil((bike.price || 0) * days);
+      setTotalPrice(price);
+    } else {
+      setRentalDuration(0);
+      setTotalPrice(0);
+    }
+  }
+}, [pickupDate, pickupTime, returnDate, returnTime]);
+
   if (!bike) {
     return <div>Không tìm thấy xe</div>;
   }
@@ -146,7 +154,7 @@ const MotorDetail = () => {
     };
 
     console.log(pickupDateTime, "picu")
-    navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDate, endDate: returnDate, startTime: pickupTime, endTime: returnTime, rentalDuration: rentalDuration, bikePrice: bike.price?.perDay||"", totalPrice: totalPrice, isDelivery: isDelivery}})
+    navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDate, endDate: returnDate, startTime: pickupTime, endTime: returnTime, rentalDuration: rentalDuration, bikePrice: bike.price||"", totalPrice: totalPrice, isDelivery: isDelivery}})
   }
 
   return (
@@ -230,7 +238,7 @@ const MotorDetail = () => {
                             </div>
                             <div className="motor-rating">
                                 <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
-                                <div className='motor-price'> <span>{bike.price?.perDay/1000  || 0}K</span>/ngày </div>
+                                <div className='motor-price'> <span>{bike.price/1000  || 0}K</span>/ngày </div>
                             </div>
                             </div>
                         </div>
@@ -247,12 +255,12 @@ const MotorDetail = () => {
 
                 </div>
                 <div className='motor-detail-booking-2'>
-                    <div className='motor-detail-booking-prices'>{bike.price?.perDay/1000 || 0}k/ngày</div>
+                    <div className='motor-detail-booking-prices'>{bike.price/1000 || 0}k/ngày</div>
                     <div className='motor-detail-booking-from-to'>
                         <div className='motor-detail-booking-from'>
                             <label>Nhận xe</label>
                             <div className='wrap-date-time'>
-                                <input
+                                {/* <input
                                     type='date'
                                     value={pickupDate}
                                     onChange={(e) => setPickupDate(e.target.value)}
@@ -262,13 +270,28 @@ const MotorDetail = () => {
                                     {generateTimeOptions().map((time) => (
                                         <option key={time} value={time}>{time}</option>
                                 ))}
+                                </select> */}
+                                <input
+                                type='date'
+                                value={pickupDate}
+                                onChange={(e) => setPickupDate(e.target.value)}
+                                />
+                                <select
+                                value={pickupTime}
+                                onChange={(e) => setPickupTime(e.target.value)}
+                                >
+                                {generateTimeOptions().map((time) => (
+                                    <option key={time} value={time}>{time}</option>
+                                ))}
                                 </select>
+                                
+
                             </div>
                         </div>
                         <div className='motor-detail-booking-to'>
                             <label>Trả xe</label>
                             <div className='wrap-date-time'>
-                                <input
+                                {/* <input
                                     type='date'
                                     value={returnDate}
                                     onChange={(e) => setReturnDate(e.target.value)}
@@ -278,7 +301,22 @@ const MotorDetail = () => {
                                     {generateTimeOptions().map((time) => (
                                         <option key={time} value={time}>{time}</option>
                                 ))}
-                                </select>
+                                </select> */}
+                                <input
+                                    type='date'
+                                    value={returnDate}
+                                    onChange={(e) => setReturnDate(e.target.value)}
+                                    />
+                                    <select
+                                    value={returnTime}
+                                    onChange={(e) => setReturnTime(e.target.value)}
+                                    >
+                                    {generateTimeOptions().map((time) => (
+                                        <option key={time} value={time}>{time}</option>
+                                    ))}
+                                    </select>
+
+
                             </div>
                         </div>
                     </div>
@@ -310,7 +348,7 @@ const MotorDetail = () => {
                     </div>
     
                     <div className='motor-detail-booking-price-duration'>
-                        <div className='motor-detail-booking-price'>Đơn giá: {bike.price?.perDay || "0"} vnđ/ ngày</div>
+                        <div className='motor-detail-booking-price'>Đơn giá: {bike.price || "0"} vnđ/ ngày</div>
                         <div className='motor-detail-booking-duration'>Số ngày thuê: {rentalDuration.toFixed(2)} </div>
 
                     </div>

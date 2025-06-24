@@ -65,7 +65,6 @@ const Dashboard = () => {
     const countRentalByMonth = async () => {
       const response = await axios.get(`${API_URL}/rental/count-by-month/${ownerId}`);
       setRentalByMonth(response.data);
-      console.log("rentalbymonth", response.data);
     }
 
     const getTopBike = async () => {

@@ -1,0 +1,9 @@
+.detail-right img{
+    width: 300px;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.detail-right span {
+    font-weight: 500 !important;
+}

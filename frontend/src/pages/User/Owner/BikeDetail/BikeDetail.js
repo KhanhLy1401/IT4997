@@ -37,9 +37,8 @@ const BikeDetail = () => {
 
       <div className="bike-prices">
         <h4>Giá thuê:</h4>
-        <p>Ngày: {bike.price.perDay} VND</p>
-        <p>Tuần: {bike.price.perWeek} VND</p>
-        <p>Tháng: {bike.price.perMonth} VND</p>
+        <p>Ngày: {bike.price} VND</p>
+        
       </div>
 
       <div className="bike-documents">

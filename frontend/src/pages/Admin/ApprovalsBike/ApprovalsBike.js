@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ApprovalsBike'
+import './ApprovalsBike.css'
 
 const ApprovalsBike = () => {
     const API_URL = process.env.REACT_APP_API_URL;
@@ -8,7 +8,7 @@ const ApprovalsBike = () => {
     const [expandedBikeId, setExpandedBikeId] = useState(null);
     const [searchTerm, setSearchTerm] = useState(""); // Save search term
     const [currentPage, setCurrentPage] = useState(1);
-    const bikesPerPage = 5;
+    const bikesPerPage = 8;
 
     const toggleDetails = (bikeId) => {
         setExpandedBikeId(expandedBikeId === bikeId ? null : bikeId);
@@ -17,7 +17,7 @@ const ApprovalsBike = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/admin/get-pending-bike`);
+                const response = await axios.get(`${API_URL}/admin/get-pending-bike`);
                 console.log("lyy", response.data);
                 setApprovalBike(response.data.users);
             } catch (error) {
@@ -33,7 +33,7 @@ const ApprovalsBike = () => {
     
         if (!isConfirmed) return;
         try {
-            const response = await fetch(`http://localhost:5000/admin/approve-bike`, {
+            const response = await fetch(`${API_URL}/admin/approve-bike`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,7 +42,9 @@ const ApprovalsBike = () => {
             });
 
             if (response.ok) {
-                alert("Chấp nhận xe thành công!");
+                 alert("Chấp nhận xe thành công!");
+                // Loại bỏ xe đã duyệt khỏi danh sách
+                setApprovalBike((prev) => prev.filter(bike => bike._id !== bikeId));
             } else {
                 alert("Có lỗi!");
             }
@@ -78,8 +80,8 @@ const ApprovalsBike = () => {
     };
 
     const filteredBikes = approvalBike?.filter(bike =>
-        bike.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        bike.location.provice.toLowerCase().includes(searchTerm.toLowerCase())
+        bike.title?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+        bike.location.provice?.toLowerCase().includes(searchTerm?.toLowerCase())
     );
 
     const indexOfLastBike = currentPage * bikesPerPage;
@@ -145,29 +147,29 @@ const ApprovalsBike = () => {
 
                                                     </div>
                                                     <div className='detail-right'>
-                                                            {/* <div className='detail-right-top'>
+                                                            <div className='detail-right-top'>
                                                                 <div className="detail-right-item">
-                                                                    <div className="item-approval">Họ và tên: {bike.fullName}</div>
-                                                                    <div className="item-approval">Số điện thoại: {user.phone}</div>
-                                                                    <div className="item-approval">Email: {user.email}</div>
-                                                                    <div className="item-approval">Địa chỉ: {user.address}</div>
-                                                                    <div className="item-approval">Số bằng lái xe: {user.license_number}</div>
+                                                                    <div className="item-approval"><span>Tên xe: {bike.title}</span></div>
+                                                                    <div className="item-approval"><span>Loại xe: {bike.bikeType}</span> </div>
+                                                                    <div className="item-approval"><span>Hãng xe: {bike.brand}</span></div>
+                                                                    <div className="item-approval"><span>Phân khối: {bike.capacity} cm<sup>3</sup></span>  </div>
+                                                                    <div className="item-approval"><span>Đăng ký xe:</span> </div>
+                                                                    <img src={bike.bike_insurance.url} alt="bike_insurance" />
                                                                 </div>
                                                             
                                                                 <div className="detail-right-item">
                                                                     
-                                                                    <div className="item-approval">Căn cước công dân: {user.citizen_id}</div>
-                                                                    <div className="item-approval">Ngân hàng: {user.banking.account_name}</div>
-                                                                    <div className="item-approval">Số tài khoản: {user.banking.account_number}</div>
-                                                                    <div className="item-approval">Tên chủ tài khoản: {user.banking.account_holder}</div>
+                                                                    <div className="item-approval"><span>Mô tả: {bike.description}</span></div>
+                                                                    <div className="item-approval"><span>Biển số xe: {bike.license_plate}</span></div>
+                                                                    <div className="item-approval"><span>Địa chỉ xe: {bike.location.province}-{bike.location.district}-{bike.location.ward}</span></div>
+                                                                    <div className="item-approval"><span>Tài sản thế chấp: {bike.security_deposit==="no_deposit"?"Không cần thế chấp":bike.security_deposit}</span></div>
+                                                                    <div className="item-approval"><span>Bảo hiểm xe:</span> </div>
+                                                                    <img src={bike.bike_registration.url} alt="bike_registration" />
 
                                                                 </div>
                                                             </div>
 
-                                                            <div className='btn-approval'>
-                                                                <button className='btn-reject'>Từ chối</button>
-                                                                <button className='btn-accept'>Chấp nhận</button>
-                                                            </div> */}
+                                                            
                                                     </div>
                                                 </div>
                                             </td>

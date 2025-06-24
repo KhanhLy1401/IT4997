@@ -15,3 +15,7 @@ html, body {
     min-height: 100vh;
 }
 
+
+.admin-main-layout {
+    width: 100%;
+}

@@ -24,7 +24,7 @@ const Addbike = () => {
     detail_location: ''
   });
   
-  const [price, setPrice] = useState({perDay: 0, perWeek: 0, perMonth: 0});
+  const [price, setPrice] = useState(0);
 
   const [registrationImage, setRegistrationImage] = useState(null);
   const [insuranceImage, setInsuranceImage] = useState(null);
@@ -108,11 +108,7 @@ const Addbike = () => {
       detail_location: location.detail_location
     };
 
-    const priceData = {
-        perDay: price.perDay,
-        perWeek: price.perWeek,
-        perMonth: price.perMonth
-    };
+    const priceData =price
 
     formData.append("ownerId", storedId);
     formData.append("title", title);
@@ -123,7 +119,7 @@ const Addbike = () => {
     formData.append("bikeType", bikeType);
     formData.append("description", bikeDescription);
     formData.append("location", JSON.stringify(locationData));
-    formData.append("price", JSON.stringify(priceData));
+    formData.append("price", price);
 
     formData.append("bike_registration", registrationImage);
     formData.append("bike_insurance", insuranceImage);
@@ -249,15 +245,7 @@ const Addbike = () => {
             <div className='price-per'>
               <div className='price-per-day'>
                 <label htmlFor="price-per-day"><i className="fa-regular fa-money-check-dollar"></i> Giá theo ngày *</label>
-                <input type="number" id="price-per-day" value={price.perDay} onChange={(e) => setPrice({...price, perDay:e.target.value})} step='5000' />
-              </div>
-              <div className='price-per-week'>
-                <label htmlFor="price-per-week"><i className="fa-regular fa-money-check-dollar"></i> Giá theo tuần *</label>
-                <input type="number" id="price-per-week" value={price.perWeek} onChange={(e) => setPrice({...price, perWeek:e.target.value})} step='5000' />
-              </div>
-              <div className='price-per-month'>
-                <label htmlFor="price-per-month"><i className="fa-regular fa-money-check-dollar"></i> Giá theo tháng *</label>
-                <input type="number" id="price-per-month" value={price.perMonth} onChange={(e) =>setPrice({...price, perMonth:e.target.value})} step='5000' />
+                <input type="number" id="price-per-day" value={price} onChange={(e) => setPrice(e.target.value)} step='5000' />
               </div>
             </div>
           </div>

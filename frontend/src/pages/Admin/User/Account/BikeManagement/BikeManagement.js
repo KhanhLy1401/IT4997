@@ -55,7 +55,7 @@ const [message, setMessage] = useState("");
   const filteredBikes = bikes?.filter((bike) => {
     const titleMatch = bike.title.toLowerCase().includes(titleFilter.toLowerCase());
     const statusMatch = selectedStatus ? bike.status === selectedStatus : true;
-    const price = bike?.price?.perDay || 0;
+    const price = bike?.price || 0;
     const min = minPrice ? parseInt(minPrice) : 0;
     const max = maxPrice ? parseInt(maxPrice) : Infinity;
     const priceMatch = price >= min && price <= max;
@@ -223,7 +223,7 @@ const [message, setMessage] = useState("");
                     <img src={bike?.images?.front?.url} alt={bike.name} className="bike-thumb" />
                   </td>
                   <td>{bike.title}</td>
-                  <td>{bike?.price?.perDay} VNĐ</td>
+                  <td>{bike?.price} VNĐ</td>
                   <td><span className={`status-label status-${bike.status}`}>{statusLabels[bike.status]}</span></td>
                   <td>{new Date(bike.createdAt).toLocaleDateString("vi-VN", {
                     timeZone: "Asia/Ho_Chi_Minh",
@@ -298,9 +298,7 @@ const [message, setMessage] = useState("");
               <div class="task-label">Số xe hoàn thành</div>
             </div>
             <div class="task-item">
-              <div class="task-count">{confirmedBikes
-                ?.filter((bike) => bike.status === 'cancelled').length}</div>
-              <div class="task-label">Xe bị hủy</div>
+              
             </div>
             <div class="task-item">
               <div class="task-count">0</div>
@@ -317,7 +315,6 @@ const [message, setMessage] = useState("");
             <div class="task-item">
               <div class="task-count">
                 0
-                <span class="new-badge">New</span>
               </div>
               <div class="task-label">Tổng số đơn</div>
             </div>

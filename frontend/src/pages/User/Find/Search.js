@@ -90,7 +90,7 @@ const Search = () => {
       const matchesDeposit = isNoDeposit ? bike.security_deposit === 'no_deposit' : true;
       const matchesDelivery = isDeliveryAvailable ? bike.delivery_home === true : true;
       const matchesPrice =
-        bike.price?.perDay >= minPrice && bike.price?.perDay <= maxPrice;
+        bike.price >= minPrice && bike.price <= maxPrice;
 
       return matchesDeposit && matchesDelivery && matchesPrice;
     });
@@ -243,7 +243,7 @@ const Search = () => {
                     {bike.rental_count} chuyến
                   </div>
                   <div className='motor-price'>
-                    <span>{bike.price?.perDay / 1000 || 0}K</span>/ngày
+                    <span>{bike.price / 1000 || 0}K</span>/ngày
                   </div>
                 </div>
               </div>

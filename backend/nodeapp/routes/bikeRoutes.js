@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addBike, getAllBikes, getBikeById,deleteBikeById, deleteAllBikes, getBikesByOwnerId , searchAvailableBikes} from "../controllers/bikeController.js";
+import { addBike, getAllBikes, getBikeById,deleteBikeById, deleteAllBikes, getBikesByOwnerId , searchAvailableBikes, getAllBikesNotPending} from "../controllers/bikeController.js";
 import {upload} from "../config/multer.js";
 
 
@@ -13,6 +13,7 @@ router.post('/add',upload.fields([
     { name: "bike_insurance", maxCount: 1 },
   ]), addBike);
 router.get('/get-all-bikes', getAllBikes)
+router.get('/get-all-bikes-not-pending', getAllBikesNotPending)
 router.delete('/delete-bikes', deleteAllBikes);
 router.post('/search', searchAvailableBikes);
 router.get('/get-by-owner/:id', getBikesByOwnerId);

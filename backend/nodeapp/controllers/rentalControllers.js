@@ -189,7 +189,7 @@ export const getRecentRevenue = async (req, res) => {
 }
 
 export const getAllRecentRevenue = async (req, res) => {
-  const months = parseInt(req.query.months) || 6;
+  const months = parseInt(req.query.months) || 12;
 
   try {
     const now = new Date();
@@ -233,6 +233,127 @@ export const getAllRecentRevenue = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+
+export const getMonthlyOwnerRevenueStats = async (req, res) => {
+  try {
+    const months = parseInt(req.query.months) || 12;
+    const now = new Date();
+    const startDate = new Date(now.getFullYear(), now.getMonth() - months + 1, 1);
+
+    const revenueData = await Rental.aggregate([
+      {
+        $match: {
+          status: "completed",
+          createdAt: { $gte: startDate }
+        }
+      },
+      {
+        $addFields: {
+          ownerIdObj: { $toObjectId: "$ownerId" },
+          month: { $dateToString: { format: "%Y-%m", date: "$createdAt" } }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            ownerId: "$ownerIdObj",
+            month: "$month"
+          },
+          totalRevenue: { $sum: "$totalPrice" },
+          totalRentals: { $sum: 1 },
+          rentals: {
+            $push: {
+              rentalId: "$_id",
+              bikeId: "$bikeId",
+              userId: "$userId",
+              totalPrice: "$totalPrice",
+              startDate: "$startDate",
+              startTime: "$startTime",
+              endDate: "$endDate",
+              endTime: "$endTime",
+              createdAt: "$createdAt"
+            }
+          }
+        }
+      },
+      {
+        $group: {
+          _id: "$_id.ownerId",
+          monthlyStats: {
+            $push: {
+              month: "$_id.month",
+              totalRevenue: "$totalRevenue",
+              totalRentals: "$totalRentals",
+              rentals: "$rentals"
+            }
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "_id",        // ObjectId đã chuẩn
+          foreignField: "_id",
+          as: "owner"
+        }
+      },
+      {
+        $unwind: "$owner"
+      },
+      {
+        $project: {
+          ownerId: "$_id",
+          ownerName: "$owner.fullName",
+          ownerEmail: "$owner.email",
+          ownerPhone: "$owner.phone",
+          bankName: "$owner.banking.account_name",
+          accountNumber: "$owner.banking.account_number",
+          accountHolder: "$owner.banking.account_holder",
+          monthlyStats: 1
+        }
+      }
+    ]);
+
+    // Tạo danh sách các tháng gần đây
+    const monthsList = [];
+    for (let i = months - 1; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const y = d.getFullYear();
+      monthsList.push(`${y}-${m}`);
+    }
+
+    // Đảm bảo mỗi owner đều có đủ các tháng, nếu không thì điền 0
+    const filledResults = revenueData.map(owner => {
+      const monthMap = Object.fromEntries(owner.monthlyStats.map(stat => [stat.month, stat]));
+      const completeStats = monthsList.map(m => ({
+        month: m,
+        totalRevenue: monthMap[m]?.totalRevenue || 0,
+        totalRentals: monthMap[m]?.totalRentals || 0,
+        rentals: monthMap[m]?.rentals || []
+      }));
+      return {
+        ownerId: owner.ownerId,
+        ownerName: owner.ownerName,
+        ownerEmail: owner.ownerEmail,
+        ownerPhone: owner.ownerPhone,
+        bankName: owner.bankName,
+        accountNumber: owner.accountNumber,
+        accountHolder: owner.accountHolder,
+        monthlyStats: completeStats
+      };
+    });
+
+    res.json(filledResults);
+  } catch (err) {
+    console.error("Lỗi thống kê:", err.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
 
 
 export const getMonthlyRentalCount = async (req, res) => {

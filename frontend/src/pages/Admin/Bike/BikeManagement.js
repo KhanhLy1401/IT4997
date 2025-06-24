@@ -8,13 +8,14 @@ const BikeManagement = () => {
   const API_URL = process.env.REACT_APP_API_URL;
   const [searchTerm, setSearchTerm] = useState(""); // Lưu giá trị tìm kiếm
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
-  const bikesPerPage = 5; // Số xe trên mỗi trang
+  const bikesPerPage = 10; // Số xe trên mỗi trang
 
   // Lấy danh sách xe
   const fetchBikes = async () => {
     try {
       const response = await axios.get(`${API_URL}/bike/get-all-bikes`);
       setBikes(response.data);
+      console.log("ds xe", response.data);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách xe:", error);
     }
@@ -98,7 +99,7 @@ const BikeManagement = () => {
         <thead>
           <tr>
             <th>STT</th>
-            <th>Model</th>
+            <th>Hình ảnh</th>
             
             <th>Tên xe</th>
             <th>Ngày đăng ký</th>
@@ -110,9 +111,9 @@ const BikeManagement = () => {
           {currentBikes.map((bike, index) => (
             <tr key={bike._id}>
               <td>{indexOfFirstBike + index + 1}</td>
-              <td><img src={bike.images[0]} /></td>
+              <td><img src={bike.images.front.url} /></td>
               <td>{bike.title}</td>
-              <td>{moment(bike.registrationDate).format("HH:mm:ss DD/MM/YYYY")}</td>
+              <td>{new Date(bike.createdAt).toLocaleString()}</td>
               <td>{bike.isBlocked ? "Bị khóa" : "Hoạt động"}</td>
               <td className="manage-actions">
                 <i className="fa-solid fa-angle-down"></i>

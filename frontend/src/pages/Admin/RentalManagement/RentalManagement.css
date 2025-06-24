@@ -1,0 +1,22 @@
+.rental-management {
+    width: 90%;
+}
+.status-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.status-tabs button {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.status-tabs button.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
