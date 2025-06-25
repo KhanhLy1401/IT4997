@@ -1,4 +1,3 @@
-import React from 'react'
 import './Home.css'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +5,7 @@ import axios from 'axios';
 import LocationPicker from '../../../components/LocationPicker/LocationPicker.js';
 
 
-const Home = ({ isOpen, setIsOpen, isLogin, setIsLogin }) => {
+const Home = () => {
   const API_URL = process.env.REACT_APP_API_URL;
 
 
@@ -111,7 +110,7 @@ const generateTimeOptions = () => {
     useEffect(() => {
           const fetchBikes = async () => {
             try {
-              const response = await axios.get(`${API_URL}/bike/get-all-bikes`);
+              const response = await axios.get(`${API_URL}/bike/get-all-bikes-not-pending`);
               setBikes(response.data);
               console.log(response.data);
             } catch (error) {
@@ -209,10 +208,10 @@ const generateTimeOptions = () => {
                   </div>
                   <div className='line-motor'></div>
                   <div className="motor-address">
-                      <i class="fa-solid fa-location-dot location-dot"></i> {bike.location?.province || "Hanoi"}
+                      <i class="fa-solid fa-location-dot location-dot"></i> {bike.location?.province || ""}, {bike.location?.district || ""}, {bike.location?.ward || ""}
                   </div>
                   <div className="motor-rating">
-                    <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
+                    <div> <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
                     <div className='motor-price'> <span>{bike.price/1000  || 0}K</span>/ngày </div>
                   </div>
                 </div>

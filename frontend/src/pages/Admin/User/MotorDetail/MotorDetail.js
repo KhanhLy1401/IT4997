@@ -16,10 +16,10 @@ const MotorDetail = () => {
     const API_FLASK = process.env.REACT_APP_API_FLASK;
     const [pickupDate, setPickupDate] = useState('');
     const [pickupDateTime, setPickupDateTime] = useState('');
-    const [pickupTime, setPickupTime] = useState("05:00");
+    const [pickupTime, setPickupTime] = useState("hh:mm");
     const [returnDate, setReturnDate] = useState('')
     const [returnDateTime, setReturnDateTime] = useState('')
-    const [returnTime, setReturnTime] = useState('05:00')
+    const [returnTime, setReturnTime] = useState('hh:mm')
     const [rentalDuration, setRentalDuration] = useState(0) // đơn vị ngày (thập phân)
     let [totalPrice, setTotalPrice] = useState(0)
     const {state} = useLocation();
@@ -260,17 +260,7 @@ useEffect(() => {
                         <div className='motor-detail-booking-from'>
                             <label>Nhận xe</label>
                             <div className='wrap-date-time'>
-                                {/* <input
-                                    type='date'
-                                    value={pickupDate}
-                                    onChange={(e) => setPickupDate(e.target.value)}
-                                    required
-                                />
-                                <select value={pickupTime} onChange={(e) => setPickupTime(e.target.value)}>
-                                    {generateTimeOptions().map((time) => (
-                                        <option key={time} value={time}>{time}</option>
-                                ))}
-                                </select> */}
+                    
                                 <input
                                 type='date'
                                 value={pickupDate}
@@ -280,11 +270,11 @@ useEffect(() => {
                                 value={pickupTime}
                                 onChange={(e) => setPickupTime(e.target.value)}
                                 >
+                                <option value="hh:mm"  disabled>hh:mm</option>
                                 {generateTimeOptions().map((time) => (
                                     <option key={time} value={time}>{time}</option>
                                 ))}
                                 </select>
-                                
 
                             </div>
                         </div>
@@ -311,6 +301,7 @@ useEffect(() => {
                                     value={returnTime}
                                     onChange={(e) => setReturnTime(e.target.value)}
                                     >
+                                    <option value="hh:mm"  disabled>hh:mm</option>
                                     {generateTimeOptions().map((time) => (
                                         <option key={time} value={time}>{time}</option>
                                     ))}
@@ -320,33 +311,7 @@ useEffect(() => {
                             </div>
                         </div>
                     </div>
-                    <div className='motor-detail-booking-address'>
-                        <label>
-                            <input 
-                                type="checkbox" 
-                                checked={isDelivery} 
-                                onChange={handleDeliveryChange} 
-                            />
-                            Giao xe tận nơi
-                        </label>
-
-                        {isDelivery && (
-                            <div className='delivery-address'>
-                                <div>{state?.province}, {state?.district}, {state?.ward}</div>
-                                <label htmlFor='address'>Địa chỉ cụ thể: <br/></label>
-                                <input
-                                    id='address'
-                                    type='text'
-                                    value={address}
-                                    onChange={(e) => setAddress(e.target.value)}
-                                    placeholder='Nhập địa chỉ nhận xe'
-                                    required
-                                />
-                                <div className='address-distance'>Khoảng cách giao xe: {(Math.ceil(state?.distance / 10) / 100).toFixed(2)} km</div>
-                            </div>
-                        )}
-                    </div>
-    
+            
                     <div className='motor-detail-booking-price-duration'>
                         <div className='motor-detail-booking-price'>Đơn giá: {bike.price || "0"} vnđ/ ngày</div>
                         <div className='motor-detail-booking-duration'>Số ngày thuê: {rentalDuration.toFixed(2)} </div>

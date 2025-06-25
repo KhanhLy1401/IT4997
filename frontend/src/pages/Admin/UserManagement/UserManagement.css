@@ -161,3 +161,10 @@
   color: white;
   border-color: #007bff;
 }
+
+.angle-down {
+  padding:  3px 8px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  align-items: center;
+}

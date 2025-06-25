@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Bike from "../models/Bike.js";
 
 import { uploadToCloudinary } from "../config/cloudinary.js";
 
@@ -126,6 +127,13 @@ export const blockUser =  async (req, res) => {
       blockedAt: new Date(),
       blockReason: reason || "Vi phạm điều khoản",
     });
+
+    await Bike.updateMany(
+      { owner: id },
+      { $set: { status: "pending_approval" } }
+    );
+
+    res.json({ message: "Tài khoản đã bị khóa và xe đã chuyển về trạng thái chờ duyệt." });
   
     res.json({ message: "Tài khoản đã bị khóa!" });
   };

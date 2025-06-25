@@ -84,7 +84,6 @@ const RentalForm = () => {
           <img src={state?.bikeImage} alt={state?.bikeTitle} />
           <p>Xăng - {state?.bikeCapacity || "110"} - Xe số - Sản xuất 2018</p>
           <div className="rental-time">
-            <p><strong>GIAO XE:</strong> {state.isDelivery ? "Giao xe tận nơi" : "Nhận xe tại cửa hàng"}</p>
             <p><strong>THỜI GIAN:</strong> {state.startDate} - {state.startTime}→ {state.endDate}-{state.endTime}</p>
           </div>
         </div>

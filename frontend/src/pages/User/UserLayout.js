@@ -21,7 +21,6 @@ import Auth from "../../components/Auth/SignIn.js";
 import RequireOwner from "../../auth/RequireOwner.js";
 import BikeDetail from "./Owner/BikeDetail/BikeDetail.js";
 
-import DirectionMap from "./MotorDetail/Map/Map.js";
 import RentalDetail from "./Account/RentalDetail/RentalDetail.js";
 const UserLayout = () => {
 
@@ -41,7 +40,6 @@ const UserLayout = () => {
           <Route path="/sign-in" element={<Auth setUser={setUser}/>} />
 
           <Route path="/" element={<Home />} />
-          <Route path="/map" element={<DirectionMap />} />
 
 
           <Route path="/motor-detail/:id" element={<MotorDetail  />} />

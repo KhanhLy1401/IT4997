@@ -115,3 +115,34 @@ export const approveBike = async (req, res) => {
     res.status(500).json({ message: "Lỗi server", error });
   }
 };
+
+export const getOwnersWithBikes = async (req, res) => {
+  try {
+    const ownersWithBikes = await User.aggregate([
+      { $match: { role: 'owner' } },
+      {
+        $addFields: {
+          stringId: { $toString: '$_id' }
+        }
+      },
+      {
+        $lookup: {
+          from: 'bikes',
+          localField: 'stringId',
+          foreignField: 'ownerId',
+          as: 'bikes'
+        }
+      },
+      {
+        $project: {
+          password: 0
+        }
+      }
+    ]);
+
+    res.status(200).json(ownersWithBikes);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+

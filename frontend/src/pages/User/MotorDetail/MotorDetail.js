@@ -13,11 +13,9 @@ const MotorDetail = () => {
     const API_URL = process.env.REACT_APP_API_URL;
     const API_FLASK = process.env.REACT_APP_API_FLASK;
     const [pickupDate, setPickupDate] = useState('');
-    const [pickupDateTime, setPickupDateTime] = useState('');
-    const [pickupTime, setPickupTime] = useState("05:00");
+    const [pickupTime, setPickupTime] = useState("hh:mm");
     const [returnDate, setReturnDate] = useState('')
-    const [returnDateTime, setReturnDateTime] = useState('')
-    const [returnTime, setReturnTime] = useState('05:00')
+    const [returnTime, setReturnTime] = useState('hh:mm')
     const [rentalDuration, setRentalDuration] = useState(0) // đơn vị ngày (thập phân)
     let [totalPrice, setTotalPrice] = useState(0)
     const [comment, setComment] = useState(null);
@@ -38,9 +36,9 @@ const MotorDetail = () => {
             setReturnDate(state.endDate);
             setReturnTime(state.endTime);
         }
-        setPickupDateTime(getCombinedDateTime(pickupDate, pickupTime));
-        setReturnDateTime(getCombinedDateTime(returnDate, returnTime));
-        console.log("datetime", pickupDateTime+returnDateTime)
+        const pickupDateTime=getCombinedDateTime(pickupDate, pickupTime);
+        const returnDateTime=getCombinedDateTime(returnDate, returnTime);
+        console.log("datetime", pickupDateTime+returnDateTime);
       
 
         const pickup = new Date(pickupDateTime);
@@ -105,8 +103,8 @@ const MotorDetail = () => {
 
     useEffect(() => {
         if (!bike || !bike.price) return;
-        setPickupDateTime(getCombinedDateTime(pickupDate, pickupTime));
-        setReturnDateTime(getCombinedDateTime(returnDate, returnTime));
+        const pickupDateTime=getCombinedDateTime(pickupDate, pickupTime);
+        const returnDateTime=getCombinedDateTime(returnDate, returnTime);
         console.log("datetime", pickupDateTime+returnDateTime)
       
 
@@ -153,7 +151,6 @@ const MotorDetail = () => {
         return;
     };
 
-    console.log(pickupDateTime, "picu")
     navigate(`/rental-form/${bike._id}`, {state: {bikeId: bike._id, bikeTitle: bike.title, bikeOwnerId: bike.ownerId, bikeImage: bike.images?.front?.url || "img", bikeCapacity: bike.capacity, startDate: pickupDate, endDate: returnDate, startTime: pickupTime, endTime: returnTime, rentalDuration: rentalDuration, bikePrice: bike.price||"", totalPrice: totalPrice, isDelivery: isDelivery}})
   }
 
@@ -176,7 +173,7 @@ const MotorDetail = () => {
             <div className='motor-detail-des'>
                 <div className='motor-detail-name'>{bike.title}</div>
                 <div className='motor-detail-feature-1'>
-                    <div className='motor-detail-rating'>3 <FontAwesomeIcon icon={faStar} /> - {bike.rental_count} chuyến đi - {bike.location?.province || "No location"}</div>
+                    <div className='motor-detail-rating'> {bike.rental_count} chuyến đi - {bike.location?.province || "No location"}</div>
                     <div className='motor-detail-highlight'> {bike.bikeType} - Giao xe tận nơi - Đặt xe nhanh</div>
                 </div>
                 <div className='motor-detail-feature-2'>
@@ -213,10 +210,8 @@ const MotorDetail = () => {
                 <div className='motor-detail-policy'>
                     <div className='motor-detail-feature-title'>Chính sách hủy xe</div>
                             <div className='motor-detail-license'>
-                                Hủy trước thời gian nhận xe ít nhất là 6 tiếng <br />
-                                Phí hủy: 10% giá trị đơn hàng
-
-
+                                Không chấp nhận hủy xe dưới mọi hình thức <br/>
+                                Không hoàn tiền khi đã thanh toán xong
                             </div>
                 </div>
                 <div>
@@ -312,6 +307,7 @@ const MotorDetail = () => {
                                     required
                                 />
                                 <select value={pickupTime} onChange={(e) => setPickupTime(e.target.value)}>
+                                    <option value="hh:mm"  disabled>hh:mm</option>
                                     {generateTimeOptions().map((time) => (
                                         <option key={time} value={time}>{time}</option>
                                 ))}
@@ -328,6 +324,7 @@ const MotorDetail = () => {
                                     required
                                 />
                                 <select value={returnTime} onChange={(e) => setReturnTime(e.target.value)}>
+                                    <option value="hh:mm"  disabled>hh:mm</option>
                                     {generateTimeOptions().map((time) => (
                                         <option key={time} value={time}>{time}</option>
                                 ))}
@@ -335,32 +332,7 @@ const MotorDetail = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='motor-detail-booking-address'>
-                        <label>
-                            <input 
-                                type="checkbox" 
-                                checked={isDelivery} 
-                                onChange={handleDeliveryChange} 
-                            />
-                            Giao xe tận nơi
-                        </label>
-
-                        {isDelivery && (
-                            <div className='delivery-address'>
-                                <div>{state?.province}, {state?.district}, {state?.ward}</div>
-                                <label htmlFor='address'>Địa chỉ cụ thể: <br/></label>
-                                <input
-                                    id='address'
-                                    type='text'
-                                    value={address}
-                                    onChange={(e) => setAddress(e.target.value)}
-                                    placeholder='Nhập địa chỉ nhận xe'
-                                    required
-                                />
-                                <div className='address-distance'>Khoảng cách giao xe: {(Math.ceil(state?.distance / 10) / 100).toFixed(2)} km</div>
-                            </div>
-                        )}
-                    </div>
+                
     
                     <div className='motor-detail-booking-price-duration'>
                         <div className='motor-detail-booking-price'>Đơn giá: {bike.price || "0"} vnđ/ ngày</div>

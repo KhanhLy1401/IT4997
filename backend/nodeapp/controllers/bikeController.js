@@ -214,6 +214,7 @@ export const searchAvailableBikes = async (req, res) => {
       // 👉 Bước 2: Tìm xe ở cùng tỉnh và trạng thái available
       const bikes = await Bike.find({
         "location.province": province,
+        status: { $ne: "pending_approval" }
       });
       
       if(!bikes) {

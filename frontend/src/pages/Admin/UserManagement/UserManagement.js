@@ -10,7 +10,7 @@ const UserManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRole, setSelectedRole] = useState('all'); // Thêm state lọc role
-  const usersPerPage = 5;
+  const usersPerPage = 8;
 
   const fetchUsers = async () => {
     try {
@@ -143,6 +143,7 @@ const UserManagement = () => {
               <td>{moment(user.createdAt).format("HH:mm:ss DD/MM/YYYY")}</td>
               <td>{user.isBlocked ? "Bị khóa" : "Hoạt động"}</td>
               <td className="manage-actions">
+                <i className="angle-down fa-solid fa-angle-down"></i>
                 {user.isBlocked ? (
                   <button className="btn approve-btn" onClick={() => unblockUser(user._id)}>
                     <i className="fa-solid fa-unlock-keyhole"></i>

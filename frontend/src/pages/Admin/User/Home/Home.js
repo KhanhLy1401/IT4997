@@ -96,6 +96,8 @@ const generateTimeOptions = () => {
           const fetchBikes = async () => {
             try {
               const response = await axios.get(`${API_URL}/bike/get-all-bikes-not-pending`);
+              console.log("notpending", response.data.length)
+
               setBikes(response.data);
             } catch (error) {
               console.error("Lỗi khi lấy dữ liệu xe:", error);
@@ -114,7 +116,6 @@ const generateTimeOptions = () => {
             <div className='booking-bar'>
                 <div className='booking-bar-title'>Bạn cần thuê xe máy ?</div>
                 <div className='booking-location'>
-                    {/* <span className='booking-bar-subtitle'><AddressAutocomplete onSelectAddress={(addr) => setLocation(addr)} /></span> */}
                     <span className='booking-bar-subtitle'><LocationPicker onLocationChange={handleLocationChange} /></span>
                 </div>
                 <div className='booking-date'>
