@@ -14,21 +14,35 @@ const BookingPage = ({ bookings }) => {
   const [recommendBikes, setRecommendBikes]= useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [rentals, SetRentals] = useState(null);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
   const API_URL = process.env.REACT_APP_API_URL;
   const API_FLASK=process.env.REACT_APP_API_FLASK;
   const userId = localStorage.getItem('_id');
 
 
-  const filteredBookings = statusFilter === "Tất cả"
-    ? bookings
-    : bookings?.filter((booking) => booking.status === statusFilter);
+  const filteredRentals = statusFilter === "Tất cả"
+  ? rentals || []
+  : rentals?.filter((rental) => {
+      // normalize status so it matches the dropdown
+      const displayStatus =
+        rental.status === "completed"
+          ? "Hoàn thành"
+          : rental.status === "confirmed"
+          ? "Đang thuê"
+          : rental.status === "pending"
+          ? "Đã hủy"
+          : rental.status;
 
-  const totalPages = Math.ceil(filteredBookings?.length / itemsPerPage ) || 1;
-  const currentBookings = filteredBookings?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+      return displayStatus === statusFilter;
+    });
+
+const totalPages = Math.ceil(filteredRentals.length / itemsPerPage) || 1;
+
+const currentRentals = filteredRentals.slice(
+  (currentPage - 1) * itemsPerPage,
+  currentPage * itemsPerPage
+);
+
 
   const handleFilterChange = (e) => {
     setStatusFilter(e.target.value);
@@ -86,9 +100,8 @@ const BookingPage = ({ bookings }) => {
         <label>Lọc theo trạng thái: </label>
         <select value={statusFilter} onChange={handleFilterChange}>
           <option value="Tất cả">Tất cả</option>
-          <option value="Đã thanh toán">Đã thanh toán</option>
+          <option value="Hoàn thành">Hoàn thành</option>
           <option value="Đang thuê">Đang thuê</option>
-          <option value="Chờ xác nhận">Chờ xác nhận</option>
           <option value="Đã hủy">Đã hủy</option>
         </select>
       </div>
@@ -105,24 +118,36 @@ const BookingPage = ({ bookings }) => {
             </tr>
           </thead>
             <tbody>
-            {rentals?.map((rental, index) => (
+            {currentRentals?.map((rental, index) => (
               <React.Fragment key={index}>
                 <tr>
                   <td><img src={rental.bikeImage} alt={rental.bikeName} className="bike-image" /></td>
-                  <td>
+                  {/* <td>
                     {rental.startTime} {new Date(rental.startDate).toLocaleDateString('vi-VN')} - 
                     {rental.endTime} {new Date(rental.endDate).toLocaleDateString('vi-VN')}
+                  </td> */}
+                  <td className="rental-time">
+                    <div>
+                      <strong>Bắt đầu:</strong> {rental.startTime}, {new Date(rental.startDate).toLocaleDateString('vi-VN')}
+                    </div>
+                    <div>
+                      <strong>Kết thúc:</strong> {rental.endTime}, {new Date(rental.endDate).toLocaleDateString('vi-VN')}
+                    </div>
                   </td>
-                  <td className="price">{rental.totalPrice}₫</td>
-                  <td>
+                  <td className="price">{rental.totalPrice.toLocaleString('vi-VN')} VNĐ</td>
+                  <td className="status-rental">
                     <span className={`status ${rental.status.toLowerCase().replace(/\s+/g, '-')}`}>
-                      {rental.status === "confirmed" ? "Đã xác nhận" : (rental.status==="completed"?"Hoàn thành": rental.status)}
+                      {rental.status === "confirmed"
+                        ? "Đã xác nhận"
+                        : rental.status === "completed"
+                        ? "Hoàn thành"
+                        : rental.status === "pending"
+                        ? "Đã hủy"
+                        : rental.status}
                     </span>
                   </td>
                   <td>
-                    {rental.status === "completed" ? (
-                      <button onClick={() => setSelectedBikeId(rental.bikeId)}>Đánh giá</button>
-                    ) : (
+                     
                       <button
                         className="action-button"
                         onClick={() => navigate(`/account/my-bookings/${rental._id}`, { state: { rental } })}
@@ -130,7 +155,10 @@ const BookingPage = ({ bookings }) => {
                         Xem chi tiết
                       </button>
 
-                    )}
+                    
+                    {rental.status === "completed" ? (
+                      <button className="review-btn" onClick={() => setSelectedBikeId(rental.bikeId)}>Đánh giá</button>
+                    ):""}
                   </td>
                 </tr>
 
@@ -177,11 +205,11 @@ const BookingPage = ({ bookings }) => {
 
       <div className="pagination">
         <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
-          ◀
+          Trước
         </button>
         <span>Trang {currentPage} / {totalPages}</span>
         <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
-          ▶
+          Tiếp
         </button>
       </div>
 

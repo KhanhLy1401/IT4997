@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 import "./Report.css";
 
 const Report = () => {
+    const API_URL = process.env.REACT_APP_API_URL;
     const [data, setData] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState(() => {
         const now = new Date();
@@ -41,7 +42,7 @@ const Report = () => {
 
     const fetchRevenueData = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/rental/by-month?month=${selectedMonth}`);
+            const response = await axios.get(`${API_URL}/rental/by-month?month=${selectedMonth}`);
             setData(response.data);
         } catch (error) {
             console.error("Error fetching revenue data:", error);

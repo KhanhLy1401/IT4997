@@ -80,7 +80,7 @@ export const getAllRentalByOwnerId = async (req, res) => {
 
 export const getAllRental = async (req, res) => {
     try {
-        const rentals = await Rental.find({status: "completed"});
+        const rentals = await Rental.find();
         if(!rentals) return res.status(404).json({message: "Không tìm thấy đơn nào"});
         else return res.status(200).json(rentals)
     } catch(error) {
