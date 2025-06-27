@@ -1,5 +1,11 @@
 .rental-management {
-    width: 90%;
+    width: 95%;
+    margin: auto;
+}
+
+.rental-management-title h2{
+  color: #333 !important;
+  font-size: 2rem;
 }
 .status-tabs {
   display: flex;

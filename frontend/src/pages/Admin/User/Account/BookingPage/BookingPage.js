@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import "./BookingPage.css";
 import axios from "axios";
 
-const BookingPage = ({ bookings }) => {
+const BookingPage = () => {
   const [statusFilter, setStatusFilter] = useState("Tất cả");
   const [selectedBikeId, setSelectedBikeId] = useState(null);
   const [rating, setRating] = useState(5); // 1-5 sao
@@ -17,15 +17,28 @@ const BookingPage = ({ bookings }) => {
   const userId = localStorage.getItem('_id');
 
 
-  const filteredBookings = statusFilter === "Tất cả"
-    ? bookings
-    : bookings?.filter((booking) => booking.status === statusFilter);
+  const filteredRentals = statusFilter === "Tất cả"
+  ? rentals || []
+  : rentals?.filter((rental) => {
+          const displayStatus =
+            rental.status === "completed"
+              ? "Hoàn thành"
+              : rental.status === "confirmed"
+              ? "Đang thuê"
+              : rental.status === "pending"
+              ? "Đã hủy"
+              : rental.status;
 
-  const totalPages = Math.ceil(filteredBookings?.length / itemsPerPage ) || 1;
-  const currentBookings = filteredBookings?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+          return displayStatus === statusFilter;
+        });
+
+    const totalPages = Math.ceil(filteredRentals.length / itemsPerPage) || 1;
+
+    const currentRentals = filteredRentals.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+
 
   const handleFilterChange = (e) => {
     setStatusFilter(e.target.value);
@@ -70,7 +83,6 @@ const BookingPage = ({ bookings }) => {
           <option value="Tất cả">Tất cả</option>
           <option value="Đã thanh toán">Đã thanh toán</option>
           <option value="Đang thuê">Đang thuê</option>
-          <option value="Chờ xác nhận">Chờ xác nhận</option>
           <option value="Đã hủy">Đã hủy</option>
         </select>
       </div>
@@ -80,8 +92,6 @@ const BookingPage = ({ bookings }) => {
           <thead>
             <tr>
               <th>Hình ảnh</th>
-              {/* <th>Tên xe</th>
-              <th>Chủ xe</th> */}
               <th>Thời gian thuê</th>
               <th>Giá</th>
               <th>Trạng thái</th>
@@ -89,17 +99,20 @@ const BookingPage = ({ bookings }) => {
             </tr>
           </thead>
             <tbody>
-            {rentals?.map((rental, index) => (
+            {currentRentals?.map((rental, index) => (
               <React.Fragment key={index}>
                 <tr>
                   <td><img src={rental.bikeImage} alt={rental.bikeName} className="bike-image" /></td>
-                  {/* <td>{rental?.bikeName}</td>
-                  <td>{rental?.ownerName}</td> */}
-                  <td>
-                    {rental.startTime} {new Date(rental.startDate).toLocaleDateString('vi-VN')} - 
-                    {rental.endTime} {new Date(rental.endDate).toLocaleDateString('vi-VN')}
+
+                  <td className="rental-time">
+                    <div>
+                      <strong>Bắt đầu:</strong> {rental.startTime}, {new Date(rental.startDate).toLocaleDateString('vi-VN')}
+                    </div>
+                    <div>
+                      <strong>Kết thúc:</strong> {rental.endTime}, {new Date(rental.endDate).toLocaleDateString('vi-VN')}
+                    </div>
                   </td>
-                  <td className="price">{rental.totalPrice}₫</td>
+                  <td className="price">{rental.totalPrice.toLocaleDateString()}VNĐ</td>
                   <td>
                     <span className={`status ${rental.status.toLowerCase().replace(/\s+/g, '-')}`}>
                       {rental.status === "confirmed" ? "Đã xác nhận" : (rental.status==="completed"?"Hoàn thành": rental.status)}

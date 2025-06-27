@@ -101,7 +101,6 @@ const RentalManagement = () => {
             <th>STT</th>
             <th>Mã đơn</th>
             <th>Xe</th>
-            <th>Người thuê</th>
             <th>Thời gian thuê</th>
             <th>Tổng tiền</th>
             <th>Thanh toán</th>
@@ -116,18 +115,15 @@ const RentalManagement = () => {
               <td>{rental._id}</td>
               <td>
                 <img src={rental.bikeImage} alt="Bike" style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '6px' }} />
-                <div>ID xe: {rental.bikeId}</div>
+                {/* <div>ID xe: {rental.bikeId}</div> */}
               </td>
-              <td>
-                <div>User: {rental.userId}</div>
-                <div>Owner: {rental.ownerId}</div>
-              </td>
+             
               <td>
                 {moment(rental.startDate).format("DD/MM/YYYY")} {rental.startTime} → {moment(rental.endDate).format("DD/MM/YYYY")} {rental.endTime}
               </td>
-              <td>{rental.totalPrice.toLocaleString()} đ</td>
+              <td>{rental.totalPrice.toLocaleString()} VNĐ</td>
               <td>{rental.paymentStatus === 'paid' ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
-              <td>{rental.status === 'pending' ? 'Đang chờ' : 
+              <td>{rental.status === 'pending' ? 'Đã hủy' : 
                    rental.status === 'confirmed' ? 'Đã xác nhận' : 
                    rental.status === 'completed' ? 'Hoàn tất' : 'Đã hủy'}</td>
               <td>{moment(rental.createdAt).format("HH:mm:ss DD/MM/YYYY")}</td>
