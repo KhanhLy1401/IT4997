@@ -10,10 +10,16 @@ const RentalManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState('all'); 
   const rentalsPerPage = 5;
+  const [selectedRentalId, setSelectedRentalId] = useState(null);
+
+  const toggleDetails = (rentalId) => {
+    setSelectedRentalId(prev => (prev === rentalId ? null : rentalId));
+  };
 
   const fetchRentals = async () => {
     try {
       const response = await axios.get(`${API_URL}/rental/`);
+      console.log(response.data);
       setRentals(response.data);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách đơn thuê:", error);
@@ -76,7 +82,7 @@ const RentalManagement = () => {
         <button 
           className={selectedStatus === 'pending' ? 'active' : ''}
           onClick={() => { setSelectedStatus('pending'); setCurrentPage(1); }}>
-          Đang chờ
+          Đã hủy
         </button>
         <button 
           className={selectedStatus === 'confirmed' ? 'active' : ''}
@@ -86,12 +92,7 @@ const RentalManagement = () => {
         <button 
           className={selectedStatus === 'completed' ? 'active' : ''}
           onClick={() => { setSelectedStatus('completed'); setCurrentPage(1); }}>
-          Hoàn tất
-        </button>
-        <button 
-          className={selectedStatus === 'cancelled' ? 'active' : ''}
-          onClick={() => { setSelectedStatus('cancelled'); setCurrentPage(1); }}>
-          Đã hủy
+          Hoàn thành
         </button>
       </div>
 
@@ -105,29 +106,65 @@ const RentalManagement = () => {
             <th>Tổng tiền</th>
             <th>Thanh toán</th>
             <th>Trạng thái</th>
-            <th>Ngày tạo</th>
+            <th>Xem chi tiết</th>
           </tr>
         </thead>
         <tbody>
           {currentRentals.map((rental, index) => (
+            <>
             <tr key={rental._id}>
               <td>{indexOfFirstRental + index + 1}</td>
               <td>{rental._id}</td>
               <td>
                 <img src={rental.bikeImage} alt="Bike" style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '6px' }} />
-                {/* <div>ID xe: {rental.bikeId}</div> */}
               </td>
              
-              <td>
-                {moment(rental.startDate).format("DD/MM/YYYY")} {rental.startTime} → {moment(rental.endDate).format("DD/MM/YYYY")} {rental.endTime}
+              <td className="rental-time">
+                    <div>
+                      <strong>Bắt đầu:</strong> {rental.startTime}, {new Date(rental.startDate).toLocaleDateString('vi-VN')}
+                    </div>
+                    <div>
+                      <strong>Kết thúc:</strong> {rental.endTime}, {new Date(rental.endDate).toLocaleDateString('vi-VN')}
+                    </div>
               </td>
-              <td>{rental.totalPrice.toLocaleString()} VNĐ</td>
-              <td>{rental.paymentStatus === 'paid' ? 'Đã thanh toán' : 'Chưa thanh toán'}</td>
-              <td>{rental.status === 'pending' ? 'Đã hủy' : 
-                   rental.status === 'confirmed' ? 'Đã xác nhận' : 
-                   rental.status === 'completed' ? 'Hoàn tất' : 'Đã hủy'}</td>
-              <td>{moment(rental.createdAt).format("HH:mm:ss DD/MM/YYYY")}</td>
+              <td className="price">{rental.totalPrice?.toLocaleString()} VNĐ</td>
+              <td>
+                <span className={`payment-badge ${rental.paymentStatus}`}>
+                  {rental.paymentStatus === 'paid' ? 'Đã thanh toán' : 'Chưa thanh toán'}
+                </span>
+              </td>
+              <td>
+                <span className={`status-badge ${rental.status}`}>
+                  {rental.status === 'pending'
+                    ? 'Đã hủy'
+                    : rental.status === 'confirmed'
+                    ? 'Đã xác nhận'
+                    : rental.status === 'completed'
+                    ? 'Hoàn thành'
+                    : 'Không rõ'}
+                </span>
+              </td>
+
+              <td>
+                <button className="detail-btn" onClick={() => toggleDetails(rental._id)}>
+                  {selectedRentalId === rental._id ? "Đóng" : "Chi tiết"}
+                </button>
+              </td>
+              
             </tr>
+            {selectedRentalId === rental._id && (
+              <tr className="rental-details-row">
+                <td colSpan="8">
+                  <div className="rental-details">
+                    <p><strong>Người thuê:</strong> {rental.userId}</p>
+                    <p><strong>Chủ xe:</strong> {rental.ownerId}</p>
+                    <p><strong>Hình thức thanh toán:</strong> {rental.paymentMethod || 'MoMo'}</p>
+                    <p><strong>Ghi chú:</strong> {rental.note || 'Không có'}</p>
+                  </div>
+                </td>
+              </tr>
+            )}
+            </>
           ))}
         </tbody>
       </table>

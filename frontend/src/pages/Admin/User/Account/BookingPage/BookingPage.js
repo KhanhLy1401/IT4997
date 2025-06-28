@@ -7,7 +7,7 @@ import axios from "axios";
 const BookingPage = () => {
   const [statusFilter, setStatusFilter] = useState("Tất cả");
   const [selectedBikeId, setSelectedBikeId] = useState(null);
-  const [rating, setRating] = useState(5); // 1-5 sao
+  const [rating, setRating] = useState(5); 
   const [comment, setComment] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -112,7 +112,7 @@ const BookingPage = () => {
                       <strong>Kết thúc:</strong> {rental.endTime}, {new Date(rental.endDate).toLocaleDateString('vi-VN')}
                     </div>
                   </td>
-                  <td className="price">{rental.totalPrice.toLocaleDateString()}VNĐ</td>
+                  <td className="price">{rental.totalPrice.toLocaleDateString()} VNĐ</td>
                   <td>
                     <span className={`status ${rental.status.toLowerCase().replace(/\s+/g, '-')}`}>
                       {rental.status === "confirmed" ? "Đã xác nhận" : (rental.status==="completed"?"Hoàn thành": rental.status)}

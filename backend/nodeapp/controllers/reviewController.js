@@ -1,17 +1,18 @@
 import Review from "../models/Review.js";
+import Rental from '../models/Rental.js'
 import mongoose from "mongoose";
 
 export const addReview = async (req, res) => {
     try {
-        const { bikeId, userId, rating, comment } = req.body;
+        const { rentalId, bikeId, userId, rating, comment } = req.body;
 
         // Kiểm tra dữ liệu đầu vào
-        if (!bikeId || !userId || !rating) {
+        if (!rentalId || !bikeId || !userId || !rating) {
             return res.status(400).json({ message: "Thiếu thông tin cần thiết." });
         }
 
-        // Tạo review mới
         const newReview = new Review({
+            rentalId,
             bikeId,
             userId,
             rating,
@@ -27,37 +28,15 @@ export const addReview = async (req, res) => {
     }
 }
 
-
-export const getReviewByUser = async (req, res) => {
-    try {
-        const { bikeId, userId } = req.params;
-
-        if (!bikeId || !userId) {
-            return res.status(400).json({ message: "Thiếu bikeId hoặc userId." });
-        }
-
-        const review = await Review.findOne({ bikeId, userId });
-
-        if (!review) {
-            return false;
-        }
-
-        res.status(200).json(review);
-    } catch (error) {
-        console.error("Lỗi khi lấy đánh giá:", error);
-        res.status(500).json({ message: "Đã xảy ra lỗi khi lấy đánh giá." });
-    }
-};
-
 export const updateReview = async (req, res) => {
     try {
-        const { bikeId, userId, rating, comment } = req.body;
+        const { rentalId, bikeId, userId, rating, comment } = req.body;
 
-        if (!bikeId || !userId || !rating) {
+        if (!rentalId || !bikeId || !userId || !rating) {
             return res.status(400).json({ message: "Thiếu thông tin cần thiết." });
         }
 
-        const existingReview = await Review.findOne({ bikeId, userId });
+        const existingReview = await Review.findOne({ rentalId, userId });
 
         if (!existingReview) {
             return res.status(404).json({ message: "Không tìm thấy đánh giá để cập nhật." });
@@ -77,13 +56,13 @@ export const updateReview = async (req, res) => {
 
 export const deleteReview = async (req, res) => {
     try {
-        const { bikeId, userId } = req.params;
+        const { rentalId, userId } = req.params;
 
-        if (!bikeId || !userId) {
+        if (!rentalId || !userId) {
             return res.status(400).json({ message: "Thiếu bikeId hoặc userId." });
         }
 
-        const deleted = await Review.findOneAndDelete({ bikeId, userId });
+        const deleted = await Review.findOneAndDelete({ rentalId, userId });
 
         if (!deleted) {
             return res.status(404).json({ message: "Không tìm thấy đánh giá để xóa." });
@@ -146,6 +125,18 @@ export const getReviewsByBikeId = async (req, res) => {
   } catch (err) {
     console.error("Lỗi khi lấy đánh giá:", err);
     res.status(500).json({ message: "Lỗi khi lấy đánh giá." });
+  }
+};
+
+
+// GET /review/user/:userId/rentalIds
+export const getReviewByUser = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const reviews = await Review.find({ userId });
+    res.status(200).json(reviews);
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi lấy danh sách rental đã review', error: err.message });
   }
 };
 

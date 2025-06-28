@@ -100,7 +100,6 @@ const BikeManagement = () => {
           <tr>
             <th>STT</th>
             <th>Hình ảnh</th>
-            
             <th>Tên xe</th>
             <th>Ngày đăng ký</th>
             <th>Trạng thái</th>
@@ -111,8 +110,8 @@ const BikeManagement = () => {
           {currentBikes.map((bike, index) => (
             <tr key={bike._id}>
               <td>{indexOfFirstBike + index + 1}</td>
-              <td><img src={bike.images.front.url} /></td>
-              <td>{bike.title}</td>
+              <td><img src={bike.images.front.url} />  </td>
+              <td>{bike.title}<br/> ID: {bike._id}</td>
               <td>{new Date(bike.createdAt).toLocaleString()}</td>
               <td>{bike.isBlocked ? "Bị khóa" : "Hoạt động"}</td>
               <td className="manage-actions">

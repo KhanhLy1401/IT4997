@@ -99,59 +99,7 @@ const AccountPage = () => {
               </div>
             </section>
     
-            <section className="license-info">
-              <h3>Giấy phép lái xe {user?.license_status === "pending" ? "Đang chờ xác thực" : (user?.license_status === "verified" ?<span className="verified"> Đã xác thực <i class="fa-solid fa-circle-check"></i></span> : <span className="not-verified">Chưa xác thực</span> ) }</h3>
-              <p className="warning">Để đặt xe, bạn cần xác thực GPLX.</p> 
-              <div className="license">
-                <div className="license-info-img">
-                {user?.license_status === "verified" ? <></> : <><i className="fa-regular fa-cloud-arrow-up"></i>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={(e) => setLicenseImage(e.target.files[0])}
-                  /> </> }
             
-                  {licenseImage ? (
-                    // Nếu người dùng mới upload ảnh, hiển thị ảnh đó từ local
-                    <img
-                      src={URL.createObjectURL(licenseImage)}
-                      alt="GPLX preview"
-                      style={{ width: "200px", height: "auto", marginTop: "10px", borderRadius: "8px" }}
-                    />
-                  ) : user?.license_image_url ? (
-                    // Nếu không có ảnh mới, nhưng user đã có ảnh cũ từ server
-                    <img
-                      src={`${user.license_image_url.url}`}
-                      alt="GPLX đã gửi"
-                      style={{ width: "200px", height: "auto", marginTop: "10px", borderRadius: "8px" }}
-                    />
-                  ) : null}
-                </div>
-                <div className="license-form">
-                  <input
-                    type="text"
-                    placeholder="Nhập số GPLX đã cấp"
-                    value={licenseNumber}
-                    onChange={(e) => setLicenseNumber(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Nhập đầy đủ họ tên"
-                    value={licenseName}
-                    onChange={(e) => setLicenseName(e.target.value)}
-                  />
-                  <input
-                    type="date"
-                    placeholder="Ngày sinh"
-                    value={licenseDate}
-                    onChange={(e) => setLicenseDate(e.target.value)}
-                  />
-                  {user?.license_status === "verified" ? <></> : <button onClick={handleVerifyLicense}>Xác thực</button>}
-                </div>
-              </div>
-            </section>
-
-
             
           </main>
         </div>

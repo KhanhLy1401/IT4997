@@ -77,82 +77,24 @@ const AccountPage = () => {
           <main className="account-content">
             <section className="account-info">
               <div className="account-info-header">
-                <h3>Thông tin tài khoản <i className="fa-solid fa-pen"></i></h3>
-                <div>
-                  <i className="fa-regular fa-suitcase-rolling luggage"> 0</i> chuyến
-                </div>
+                <h3>Thông tin tài khoản </h3>
+              
               </div>
               <div className="detail-profile">
                 <div className="profile">
-                  <div className="avatar-account">Ly</div>
+                  <div className="avatar-account"><i class="fa-regular fa-circle-user fa-6x"></i></div>
                   <div className="info">
-                    <h4>{user?.fullName}</h4>
-                    <p>Tham gia: {user?.createdAt}</p>
+                    <h4>Họ và tên: {user?.fullName}</h4>
                   </div>
                 </div>
                 <div className="details">
-                  <p><strong>Ngày sinh:</strong> --/--/----</p>
-                  <p><strong>Giới tính:</strong> Nam</p>
                   <p><strong>Email:</strong> {user?.email} </p>
-                  <p><strong>Số điện thoại:</strong> {user?.phone} Đã xác thực </p>
+                  <p><strong>Số điện thoại:</strong> {user?.phone}  </p>
+                  <p><strong>Ngày tham gia: </strong> {new Date(user?.createdAt).toLocaleString('vi-VN')}  </p>
                 </div>
               </div>
             </section>
-    
-            <section className="license-info">
-              <h3>Giấy phép lái xe {user?.license_status === "pending" ? "Đang chờ xác thực" : (user?.license_status === "verified" ?<span className="verified"> Đã xác thực <i class="fa-solid fa-circle-check"></i></span> : <span className="not-verified">Chưa xác thực</span> ) }</h3>
-              <p className="warning">Để đặt xe, bạn cần xác thực GPLX.</p> 
-              <div className="license">
-                <div className="license-info-img">
-                {user?.license_status === "verified" ? <></> : <><i className="fa-regular fa-cloud-arrow-up"></i>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={(e) => setLicenseImage(e.target.files[0])}
-                  /> </> }
-            
-                  {licenseImage ? (
-                    // Nếu người dùng mới upload ảnh, hiển thị ảnh đó từ local
-                    <img
-                      src={URL.createObjectURL(licenseImage)}
-                      alt="GPLX preview"
-                      style={{ width: "200px", height: "auto", marginTop: "10px", borderRadius: "8px" }}
-                    />
-                  ) : user?.license_image_url ? (
-                    // Nếu không có ảnh mới, nhưng user đã có ảnh cũ từ server
-                    <img
-                      src={`${user.license_image_url.url}`}
-                      alt="GPLX đã gửi"
-                      style={{ width: "200px", height: "auto", marginTop: "10px", borderRadius: "8px" }}
-                    />
-                  ) : null}
-                </div>
-                <div className="license-form">
-                  <input
-                    type="text"
-                    placeholder="Nhập số GPLX đã cấp"
-                    value={licenseNumber}
-                    onChange={(e) => setLicenseNumber(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Nhập đầy đủ họ tên"
-                    value={licenseName}
-                    onChange={(e) => setLicenseName(e.target.value)}
-                  />
-                  <input
-                    type="date"
-                    placeholder="Ngày sinh"
-                    value={licenseDate}
-                    onChange={(e) => setLicenseDate(e.target.value)}
-                  />
-                  {user?.license_status === "verified" ? <></> : <button onClick={handleVerifyLicense}>Xác thực</button>}
-                </div>
-              </div>
-            </section>
-
-
-            
+                
           </main>
         </div>
       );

@@ -26,3 +26,67 @@
   color: white;
   border-color: #007bff;
 }
+
+.rental-details-row {
+  background-color: #f9fafb;
+}
+
+.rental-details {
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.status-badge {
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.status-badge.confirmed {
+  background-color: #dbeafe; /* xanh dương nhạt */
+  color: #1d4ed8;             /* xanh dương đậm */
+}
+
+.status-badge.completed {
+  background-color: #d1fae5; /* xanh lá nhạt */
+  color: #065f46;            /* xanh lá đậm */
+}
+
+.status-badge.pending {
+  background-color: #fee2e2; /* đỏ nhạt */
+  color: #991b1b;            /* đỏ đậm */
+}
+
+.payment-badge {
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 13px;
+  display: inline-block;
+}
+
+
+/* Chưa thanh toán */
+.payment-badge.pending {
+  background-color: #fef3c7;  /* vàng nhạt */
+  color: #b45309;             /* vàng đậm */
+}
+
+
+
+/* Đã thanh toán – xanh biển đậm nhẹ */
+.payment-badge.paid {
+  background-color: #e0f2fe;  /* xanh biển nhạt */
+  color: #0369a1;             /* xanh biển đậm */
+}
+
+.detail-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 12px; 
+  border-radius: 5px;
+  border: 1px solid #fff;
+}

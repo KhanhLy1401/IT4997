@@ -14,6 +14,9 @@ const BookingPage = ({ bookings }) => {
   const [recommendBikes, setRecommendBikes]= useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [rentals, SetRentals] = useState(null);
+  const [openReviewRowIndex, setOpenReviewRowIndex] = useState(null);
+  const [userReviews, setUserReviews] = useState([]);
+  const [openReviewDetail, setOpenReviewDetail] = useState(null); // rentalId đang mở phần xem đánh giá
   const itemsPerPage = 5;
   const API_URL = process.env.REACT_APP_API_URL;
   const API_FLASK=process.env.REACT_APP_API_FLASK;
@@ -50,6 +53,23 @@ const currentRentals = filteredRentals.slice(
   };
 
   useEffect(() => {
+  const fetchReviews = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/review/get-by-user/${userId}`); // tạo route này ở backend
+      setUserReviews(res.data);
+      console.log("getreview", res.data);
+    } catch (err) {
+      console.error("Lỗi khi lấy đánh giá:", err.message);
+    }
+  };
+
+  fetchReviews();
+}, [API_URL]);
+
+const getReviewByRentalId = (rentalId) => {
+  return userReviews.find((review) => review.rentalId === rentalId);
+};
+  useEffect(() => {
         const fetchData = async () => {
             try {
                 const recommendation = await axios.get(`${API_FLASK}/recommend/user?userId=${userId}`)
@@ -63,9 +83,10 @@ const currentRentals = filteredRentals.slice(
 
     }, [API_URL]);
    
-  const handleSubmitReview = async (bikeId) => {
+  const handleSubmitReview = async (bikeId,rentalId) => {
     try {
       await axios.post(`${API_URL}/review/add`, {
+        rentalId,
         bikeId,
         userId,
         rating,
@@ -122,10 +143,7 @@ const currentRentals = filteredRentals.slice(
               <React.Fragment key={index}>
                 <tr>
                   <td><img src={rental.bikeImage} alt={rental.bikeName} className="bike-image" /></td>
-                  {/* <td>
-                    {rental.startTime} {new Date(rental.startDate).toLocaleDateString('vi-VN')} - 
-                    {rental.endTime} {new Date(rental.endDate).toLocaleDateString('vi-VN')}
-                  </td> */}
+    
                   <td className="rental-time">
                     <div>
                       <strong>Bắt đầu:</strong> {rental.startTime}, {new Date(rental.startDate).toLocaleDateString('vi-VN')}
@@ -156,17 +174,46 @@ const currentRentals = filteredRentals.slice(
                       </button>
 
                     
-                    {rental.status === "completed" ? (
-                      <button className="review-btn" onClick={() => setSelectedBikeId(rental.bikeId)}>Đánh giá</button>
-                    ):""}
+                   {rental.status === "completed" && (
+                      getReviewByRentalId(rental._id) ? (
+                        <><button className="review-btn" onClick={() => setOpenReviewDetail(rental._id)}>
+                          Xem đánh giá
+                        </button>
+                         </>
+
+                      ) : (
+                        <button
+                          className="review-btn"
+                          onClick={() => {
+                            setSelectedBikeId(rental.bikeId);
+                            setOpenReviewRowIndex(index);
+                          }}
+                        >
+                          Đánh giá
+                        </button>
+                      )
+                    )}
+
                   </td>
                 </tr>
+                {openReviewDetail === rental._id && (
+                          <tr>
+                            <td colSpan="7">
+                              <div className="review-box">
+                                <div><strong>Đánh giá:</strong> {getReviewByRentalId(rental._id)?.rating} ⭐</div>
+                                <div><strong>Nhận xét:</strong> {getReviewByRentalId(rental._id)?.comment}</div>
+                                <button className="cancel-btn" onClick={() => setOpenReviewDetail(null)}>Đóng</button>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
 
-                {selectedBikeId === rental.bikeId && (
+                {openReviewRowIndex === index && (
                   <tr>
                     <td colSpan="7">
                       <div className="review-box">
                         <div className="star-rating">
+                          <strong>Đánh giá: </strong>
                           {[1, 2, 3, 4, 5].map((star) => (
                             <span
                               key={star}
@@ -181,16 +228,26 @@ const currentRentals = filteredRentals.slice(
                             </span>
                           ))}
                         </div>
-                        <textarea
+                          <textarea
                           rows="3"
                           value={comment}
                           onChange={(e) => setComment(e.target.value)}
                           placeholder="Nhập nhận xét của bạn..."
-                          style={{ width: "100%", marginTop: "10px" }}
+                          style={{ width: "90%", marginTop: "10px" }}
                         ></textarea>
                         <div style={{ marginTop: "10px" }}>
-                          <button onClick={() => handleSubmitReview(rental.bikeId)}>Gửi đánh giá</button>
-                          <button onClick={() => setSelectedBikeId(null)} style={{ marginLeft: "10px" }}>Hủy</button>
+                          <button className="review-btn" onClick={() => {handleSubmitReview(rental.bikeId, rental._id); setSelectedBikeId(null); setOpenReviewRowIndex(null);}}>Gửi đánh giá</button>
+                          <button
+                            className="cancel-btn"
+                            onClick={() => {
+                              setSelectedBikeId(null);
+                              setOpenReviewRowIndex(null);
+                            }}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            Hủy
+                          </button>
+
                         </div>
                       </div>
                     </td>

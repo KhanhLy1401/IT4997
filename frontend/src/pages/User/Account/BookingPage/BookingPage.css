@@ -93,8 +93,11 @@
   }
 
   .review-box {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
-    padding: 5px
+    padding: 5px;
+
   }
 
   .action-button {
@@ -156,11 +159,17 @@
   margin-right: 4px;
 }
 
-.review-btn {
+.review-btn,
+.cancel-btn {
   padding: 4px 10px;
   margin-left: 5px;
   border-radius: 3px;
   background-color: #1877F2;
   border: 2px solid #1877f2;
   color: #fff;
+}
+
+.cancel-btn {
+  background-color: #d0312d !important;
+  border: 2px solid #9f1e1c !important;
 }

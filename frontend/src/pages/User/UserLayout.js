@@ -22,6 +22,7 @@ import RequireOwner from "../../auth/RequireOwner.js";
 import BikeDetail from "./Owner/BikeDetail/BikeDetail.js";
 
 import RentalDetail from "./Account/RentalDetail/RentalDetail.js";
+import RentalPolicyPage from "../Policy/Policy.js";
 const UserLayout = () => {
 
   const [user, setUser] = useState(localStorage.getItem("user") || null);
@@ -41,7 +42,7 @@ const UserLayout = () => {
 
           <Route path="/" element={<Home />} />
 
-
+          <Route path='/about-us' element={<RentalPolicyPage/>}/>
           <Route path="/motor-detail/:id" element={<MotorDetail  />} />
           <Route path="/owner/register" element={<Register />} />
           <Route path="/owner/register-form" element={<RegisterPage />} />
