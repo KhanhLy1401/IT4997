@@ -58,7 +58,8 @@ const BikeManagement = () => {
   // Tìm kiếm xe
   const filteredBikes = bikes.filter((bike) =>
     (bike.model?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-    (bike.ownerName?.toLowerCase() || "").includes(searchTerm.toLowerCase())
+    (bike.ownerId?.toLowerCase() || "").includes(searchTerm.toLowerCase())||
+    (bike._id?.toLowerCase() || "").includes(searchTerm.toLowerCase())
   );
 
   // Phân trang
@@ -111,7 +112,7 @@ const BikeManagement = () => {
             <tr key={bike._id}>
               <td>{indexOfFirstBike + index + 1}</td>
               <td><img src={bike.images.front.url} />  </td>
-              <td>{bike.title}<br/> ID: {bike._id}</td>
+              <td><strong>Tên xe: </strong>{bike.title}<br/> <strong>ID:</strong> {bike._id} <br/><strong>OnwerID:</strong>  {bike.ownerId}</td>
               <td>{new Date(bike.createdAt).toLocaleString()}</td>
               <td>{bike.isBlocked ? "Bị khóa" : "Hoạt động"}</td>
               <td className="manage-actions">

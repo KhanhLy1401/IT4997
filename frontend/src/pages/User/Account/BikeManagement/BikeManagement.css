@@ -164,17 +164,23 @@
     color: #333;
   }
   
-  .new-badge {
-    background: #ff5b00;
-    color: white;
-    font-size: 10px;
-    padding: 2px 4px;
-    border-radius: 10px;
-    position: absolute;
-    top: -8px;
-    right: -16px;
-  }
   .list-rented-bike {
     color: #333 !important;
     padding: 10px
+  }
+
+   .action-hide,
+   .action-fix {
+    margin-left: 5px;
+    border: 2px solid hsl(19, 88%, 56%);
+    background-color: #f26a2b;
+    border-radius: 5px;
+    color: #fff;
+    padding: 4px 8px;
+  }
+
+  .action-fix {
+    background-color: #2673dd !important;
+    border: 2px solid #2673dd;
+
   }

@@ -86,7 +86,7 @@ export const getAllBikes = async (req, res) => {
 
 export const getAllBikesNotPending = async (req, res) => {
     try {   
-        const allBikes = await Bike.find({ status: { $ne: "pending_approval" } });
+        const allBikes = await Bike.find({ status: { $nin: ["pending_approval", "locked"] } });
         res.status(200).json(allBikes);
 
     } catch(error) {
@@ -276,4 +276,30 @@ export const searchAvailableBikes = async (req, res) => {
   };
 
 
-  
+  // PATCH /bike/update-status/:bikeId
+export const updateBikeStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  // Kiểm tra status hợp lệ
+  const allowedStatuses = ['pending_approval', 'available', 'rented', 'locked'];
+  if (!allowedStatuses.includes(status)) {
+    return res.status(400).json({ error: 'Trạng thái không hợp lệ.' });
+  }
+
+  try {
+    const updatedBike = await Bike.findByIdAndUpdate(
+      id,
+      { status, updatedAt: new Date() },
+      { new: true }
+    );
+
+    if (!updatedBike) {
+      return res.status(404).json({ error: 'Không tìm thấy xe.' });
+    }
+
+    res.status(200).json(updatedBike);
+  } catch (error) {
+    res.status(500).json({ error: 'Lỗi khi cập nhật trạng thái xe.' });
+  }
+};

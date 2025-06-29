@@ -232,7 +232,7 @@ const [message, setMessage] = useState("");
                   <td>
                     <button className="action-btn">Chi tiết</button>
                     <button className='action-hide'>Ẩn xe</button>
-                    <button className='action-hide'>Chỉnh sửa</button>
+                    <button className='action-fix'>Chỉnh sửa</button>
                   </td>
                 </tr>
               ))}
@@ -331,7 +331,6 @@ const [message, setMessage] = useState("");
                 <th>Người thuê</th> */}
                 <th>Ngày thuê</th>
                 <th>Tổng tiền</th>
-                <th>Loại giao</th>
                 <th>Xác nhận</th>
               </tr>
             </thead>
@@ -349,12 +348,10 @@ const [message, setMessage] = useState("");
                       {bike.startTime} {new Date(bike.startDate).toLocaleDateString('vi-VN')} -
                       {bike.endTime} {new Date(bike.endDate).toLocaleDateString("vi-VN")}
                     </td>
-                    <td>
+                    <td className='price'>
                       {bike.totalPrice} VNĐ
                     </td>
-                    <td>
-                      Tự đến lấy
-                    </td>
+                   
                     <td>
                     <button
                       className="action-btn"
@@ -383,7 +380,6 @@ const [message, setMessage] = useState("");
                 <th>Người thuê</th> */}
                 <th>Ngày thuê</th>
                 <th>Tổng tiền</th>
-                <th>Loại giao</th>
                 <th>Xác nhận</th>
               </tr>
             </thead>
@@ -407,12 +403,10 @@ const [message, setMessage] = useState("");
                       hour12: false
                       })}
                     </td>
-                    <td>
+                    <td className='price'>
                       {bike.totalPrice} VNĐ
                     </td>
-                    <td>
-                      Tự đến lấy
-                    </td>
+                   
                     <td>
                       <button
                         className="action-btn"
@@ -433,11 +427,8 @@ const [message, setMessage] = useState("");
             <thead>
               <tr>
                 <th>Ảnh</th>
-                {/* <th>Tên xe</th> */}
-                {/* <th>Người thuê</th> */}
                 <th>Ngày thuê</th>
                 <th>Tổng tiền</th>
-                <th>Loại giao</th>
                 <th>Hành động</th>
               </tr>
             </thead>

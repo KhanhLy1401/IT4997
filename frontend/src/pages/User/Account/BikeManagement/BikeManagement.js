@@ -225,7 +225,7 @@ const BikeManagement = () => {
                     <img src={bike?.images?.front?.url} alt={bike.name} className="bike-thumb" />
                   </td>
                   <td>{bike.title}</td>
-                  <td>{bike?.price} VNĐ</td>
+                  <td className='price'>{bike?.price} VNĐ</td>
                   <td><span className={`status-label status-${bike.status}`}>{statusLabels[bike.status]}</span></td>
                   <td>{new Date(bike.createdAt).toLocaleDateString("vi-VN", {
                     timeZone: "Asia/Ho_Chi_Minh",
@@ -233,8 +233,8 @@ const BikeManagement = () => {
                   })}</td>
                   <td>
                     <button className="action-btn" onClick={() => navigate(`/account/bikes/${bike._id}`, { state: { bike } })}>Chi tiết</button>
-                    <button className='action-hide'>Ẩn xe</button>
-                    <button className='action-hide'>Chỉnh sửa</button>
+                    <button className='action-hide'>Khóa xe</button>
+                    <button className='action-fix'>Chỉnh sửa</button>
                   </td>
                 </tr>
               ))}
@@ -336,7 +336,6 @@ const BikeManagement = () => {
                 <th>Người thuê</th> */}
                 <th>Ngày thuê</th>
                 <th>Tổng tiền</th>
-                <th>Loại giao</th>
                 <th>Xác nhận</th>
               </tr>
             </thead>
@@ -354,12 +353,10 @@ const BikeManagement = () => {
                       {bike.startTime} {new Date(bike.startDate).toLocaleDateString('vi-VN')} -
                       {bike.endTime} {new Date(bike.endDate).toLocaleDateString("vi-VN")}
                     </td>
-                    <td>
+                    <td className='price'>
                       {bike.totalPrice} VNĐ
                     </td>
-                    <td>
-                      Tự đến lấy
-                    </td>
+          
                     <td>
                     <button
                       className="action-btn"
@@ -388,7 +385,6 @@ const BikeManagement = () => {
                 <th>Người thuê</th> */}
                 <th>Ngày thuê</th>
                 <th>Tổng tiền</th>
-                <th>Loại giao</th>
                 <th>Xác nhận</th>
               </tr>
             </thead>
@@ -412,12 +408,10 @@ const BikeManagement = () => {
                       hour12: false
                       })}
                     </td>
-                    <td>
+                    <td className='price'>
                       {bike.totalPrice} VNĐ
                     </td>
-                    <td>
-                      Tự đến lấy
-                    </td>
+                  
                     <td>
                       <button
                         className="action-btn"
@@ -442,7 +436,6 @@ const BikeManagement = () => {
                 {/* <th>Người thuê</th> */}
                 <th>Ngày thuê</th>
                 <th>Tổng tiền</th>
-                <th>Loại giao</th>
                 <th>Hành động</th>
               </tr>
             </thead>
@@ -466,12 +459,10 @@ const BikeManagement = () => {
                       hour12: false
                       })}
                     </td>
-                    <td>
+                    <td className='price'>
                       {bike.totalPrice} VNĐ
                     </td>
-                    <td>
-                      Tự đến lấy
-                    </td>
+                   
                     <td>
                       <button
                         className="action-btn"

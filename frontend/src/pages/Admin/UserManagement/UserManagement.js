@@ -56,7 +56,8 @@ const UserManagement = () => {
     const matchSearch = 
       (user.fullName?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
       (user.email?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-      (user.phone?.toLowerCase() || "").includes(searchTerm.toLowerCase());
+      (user.phone?.toLowerCase() || "").includes(searchTerm.toLowerCase())||
+      (user._id?.toLowerCase() || "").includes(searchTerm.toLowerCase())
     
     const matchRole = selectedRole === 'all' ? true : user.role === selectedRole;
 
@@ -137,7 +138,7 @@ const UserManagement = () => {
               <td className="user-info">
                 <strong>{user.fullName}</strong>
               </td>
-              <td>{user.email}</td>
+              <td>{user.email} <br/> <strong>ID: </strong> {user._id}</td>
               <td>{user.phone}</td>
               <td>{user.role==="admin"?"Admin":(user.role==="owner"?"Chủ xe":"Người dùng")}</td>
               <td>{moment(user.createdAt).format("HH:mm:ss DD/MM/YYYY")}</td>

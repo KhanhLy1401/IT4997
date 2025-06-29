@@ -6,7 +6,7 @@ import { jwtDecode } from "jwt-decode";
 const RequireOwner = ({ children }) => {
   const user = localStorage.getItem('token'); 
   const decoded = jwtDecode(user);
-  const isOwner = decoded?.role === 'owner'; 
+  const isOwner = decoded?.role === 'owner' || 'admin'; 
 
   if (!isOwner) {
     return <>

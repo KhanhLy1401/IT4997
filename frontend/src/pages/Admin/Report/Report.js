@@ -3,14 +3,45 @@ import axios from "axios";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import "./Report.css";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Report = () => {
     const API_URL = process.env.REACT_APP_API_URL;
     const [data, setData] = useState([]);
+    const [expandedOwnerId, setExpandedOwnerId] = useState(null);
     const [selectedMonth, setSelectedMonth] = useState(() => {
         const now = new Date();
         return `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, "0")}`;
+        
     });
+
+
+// Tạo danh sách 12 tháng gần nhất
+    const getLast12Months = () => {
+    const now = new Date();
+    const months = [];
+
+    for (let i = 11; i >= 0; i--) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const key = `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, "0")}`;
+        months.push({ month: key, totalRevenue: 0 });
+    }
+
+    return months;
+    };
+
+    const monthlyRevenueData = getLast12Months().map(monthEntry => {
+    const total = data.reduce((sum, owner) => {
+        const stat = owner.monthlyStats.find(m => m.month === monthEntry.month);
+        return sum + (stat ? stat.totalRevenue : 0);
+    }, 0);
+
+    return {
+        ...monthEntry,
+        totalRevenue: total,
+    };
+    });
+
 
     const handleExportExcel = () => {
     const rows = [];
@@ -44,6 +75,7 @@ const Report = () => {
         try {
             const response = await axios.get(`${API_URL}/rental/by-month?month=${selectedMonth}`);
             setData(response.data);
+            console.log("Doanh thu", response.data)
         } catch (error) {
             console.error("Error fetching revenue data:", error);
         }
@@ -65,7 +97,9 @@ const Report = () => {
 
     return (
         <div className="revenue-dashboard">
-            <h2>Doanh thu theo chủ xe</h2>
+            <div className="report-title">
+                <h2 >Doanh thu theo tháng của chủ xe</h2>
+            </div>
 
             <div className="revenue-header">
                 <div>
@@ -76,7 +110,7 @@ const Report = () => {
                         onChange={handleMonthChange}
                     />
                 </div>
-                <button onClick={handleExportExcel}>Xuất Excel</button>
+                <button className="action-hide" onClick={handleExportExcel}>Xuất Excel</button>
 
 
                 <div className="revenue-total">
@@ -84,7 +118,7 @@ const Report = () => {
                 </div>
             </div>
 
-            <table className="revenue-table">
+            <table className="rental-table">
                 <thead>
                     <tr>
                         <th>Chủ xe </th>
@@ -92,27 +126,75 @@ const Report = () => {
                         <th>SĐT</th>
                         <th>Ngân hàng</th>
                         <th>Doanh thu</th>
-                        <th>Số đơn đã thanh toán</th>
+                        <th>Số đơn</th>
+                        <th>Chi tiết mã đơn</th>
                     </tr>
                 </thead>
+        
                 <tbody>
                     {data.map(owner => {
                         const monthStat = owner.monthlyStats.find(stat => stat.month === selectedMonth);
+                        const isExpanded = expandedOwnerId === owner.ownerId;
+
                         return (
-                            <tr key={owner.ownerId}>
-                                <td>{owner.ownerName}</td>
-                                <td>{owner.ownerEmail}</td>
-                                <td>{owner.ownerPhone}</td>
-                                <td>{owner?.bankName}-{owner?.accountHolder}-{owner?.accountNumber}</td>
-                                <td>{monthStat ? monthStat.totalRevenue.toLocaleString() : 0} vnđ</td>
-                                <td>{monthStat ? monthStat.totalRentals : 0} đơn</td>
+                        <React.Fragment key={owner.ownerId}>
+                            <tr>
+                            <td>{owner.ownerName}</td>
+                            <td>{owner.ownerEmail}</td>
+                            <td>{owner.ownerPhone}</td>
+                            <td>{owner?.bankName || 'Vietcombank'}-{owner?.accountHolder||'Phan Ly'}-{owner?.accountNumber||'1020608758'}</td>
+                            <td className="price">{monthStat ? monthStat.totalRevenue.toLocaleString() : 0} VNĐ</td>
+                            <td>{monthStat ? monthStat.totalRentals : 0} đơn</td>
+                            <td>
+                                {monthStat?.rentals?.length > 0 && (
+                                <button className="action-fix" onClick={() => setExpandedOwnerId(isExpanded ? null : owner.ownerId)}>
+                                    {isExpanded ? "Ẩn mã đơn" : "Xem mã đơn"}
+                                </button>
+                                )}
+                            </td>
                             </tr>
+
+                            {isExpanded && monthStat?.rentals?.length > 0 && (
+                            <tr>
+                            <td colSpan="7" className="rental-details-cell">
+                                <strong>Danh sách mã đơn:</strong>
+                                <ul className="rental-details-list">
+                                {monthStat.rentals.map((rental) => (
+                                    <li key={rental.rentalId} className="rental-item">
+                                    <div><strong>Mã đơn:</strong> <code>{rental.rentalId}</code></div>
+                                    <div><strong>Tổng tiền:</strong> <span className="price">{rental.totalPrice.toLocaleString()} VNĐ</span></div>
+                                    {/* <div><strong>Thời gian:</strong> {new Date(rental.startDate).toLocaleDateString('vi-VN')} {rental.startTime} - {new Date(rental.endDate).toLocaleDateString('vi-VN')} {rental.endTime}</div> */}
+                                    </li>
+                                ))}
+                                </ul>
+                            </td>
+                            </tr>
+                            )}
+                        </React.Fragment>
                         );
                     })}
-                </tbody>
+                    </tbody>
+
             </table>
-        </div>
-    );
+
+            <h3>Biểu đồ doanh thu 12 tháng gần nhất</h3>
+                <div style={{ width: "100%", height: 400 }}>
+                <ResponsiveContainer>
+                    <LineChart
+                    data={monthlyRevenueData}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                    >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis tickFormatter={(value) => `${(value / 1e6).toFixed(1)}tr`} />
+                    <Tooltip formatter={(value) => `${value.toLocaleString()} vnđ`} />
+                    <Line type="monotone" dataKey="totalRevenue" stroke="#8884d8" strokeWidth={2} />
+                    </LineChart>
+                </ResponsiveContainer>
+                </div>
+
+            </div>
+        );
 };
 
 export default Report;

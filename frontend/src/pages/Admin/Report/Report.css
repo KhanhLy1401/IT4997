@@ -5,6 +5,10 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.report-title h2 {
+    color: #333 !important;
+}
+
 .revenue-header {
     display: flex;
     justify-content: space-between;
@@ -41,4 +45,39 @@
 
 .revenue-table tr:hover {
     background-color: #fafafa;
+}
+
+.rental-details-cell {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-left: 4px solid #4caf50;
+  border-radius: 6px;
+}
+
+.rental-details-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+}
+
+.rental-item {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s;
+}
+
+.rental-item:hover {
+  background-color: #f1faff;
+}
+
+.rental-item code {
+  background-color: #eef;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #333;
 }
