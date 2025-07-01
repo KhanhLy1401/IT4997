@@ -68,6 +68,7 @@
   
   .bike-table thead {
     background-color: #f8f9fa;
+    text-transform: uppercase;
   }
   
   .bike-table th, .bike-table td {

@@ -7,3 +7,7 @@
 .detail-right span {
     font-weight: 500 !important;
 }
+
+.approval-item thead {
+    text-transform: uppercase;
+}

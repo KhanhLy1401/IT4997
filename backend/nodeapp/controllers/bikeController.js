@@ -303,3 +303,27 @@ export const updateBikeStatus = async (req, res) => {
     res.status(500).json({ error: 'Lỗi khi cập nhật trạng thái xe.' });
   }
 };
+
+// controllers/bikeController.js
+export const countBikesByProvince = async (req, res) => {
+  try {
+    const result = await Bike.aggregate([
+      {
+        $group: {
+          _id: {
+            province: "$location.province",
+            district: "$location.district"
+          },
+          totalBikes: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { totalBikes: -1 } // Sắp xếp từ nhiều đến ít
+      }
+    ]);
+
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

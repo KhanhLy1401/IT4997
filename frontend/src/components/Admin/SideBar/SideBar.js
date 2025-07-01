@@ -13,7 +13,6 @@ const SideBar = () => {
           <FontAwesomeIcon icon={faCircleUser} />
         </div>
         <div className='avatar-email'>
-          avatar@gmail.com
         </div>
       </div>
 
@@ -43,9 +42,9 @@ const SideBar = () => {
         <i class="fa-regular fa-user-check"></i>
           <span>Duyệt đăng ký chủ xe</span>
         </NavLink>
-        <NavLink to="/admin/approvals-license" className='menu-item' activeclassname="active">
+        <NavLink to="/admin/review-management" className='menu-item' activeclassname="active">
         <i class="fa-solid fa-money-check"></i>
-          <span>Duyệt bằng lái xe</span>
+          <span>Quản lý đánh giá </span>
         </NavLink>
         
         <NavLink to="/admin/transactions" className='menu-item' activeclassname="active">

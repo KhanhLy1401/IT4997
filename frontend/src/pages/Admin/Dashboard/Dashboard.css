@@ -60,3 +60,51 @@
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
     background-color: #fff;
 }
+
+.db-table-section {
+    width: 120%;
+    margin-bottom: 20px;
+}
+
+.db-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.db-table th, .db-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.db-table th {
+  background-color: #f9f9f9;
+}
+
+.db-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.db-table button {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.db-table button:hover {
+  background-color: #0056b3;
+}
+
+.district-row {
+  background-color: #f1f7ff;
+}
+
+.db-pie {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 30px;
+}

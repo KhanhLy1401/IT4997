@@ -28,6 +28,15 @@ export const addReview = async (req, res) => {
     }
 }
 
+export const getAllReview = async (req, res) => {
+  try {
+    const reviews = await Review.find();
+    res.status(200).json(reviews);
+  } catch (err) {
+    res.status(500).json({message: err.message})
+  }
+}
+
 export const updateReview = async (req, res) => {
     try {
         const { rentalId, bikeId, userId, rating, comment } = req.body;
@@ -56,13 +65,13 @@ export const updateReview = async (req, res) => {
 
 export const deleteReview = async (req, res) => {
     try {
-        const { rentalId, userId } = req.params;
+        const { reviewId } = req.params;
 
-        if (!rentalId || !userId) {
-            return res.status(400).json({ message: "Thiếu bikeId hoặc userId." });
+        if (!reviewId ) {
+            return res.status(400).json({ message: "Thiếu reviewId." });
         }
 
-        const deleted = await Review.findOneAndDelete({ rentalId, userId });
+        const deleted = await Review.findOneAndDelete(reviewId );
 
         if (!deleted) {
             return res.status(404).json({ message: "Không tìm thấy đánh giá để xóa." });

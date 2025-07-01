@@ -156,10 +156,13 @@ const RentalManagement = () => {
               <tr className="rental-details-row">
                 <td colSpan="8">
                   <div className="rental-details">
-                    <p><strong>Người thuê:</strong> {rental.userId}</p>
-                    <p><strong>Chủ xe:</strong> {rental.ownerId}</p>
-                    <p><strong>Hình thức thanh toán:</strong> {rental.paymentMethod || 'MoMo'}</p>
-                    <p><strong>Ghi chú:</strong> {rental.note || 'Không có'}</p>
+                    <ul>
+                      <li><strong>Người thuê:</strong> {rental.userId}</li>
+                      <li><strong>Chủ xe:</strong> {rental.ownerId}</li>
+                      <li><strong>Xe:</strong> {rental.bikeId}</li>
+                      <li><strong>Tổng tiền :</strong> {rental.totalPrice} VNĐ</li>
+                    </ul>
+                  
                   </div>
                 </td>
               </tr>

@@ -103,6 +103,7 @@ const BikeManagement = () => {
             <th>Hình ảnh</th>
             <th>Tên xe</th>
             <th>Ngày đăng ký</th>
+            <th>Số lượt thuê</th>
             <th>Trạng thái</th>
             <th>Quản lý</th>
           </tr>
@@ -114,6 +115,7 @@ const BikeManagement = () => {
               <td><img src={bike.images.front.url} />  </td>
               <td><strong>Tên xe: </strong>{bike.title}<br/> <strong>ID:</strong> {bike._id} <br/><strong>OnwerID:</strong>  {bike.ownerId}</td>
               <td>{new Date(bike.createdAt).toLocaleString()}</td>
+              <td>{bike.rental_count}</td>
               <td>{bike.isBlocked ? "Bị khóa" : "Hoạt động"}</td>
               <td className="manage-actions">
                 <i className="fa-solid fa-angle-down"></i>
