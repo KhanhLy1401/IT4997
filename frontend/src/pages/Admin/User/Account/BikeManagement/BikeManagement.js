@@ -102,6 +102,33 @@ const [message, setMessage] = useState("");
     getConfirmedBikes();
   }, [API_URL, ownerId]);
 
+    const handleLockBike = async (bikeId) => {
+      try {
+        await axios.patch(`${API_URL}/bike/update-status/${bikeId}`, {
+          status: "locked" 
+        });
+        setMessage(" Đã khóa xe.");
+        window.location.reload(); 
+      } catch (error) {
+        setMessage(" Lỗi khi khóa xe.");
+        console.error(error);
+      }
+    };
+
+  const handleUnlockBike = async (bikeId) => {
+    try {
+      await axios.patch(`${API_URL}/bike/update-status/${bikeId}`, {
+          status: "locked" 
+        });
+      setMessage("Đã mở khóa xe.");
+      reloadBikes();
+    } catch (error) {
+      setMessage("Lỗi khi mở khóa xe.");
+      console.error(error);
+    }
+  };
+
+
   const handleDelivered = async (bikeId) => {
     try {
       setLoading(true); // Bắt đầu loading
@@ -231,7 +258,27 @@ const [message, setMessage] = useState("");
                   })}</td>
                   <td>
                     <button className="action-btn">Chi tiết</button>
-                    <button className='action-hide'>Ẩn xe</button>
+                    <button
+                      className='action-hide'
+                      onClick={() => {
+                        const confirmHide = window.confirm("Bạn có chắc chắn muốn ẩn (khóa) xe?");
+                        if (confirmHide) handleLockBike(bike._id);
+                      }}
+                      disabled={bike.status === 'locked'}
+                    >
+                      Khóa xe
+                    </button>
+
+                    <button
+                      className='action-show'
+                      onClick={() => {
+                        const confirmShow = window.confirm("Bạn có muốn mở khóa xe này?");
+                        if (confirmShow) handleUnlockBike(bike._id);
+                      }}
+                      disabled={bike.status === 'available'}
+                    >
+                      Mở khóa
+                    </button>
                   </td>
                 </tr>
               ))}

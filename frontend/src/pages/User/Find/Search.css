@@ -89,6 +89,13 @@
 
 .filter-btn {
     align-items: center;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    padding: 6px 5px 0 5px; 
+    border-radius: 10px;
+    background-color: #5fcf86;
+    color: #fff;
+
 }
 
 .filter-options {

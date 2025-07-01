@@ -189,28 +189,6 @@ export const handleIPN = async (req, res) => {
         // 3. Cập nhật trạng thái đơn thuê
 ;
 
-        // await Rental.findByIdAndUpdate(payment.rentalId, { status: 'confirmed', paymentStatus: 'paid' });
-        // const rental = await Rental.findById(payment.rentalId);
-        // const user = await User.findById(rental.userId);
-        // const bike = await Bike.findById(rental.bikeId);
-
-        // if (!user) {
-        //   console.log("❌ Không tìm thấy người thuê.");
-        //   return res.status(404).json({ message: 'User not found' });
-        // } else {
-        //   console.log("email người thuê", user.email);
-        // }
-        // // 📧 Gửi mail thông báo cho chủ xe
-        // try {
-        //   console.log("gui xe dc");
-        // await sendPaymentSuccessEmail(user.email, user.fullName, user.phone, bike.title);
-
-        // } catch(error) {
-        //   console.error("Gửi mail không thành công", error.message);
-        // }
-    
-        // console.log("✅ Đã cập nhật trạng thái đơn thuê và thanh toán.");
-
         await Rental.findByIdAndUpdate(payment.rentalId, {
           status: 'confirmed',
           paymentStatus: 'paid',

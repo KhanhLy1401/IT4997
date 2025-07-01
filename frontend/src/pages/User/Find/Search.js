@@ -159,9 +159,6 @@ const Search = () => {
           
         </div>
         <div className='search-filter'>
-          <div className='repeat-filter'>
-            <i className='fa-solid fa-repeat'></i>
-          </div>
           <div className='filter-options'>
             <label>
               <input

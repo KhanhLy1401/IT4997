@@ -305,6 +305,7 @@ useEffect(() => {
                                 <input
                                     type='date'
                                     value={pickupDate}
+                                    min={new Date().toISOString().split("T")[0]}
                                     onChange={(e) => setPickupDate(e.target.value)}
                                     required
                                 />
@@ -322,6 +323,7 @@ useEffect(() => {
                                 <input
                                     type='date'
                                     value={returnDate}
+                                    min={pickupDate}
                                     onChange={(e) => setReturnDate(e.target.value)}
                                     required
                                 />
