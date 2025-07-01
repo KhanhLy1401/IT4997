@@ -234,7 +234,7 @@ const Search = () => {
                 </div>
                 <div className='motor-address'>
                   <i className='fa-solid fa-location-dot'></i>{' '}
-                  {bike.location?.province || 'No location'}
+                  {bike.location?.ward || ''}, {bike.location?.district || ''}, {bike.location?.province || 'No location'}
                 </div>
                 <div className='motor-rating'>
                   <div>
