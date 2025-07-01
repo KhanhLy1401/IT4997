@@ -6,9 +6,10 @@ import './BikeManagement.css';
 const BikeManagement = () => {
   const [bikes, setBikes] = useState([]);
   const API_URL = process.env.REACT_APP_API_URL;
+  const [expandedBikeId, setExpandedBikeId] = useState(null);
   const [searchTerm, setSearchTerm] = useState(""); // Lưu giá trị tìm kiếm
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
-  const bikesPerPage = 10; // Số xe trên mỗi trang
+  const bikesPerPage = 6; // Số xe trên mỗi trang
 
   // Lấy danh sách xe
   const fetchBikes = async () => {
@@ -21,6 +22,9 @@ const BikeManagement = () => {
     }
   };
 
+  const toggleDetails = (bikeId) => {
+        setExpandedBikeId(expandedBikeId === bikeId ? null : bikeId);
+  };
   // Khóa xe
   const blockBike = async (id) => {
     try {
@@ -110,6 +114,7 @@ const BikeManagement = () => {
         </thead>
         <tbody>
           {currentBikes.map((bike, index) => (
+            <>
             <tr key={bike._id}>
               <td>{indexOfFirstBike + index + 1}</td>
               <td><img src={bike.images.front.url} />  </td>
@@ -118,7 +123,7 @@ const BikeManagement = () => {
               <td>{bike.rental_count}</td>
               <td>{bike.isBlocked ? "Bị khóa" : "Hoạt động"}</td>
               <td className="manage-actions">
-                <i className="fa-solid fa-angle-down"></i>
+                <i className="fa-solid fa-angle-down"onClick={()=>toggleDetails(bike._id)}></i>
 
                 {bike.isBlocked ? (
                   <button className="btn approve-btn" onClick={() => unblockBike(bike._id)}>
@@ -132,7 +137,51 @@ const BikeManagement = () => {
                 )}
               </td>
             </tr>
+            {expandedBikeId === bike._id && (
+                <tr>
+                    <td colSpan="7">
+                        <div className="detail-approval-info">Thông tin chi tiết</div>
+                        
+                        <div className='detail-approval-user'>
+                            <div className='detail-left'>
+                                <img src={bike.images.front.url} alt="Front"  />
+                                <img src={bike.images.side.url} alt="Side" />
+                                <img src={bike.images.back.url} alt="Back" />
+
+                            </div>
+                            <div className='detail-right'>
+                                    <div className='detail-right-top'>
+                                        <div className="detail-right-item">
+                                            <div className="item-approval"><span>Tên xe: {bike.title}</span></div>
+                                            <div className="item-approval"><span>Loại xe: {bike.bikeType}</span> </div>
+                                            <div className="item-approval"><span>Hãng xe: {bike.brand}</span></div>
+                                            <div className="item-approval"><span>Phân khối: {bike.capacity} cm<sup>3</sup></span>  </div>
+                                            <div className="item-approval"><span>Đăng ký xe:</span> </div>
+                                            <img src={bike.bike_insurance.url} alt="bike_insurance" />
+                                        </div>
+                                    
+                                        <div className="detail-right-item">
+                                            
+                                            <div className="item-approval"><span>Mô tả: {bike.description}</span></div>
+                                            <div className="item-approval"><span>Biển số xe: {bike.license_plate}</span></div>
+                                            <div className="item-approval"><span>Địa chỉ xe: {bike.location.province}-{bike.location.district}-{bike.location.ward}</span></div>
+                                            <div className="item-approval"><span>Tài sản thế chấp: {bike.security_deposit==="no_deposit"?"Không cần thế chấp":bike.security_deposit}</span></div>
+                                            <div className="item-approval"><span>Bảo hiểm xe:</span> </div>
+                                            <img src={bike.bike_registration.url} alt="bike_registration" />
+
+                                        </div>
+                                    </div>
+
+                                    
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            )}
+            </>
           ))}
+
+          
         </tbody>
       </table>
 

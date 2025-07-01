@@ -21,6 +21,7 @@ const MotorDetail = () => {
     const [comment, setComment] = useState(null);
     const [avarageRating, setAvarageRating] = useState(null);
     const {state} = useLocation();
+    console.log("State gửi từ search", state);
     const [isDelivery, setIsDelivery] = useState(false);
     const [address, setAddress] = useState('');
     const [recommendBikes, setRecommendBikes]=useState();
@@ -29,38 +30,38 @@ const MotorDetail = () => {
         setIsDelivery(e.target.checked);
     };
 
-    useEffect(()=>{
-        if(state){
-            setPickupDate(state.startDate);
-            setPickupTime(state.startTime);
-            setReturnDate(state.endDate);
-            setReturnTime(state.endTime);
-        }
-        const pickupDateTime=getCombinedDateTime(pickupDate, pickupTime);
-        const returnDateTime=getCombinedDateTime(returnDate, returnTime);
-        console.log("datetime", pickupDateTime+returnDateTime);
-      
+  // 1. Khi vào trang, nếu có `state` thì set thời gian ngay
+useEffect(() => {
+  if (state) {
+    setPickupDate(state.startDate);
+    setPickupTime(state.startTime);
+    setReturnDate(state.endDate);
+    setReturnTime(state.endTime);
+  }
+}, [state]);
 
-        const pickup = new Date(pickupDateTime);
-        const dropoff = new Date(returnDateTime);
-      
-        const diffInMs = dropoff - pickup;
-        const diffInHours = diffInMs / (1000 * 60 * 60);
-      
-        if (diffInHours > 0) {
-          const days = diffInHours / 24;
-          setRentalDuration(days);
-      
-          const pricePerDay = bike.price || 0;
-          console.log("gia", bike.price);
-          const price = Math.ceil(pricePerDay * days);
-          setTotalPrice(price);
-        } else {
-          setRentalDuration(0);
-          setTotalPrice(0);
-        }
-    }
-    , [pickupDate, pickupTime, returnDate, returnTime])
+// 2. Khi đã có `bike` và thời gian đầy đủ thì mới tính toán giá
+useEffect(() => {
+  if (!bike || !bike.price || !pickupDate || !pickupTime || !returnDate || !returnTime) return;
+
+  const pickupDateTime = getCombinedDateTime(pickupDate, pickupTime);
+  const returnDateTime = getCombinedDateTime(returnDate, returnTime);
+  const pickup = new Date(pickupDateTime);
+  const dropoff = new Date(returnDateTime);
+  const diffInMs = dropoff - pickup;
+  const diffInHours = diffInMs / (1000 * 60 * 60);
+
+  if (diffInHours > 0) {
+    const days = diffInHours / 24;
+    setRentalDuration(days);
+    const price = Math.ceil(bike.price * days);
+    setTotalPrice(price);
+  } else {
+    setRentalDuration(0);
+    setTotalPrice(0);
+  }
+}, [bike, pickupDate, pickupTime, returnDate, returnTime]);
+
 
     const getCombinedDateTime = (date, time) => {
         return `${date}T${time}`;
@@ -236,10 +237,10 @@ const MotorDetail = () => {
                             </div>
                             <div className='line-motor'></div>
                             <div className="motor-address">
-                                <i class="fa-solid fa-location-dot location-dot"></i> {bike.location?.province || "Hanoi"}
+                                <i class="fa-solid fa-location-dot location-dot"></i> {bike.location?.ward || ""}, {bike.location?.district || ""}, {bike.location?.province || "Hanoi"}
                             </div>
                             <div className="motor-rating">
-                                <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
+                                <div><i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
                                 <div className='motor-price'> <span>{bike.price/1000  || 0}K</span>/ngày </div>
                             </div>
                             </div>
@@ -257,16 +258,16 @@ const MotorDetail = () => {
                     </div>
 
                         {comment && comment.length > 0 && (
-                        <div className="motor-detail-comments">
-                            <div className="motor-detail-feature-title">Đánh giá</div>
-                            <span class="star"><i className="fa-solid fa-star"></i></span>
-                            <span class="rating">{avarageRating} </span>
-                            <span class="count">• {comment?.length} đánh giá</span>
+                        <div className="motor-detail-comments" >
+                            <div className="motor-detail-feature-title" style={{padding: "20px"}}>Đánh giá</div>
+                            <span className="star"><i className="fa-solid fa-star"></i></span>
+                            <span className="rating">{avarageRating} </span>
+                            <span className="count">• {comment?.length} đánh giá</span>
                             {comment.map((c, i) => (
-                            <div class="review-box">
+                            <div class="review-box" style={{padding: "10px"}}>
                             <img src="/assets/avatar.png" alt="Avatar" class="avatar" />
                                 <div class="review-content">
-                                    <div class="review-top">
+                                    <div class="review-top" >
                                     <span class="name">user{c.userId}</span>
                                     <span class="date">{c.createdAt.slice(0, 10)}</span>
                                     </div>
@@ -289,9 +290,10 @@ const MotorDetail = () => {
             </div>
             <div className='motor-detail-booking'>
                 <div className='motor-detail-booking-1'>
+                    Khách hàng vui lòng liên hệ với chủ xe để thỏa thuận về giao/trả tận nơi <br/>
                     Phí giao nhận xe tại địa chỉ khách hàng tính theo:<br/>
-                    -Dưới 10km: 10.000 vnđ / km <br/>
-                    -Từ 10km: 7.000 vnđ / km
+                    -Dưới 10km: 12.000 vnđ / km <br/>
+                    -Từ 10km: 10.000 vnđ / km
 
                 </div>
                 <div className='motor-detail-booking-2'>

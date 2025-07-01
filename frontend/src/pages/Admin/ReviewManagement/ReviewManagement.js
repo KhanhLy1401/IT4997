@@ -20,7 +20,7 @@ const ReviewManagement = () => {
   const deleteReview = async (reviewId) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa đánh giá này không?")) {
       try {
-        await axios.delete(`http://localhost:5000/review/delete/${reviewId}`);
+        await axios.delete(`${API_URL}/review/delete/${reviewId}`);
         setReviews((prev) => prev.filter((r) => r._id !== reviewId));
       } catch (error) {
         console.error("Xóa thất bại:", error);

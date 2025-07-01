@@ -238,7 +238,7 @@ const Search = () => {
                 </div>
                 <div className='motor-rating'>
                   <div>
-                    4.5 <i className='fa-solid fa-star yellow-star'></i> -{' '}
+                  
                     <i className='fa-regular fa-suitcase-rolling luggage'></i>{' '}
                     {bike.rental_count} chuyến
                   </div>

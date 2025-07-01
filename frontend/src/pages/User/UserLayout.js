@@ -54,7 +54,6 @@ const UserLayout = () => {
             <Route path="dashboard" element={<RequireOwner><Dashboard/></RequireOwner>}/>
             <Route path="my-bookings" element={<BookingPage />} />
             <Route path="my-bookings/:id" element={<RentalDetail />} />
-            <Route path="favorites" element={<Favorite />} />
             <Route path="bikes" element={<RequireOwner><BikeManagement/></RequireOwner>} />
             <Route path="bikes/:id" element={<RequireOwner><BikeDetail/></RequireOwner>} />
           </Route>

@@ -232,7 +232,6 @@ const [message, setMessage] = useState("");
                   <td>
                     <button className="action-btn">Chi tiết</button>
                     <button className='action-hide'>Ẩn xe</button>
-                    <button className='action-fix'>Chỉnh sửa</button>
                   </td>
                 </tr>
               ))}

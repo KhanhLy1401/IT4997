@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import './Sidebar.css';
 
 const SideBar = () => {
+  const email = localStorage.getItem("user");
   return (
     <div className='sidebar'>
       <div className='avatar'>
@@ -13,6 +14,7 @@ const SideBar = () => {
           <FontAwesomeIcon icon={faCircleUser} />
         </div>
         <div className='avatar-email'>
+          {email}
         </div>
       </div>
 

@@ -234,7 +234,6 @@ const BikeManagement = () => {
                   <td>
                     <button className="action-btn" onClick={() => navigate(`/account/bikes/${bike._id}`, { state: { bike } })}>Chi tiết</button>
                     <button className='action-hide'>Khóa xe</button>
-                    <button className='action-fix'>Chỉnh sửa</button>
                   </td>
                 </tr>
               ))}

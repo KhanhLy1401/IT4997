@@ -36,7 +36,6 @@ const UserLayout = () => {
             <Route path="add-bike" element={<Addbike/>}/>
             <Route path="dashboard" element={<Dashboard/>}/>
             <Route path="my-bookings" element={<BookingPage />} />
-            <Route path="favorites" element={<Favorite />} />
             <Route path="bikes" element={<BikeManagement/>} />
           </Route>
           <Route path="/rental-form/:id" element={<RentalForm />} />

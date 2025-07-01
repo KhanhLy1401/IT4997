@@ -124,3 +124,13 @@ button.cancel {
 button:hover {
   opacity: 0.9;
 }
+
+.notice-message {
+  color: #d9534f;
+  background-color: #fff3cd;
+  padding: 10px;
+  border-left: 5px solid #f0ad4e;
+  margin: 10px 0 20px;
+  border-radius: 4px;
+  font-size: 14px;
+}

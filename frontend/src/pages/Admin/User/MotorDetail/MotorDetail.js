@@ -237,7 +237,7 @@ useEffect(() => {
                                 <i class="fa-solid fa-location-dot location-dot"></i> {bike.location?.province || "Hanoi"}
                             </div>
                             <div className="motor-rating">
-                                <div>4.5 <i className="fa-solid fa-star yellow-star"></i> - <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
+                                <div> <i className="fa-regular fa-suitcase-rolling luggage"  ></i> {bike.rental_count} chuyến</div>
                                 <div className='motor-price'> <span>{bike.price/1000  || 0}K</span>/ngày </div>
                             </div>
                             </div>

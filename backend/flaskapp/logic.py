@@ -8,7 +8,7 @@ from models import bikes_col, rentals_col, reviews_col
 # --- TF-IDF Content-Based ---
 def prepare_tfidf_matrix(bikes):
     #ghép các thuộc tính thành document
-    docs = [f"{b['title']} {b['brand']} {b['bikeType']} {b['description']}" for b in bikes]
+    docs = [f"{b['title']} {b['brand']} {b['bikeType']} {b['capacity']} {b['description']}" for b in bikes]
     vect = TfidfVectorizer() #Tạo vectorizer
     tfidf = vect.fit_transform(docs) #Chuyển sang ma trận TF-IDF
     return tfidf, vect

@@ -10,7 +10,7 @@ const UserManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedRole, setSelectedRole] = useState('all'); // Thêm state lọc role
-  const usersPerPage = 8;
+  const usersPerPage = 6;
 
   const fetchUsers = async () => {
     try {

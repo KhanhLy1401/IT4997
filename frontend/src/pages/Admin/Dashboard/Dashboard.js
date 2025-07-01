@@ -6,7 +6,6 @@ import { PieChart, Pie, Cell, Tooltip, Legend} from "recharts";
 
 const Dashboard = () => {
     const API_URL = process.env.REACT_APP_API_URL;
-    // console.log('URL là:', API_URL);
     const [user, setUser] = useState(0);
     const [owner, setOwner] = useState(0);
     const [bike, setBike] = useState(0);
@@ -42,8 +41,9 @@ const Dashboard = () => {
     }, [API_URL])
 
     const countByType = (bikes) => {
+      if (!Array.isArray(bikes)) return [];
       const result = {};
-      bikes.forEach(bike => {
+      bikes?.forEach(bike => {
         const type = bike.bikeType || "Không xác định";
         result[type] = (result[type] || 0) + 1;
       });

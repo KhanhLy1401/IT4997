@@ -107,29 +107,7 @@ const RentalForm = () => {
           </div>
 
           <div className="payment-method">
-            <div className="option">
-              <label>
-                <input 
-                  type="radio" 
-                  name="payment" 
-                  value="before" 
-                  onChange={() => setPaymentMethod('before')} 
-                />
-                <span>Thanh toán</span>
-              </label>
-            </div>
-            {/* <div className="option">
-              <label>
-                <input 
-                  type="radio" 
-                  name="payment" 
-                  value="after" 
-                  onChange={() => setPaymentMethod('after')} 
-                  defaultChecked 
-                />
-                <span>Trả sau</span>
-              </label>
-            </div> */}
+            
           </div>
 
           <div className="form-buttons">

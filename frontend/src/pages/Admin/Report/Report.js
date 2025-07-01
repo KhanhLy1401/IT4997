@@ -46,7 +46,7 @@ const Report = () => {
     const handleExportExcel = () => {
     const rows = [];
 
-    data.forEach(owner => {
+    data?.forEach(owner => {
         const monthStat = owner.monthlyStats.find(stat => stat.month === selectedMonth);
         if (monthStat) {
             rows.push({

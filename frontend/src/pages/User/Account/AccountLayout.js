@@ -13,8 +13,9 @@ const AccountLayout = () => {
           </li>
           <li>
             
-            <NavLink to ="/account/favorites"><i className="fa-regular fa-heart"></i> Xe yêu thích</NavLink>
+            <NavLink to="/account/my-bookings"><i className="fa-regular fa-box-check"></i> Chuyến của tôi</NavLink>
           </li>
+
           <li>
             
             <NavLink to='/account/add-bike'><i className="fa-solid fa-arrow-up-from-bracket"></i> Đăng xe</NavLink>
@@ -27,12 +28,8 @@ const AccountLayout = () => {
           <NavLink to='/account/dashboard'><i class="fa-solid fa-chart-mixed-up-circle-dollar"></i> Thống kê </NavLink>
 
           </li>
-          <li>
-            
-            <NavLink to="/account/my-bookings"><i className="fa-regular fa-box-check"></i> Chuyến của tôi</NavLink>
-          </li>
+          
           {/* <li><i className="fa-regular fa-map-pin"></i> Địa chỉ của tôi</li> */}
-          <li className="logoutt"><i className="fa-solid fa-left-from-bracket"></i> Đăng xuất</li>
         </ul>
       </aside>
 
