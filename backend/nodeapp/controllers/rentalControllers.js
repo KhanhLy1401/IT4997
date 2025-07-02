@@ -80,12 +80,11 @@ export const getAllRentalByOwnerId = async (req, res) => {
     }
 }
 
-export const getAllRentalConfirmedByOwnerId = async (req, res) => {
+export const getAllRentalBikeByOwnerId = async (req, res) => {
     try {
         const ownerId = req.params.id;
         const rentals = await Rental.find({ 
-            ownerId: ownerId, 
-            status: 'confirmed' 
+            ownerId: ownerId
         });
         return res.status(200).json(rentals);
     } catch(error) {

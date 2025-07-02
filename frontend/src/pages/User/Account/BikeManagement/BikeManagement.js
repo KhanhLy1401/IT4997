@@ -159,7 +159,7 @@ const BikeManagement = () => {
       setLoading(true); // Bắt đầu loading
       setMessage("");   // Clear message cũ
   
-      await axios.patch(`${API_URL}/rental/update-status/${bikeId}`, {
+      await axios.patch(`${API_URL}/owner-bike/update-status/${bikeId}`, {
         status: "completed"
       });
   
@@ -355,8 +355,6 @@ const BikeManagement = () => {
             <thead>
               <tr>
                 <th>Ảnh</th>
-                {/* <th>Tên xe</th>
-                <th>Người thuê</th> */}
                 <th>Ngày thuê</th>
                 <th>Tổng tiền</th>
                 <th>Xác nhận</th>
