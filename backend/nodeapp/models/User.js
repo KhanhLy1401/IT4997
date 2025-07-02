@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
         front: imageSchema,
         back: imageSchema
     },
+    status: {type: String, enum: ["pending", "approved", "rejected"], default: "rejected"},
     banking: {
         account_name: String,
         account_number: String,
