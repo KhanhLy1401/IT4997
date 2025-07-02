@@ -187,7 +187,22 @@ const Report = () => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="month" />
                     <YAxis tickFormatter={(value) => `${(value / 1e6).toFixed(1)}tr`} />
-                    <Tooltip formatter={(value) => `${value.toLocaleString()} vnđ`} />
+                    <Tooltip
+                        content={({ active, payload, label }) => {
+                            if (active && payload && payload.length) {
+                            return (
+                                <div style={{ background: 'white', padding: '10px', border: '1px solid #ccc' }}>
+                                <p><strong>{label}</strong></p>
+                                <p style={{ color: "#8884d8" }}>
+                                    Tổng doanh thu: {payload[0].value.toLocaleString()} vnđ
+                                </p>
+                                </div>
+                            );
+                            }
+                            return null;
+                        }}
+                        />
+
                     <Line type="monotone" dataKey="totalRevenue" stroke="#8884d8" strokeWidth={2} />
                     </LineChart>
                 </ResponsiveContainer>
