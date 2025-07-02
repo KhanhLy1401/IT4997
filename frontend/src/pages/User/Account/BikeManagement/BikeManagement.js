@@ -121,7 +121,7 @@ const BikeManagement = () => {
     };
 
     const getConfirmedBikes = async () => {
-      const response = await axios.get(`${API_URL}/rental/owner/${ownerId}`);
+      const response = await axios.get(`${API_URL}/rental/owner-bike/${ownerId}`);
       setConfirmedBikes(response.data);
       console.log('confirmed-bike', response.data);
       
