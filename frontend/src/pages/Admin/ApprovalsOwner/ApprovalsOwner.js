@@ -115,12 +115,12 @@ const ApprovalsOwner = () => {
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Avatar</th>
-                            <th>Full Name</th>
-                            <th>Address</th>
-                            <th>Details</th>
-                            <th>Approve</th>
-                            <th>Reject</th>
+                            <th>Ảnh</th>
+                            <th>Họ và tên</th>
+                            <th>Địa chỉ</th>
+                            <th>Chi tiết</th>
+                            <th>Đồng ý</th>
+                            <th>Từ chối</th>
                         </tr>
                     </thead>
                     <tbody>
