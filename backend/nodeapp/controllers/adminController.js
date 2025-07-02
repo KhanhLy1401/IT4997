@@ -8,7 +8,7 @@ export const getPendingOwner = async (req, res) => {
         const pendingUsers = await User.find({ status: "pending" });
 
         if (pendingUsers.length === 0) {
-            return res.status(404).json({ message: "Không có yêu cầu nào đang chờ duyệt" });
+            return res.status(200).json({ message: "Không có yêu cầu nào đang chờ duyệt" });
         }
         
 

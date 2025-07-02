@@ -19,10 +19,12 @@ const ApprovalsOwner = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                console.log("Api url", API_URL);
                 const response = await axios.get(`${API_URL}/admin/get-pending-owner`);
+                console.log("pending owner", response.data);
                 setApprovalOwner(response.data.users);
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching data:', error.message);
             }
         };
 
