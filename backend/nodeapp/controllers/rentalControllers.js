@@ -80,6 +80,18 @@ export const getAllRentalByOwnerId = async (req, res) => {
     }
 }
 
+export const getAllRentalConfirmedByOwnerId = async (req, res) => {
+    try {
+        const ownerId = req.params.id;
+        const rentals = await Rental.find({ 
+            ownerId: ownerId, 
+            status: 'confirmed' 
+        });
+        return res.status(200).json(rentals);
+    } catch(error) {
+        res.status(500).json ({message: error.message});
+    }
+}
 
 export const getAllRental = async (req, res) => {
     try {

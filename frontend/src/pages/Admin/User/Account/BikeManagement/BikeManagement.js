@@ -92,7 +92,7 @@ const [message, setMessage] = useState("");
     };
 
     const getConfirmedBikes = async () => {
-      const response = await axios.get(`${API_URL}/rental/owner/${ownerId}`);
+      const response = await axios.get(`${API_URL}/rental/confirmed/${ownerId}`);
       setConfirmedBikes(response.data);
       console.log('confirmed-bike', response.data);
       
@@ -345,24 +345,7 @@ const [message, setMessage] = useState("");
             </div>
             <div class="task-item">
               
-            </div>
-            <div class="task-item">
-              <div class="task-count">0</div>
-              <div class="task-label">Xe tạm bị khóa</div>
-            </div>
-            <div class="task-item">
-              <div class="task-count">13</div>
-              <div class="task-label">Số lượt đánh giá</div>
-            </div>
-            <div class="task-item">
-              <div class="task-count">2</div>
-              <div class="task-label">Số bình luận</div>
-            </div>
-            <div class="task-item">
-              <div class="task-count">
-                0
-              </div>
-              <div class="task-label">Tổng số đơn</div>
+            
             </div>
           </div>
         </div>
