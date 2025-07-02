@@ -69,7 +69,10 @@ export const getAllRentalByUserId = async (req, res) => {
 export const getAllRentalByOwnerId = async (req, res) => {
     try {
         const ownerId = req.params.id;
-        const rentals = await Rental.find({ ownerId: ownerId });
+        const rentals = await Rental.find({ 
+            ownerId: ownerId, 
+            status: 'completed' 
+        });
         return res.status(200).json(rentals);
     } catch(error) {
         console.error ("Lỗi getAllRentalByOwnerId:", error.message);
@@ -145,6 +148,7 @@ export const getRecentRevenue = async (req, res) => {
         {
         $match: {
             ownerId: ownerId,
+            status:'completed',
             createdAt: { $gte: startDate }
         }
         },
@@ -368,6 +372,7 @@ export const getMonthlyRentalCount = async (req, res) => {
         {
           $match: {
             ownerId: ownerId,
+            status: "completed",
             createdAt: { $gte: startDate }
           }
         },
@@ -408,52 +413,18 @@ export const getMonthlyRentalCount = async (req, res) => {
     }
 };
   
-// export const getBikeTypeInRental = async (req, res) => {
-//     try {
-//         // Sử dụng aggregate để nhóm theo loại xe và đếm số lượng xe
-//         const bikeCounts = await Rental.aggregate([
-//           {
-//             $lookup: {
-//               from: 'Bike',  // Tên collection của Bike
-//               localField: 'bikeId',  // Trường bikeId trong Rental
-//               foreignField: '_id',  // Trường _id trong Bike
-//               as: 'bikeDetails'  // Tạo một mảng bikeDetails chứa thông tin của xe
-//             }
-//           },
-//           {
-//             $unwind: '$bikeDetails'  // Phân tách mảng bikeDetails thành các document riêng biệt
-//           },
-//           {
-//             $group: {
-//               _id: '$bikeDetails.bikeType',  // Nhóm theo loại xe (manual hoặc automatic)
-//               count: { $sum: 1 }  // Đếm số lượng xe cho mỗi loại
-//             }
-//           },
-//           {
-//             $project: {
-//               _id: 0,  // Không hiển thị _id
-//               bikeType: '$_id',  // Trả về loại xe
-//               count: 1  // Trả về số lượng xe
-//             }
-//           }
-//         ]);
-    
-//         // Trả về kết quả
-//         res.json(bikeCounts);
-//       } catch (error) {
-//         res.status(500).json({ error: 'Lỗi khi đếm xe' });
-//       }
-// }
+
 
 export const getBikeTypeInRental = async (req, res) => {
     try {
-      const { ownerId } = req.params; // Lấy ownerId từ params của URL (hoặc từ body nếu bạn muốn gửi theo POST)
+      const { ownerId } = req.params; 
   
       // Sử dụng aggregate để nhóm theo loại xe và đếm số lượng xe
       const bikeCounts = await Rental.aggregate([
         {
           $match: {
-            ownerId: ownerId  // Lọc theo ownerId
+            ownerId: ownerId,
+            status: "completed"  // Lọc theo ownerId
           }
         },
         {

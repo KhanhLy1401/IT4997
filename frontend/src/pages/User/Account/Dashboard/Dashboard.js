@@ -44,7 +44,8 @@ const Dashboard = () => {
         setCountBikes(response.data.length);
     }
     const countRentals = async () => {
-        const response = await axios.get(`${API_URL}/rental/owner/${ownerId}`);
+        const response = await axios.get(`http://localhost:5000/rental/owner/${ownerId}`);
+        console.log("count rental by owner", response.data);
         setCountRentals(response.data.length);
         setTotalRevenue(response.data.reduce((sum, rental) => sum + (rental.totalPrice || 0), 0));
         const uniqueUserIds = new Set(response.data?.map(rental => rental.userId)); 
@@ -52,18 +53,18 @@ const Dashboard = () => {
     }
 
     const recentRevenue = async () => {
-      const response = await axios.get(`${API_URL}/rental/revenue/${ownerId}`);
+      const response = await axios.get(`http://localhost:5000/rental/revenue/${ownerId}`);
       setRevenue(response.data);
 
     }
 
     const countBikeType = async () => {
-      const response = await axios.get(`${API_URL}/rental/bike-type/${ownerId}`);
+      const response = await axios.get(`http://localhost:5000/rental/bike-type/${ownerId}`);
       setBikeType(response.data);
     }
 
     const countRentalByMonth = async () => {
-      const response = await axios.get(`${API_URL}/rental/count-by-month/${ownerId}`);
+      const response = await axios.get(`http://localhost:5000/rental/count-by-month/${ownerId}`);
       setRentalByMonth(response.data);
       console.log("rentalbymonth", response.data);
     }

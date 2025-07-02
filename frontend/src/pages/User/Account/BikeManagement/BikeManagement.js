@@ -345,30 +345,7 @@ const BikeManagement = () => {
                 ?.filter((bike) => bike.status === 'completed').length}</div>
               <div class="task-label">Số xe hoàn thành</div>
             </div>
-            <div class="task-item">
-              <div class="task-count">{confirmedBikes
-                ?.filter((bike) => bike.status === 'cancelled').length}</div>
-              <div class="task-label">Xe bị hủy</div>
-            </div>
-            <div class="task-item">
-              <div class="task-count">0</div>
-              <div class="task-label">Xe tạm bị khóa</div>
-            </div>
-            <div class="task-item">
-              <div class="task-count">13</div>
-              <div class="task-label">Số lượt đánh giá</div>
-            </div>
-            <div class="task-item">
-              <div class="task-count">2</div>
-              <div class="task-label">Số bình luận</div>
-            </div>
-            <div class="task-item">
-              <div class="task-count">
-                0
-                <span class="new-badge">New</span>
-              </div>
-              <div class="task-label">Tổng số đơn</div>
-            </div>
+            
           </div>
         </div>
         <div>

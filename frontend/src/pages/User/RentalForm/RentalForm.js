@@ -82,7 +82,7 @@ const RentalForm = () => {
         <div className="info-details">
           <h2>{state?.bikeTitle}</h2>
           <img src={state?.bikeImage} alt={state?.bikeTitle} />
-          <p>Xăng - {state?.bikeCapacity || "110"} - Xe số - Sản xuất 2018</p>
+          <p>Xăng - {state?.bikeCapacity || "110"} - {state?.bikeType}</p>
           <div className="rental-time">
             <p><strong>THỜI GIAN:</strong> {state.startDate} - {state.startTime}→ {state.endDate}-{state.endTime}</p>
           </div>

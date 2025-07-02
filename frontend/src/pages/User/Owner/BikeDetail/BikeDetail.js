@@ -19,15 +19,13 @@ const BikeDetail = () => {
         <img src={bike.images.side.url} alt="Mặt bên xe" />
         <img src={bike.images.back.url} alt="Mặt sau xe" />
       </div>
+      <p><strong>ID:</strong> {bike._id}</p>
 
       <p><strong>Biển số:</strong> {bike.license_plate}</p>
       <p><strong>Chủ xe:</strong> {bike.ownerName}</p>
-
       <div className="bike-location">
         <h4>Địa điểm: {bike.location.detail_location}, {bike.location.ward}, {bike.location.district}, {bike.location.province}</h4>
-        <p>
-          
-        </p>
+      
       </div>
 
       <p><strong>Giao tận nhà:</strong> {bike.delivery_home ? "Có" : "Không"}</p>
